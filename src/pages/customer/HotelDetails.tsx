@@ -11,8 +11,7 @@ import PageMeta from "../../components/common/PageMeta";
 const AMENITY_ICONS: Record<string, typeof Wifi> = {
   WiFi: Wifi, Parking: Car, Restaurant: UtensilsCrossed, Gym: Dumbbell,
   Pool: Waves, Spa: Dumbbell, Garden: TreePine, "Lake View": Waves,
-  "Mountain View": TreePine, "Room Service": UtensilsCrossed,
-  "Room Service": UtensilsCrossed, "Airport Transfer": Car,
+  "Mountain View": TreePine,  "Room Service": UtensilsCrossed, "Airport Transfer": Car,
   Laundry: TreePine, "Conference Hall": Dumbbell, Tennis: Dumbbell,
 };
 
