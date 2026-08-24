@@ -41,7 +41,7 @@ import NotFound from "../pages/OtherPage/NotFound";
 
 export default function AppRoutes() {
   return (
-    <Router basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+    <Router basename="/NorthRoutes-pk">
       <ScrollToTop />
       <Routes>
         {/* Customer Routes (with Navbar + Footer) */}
