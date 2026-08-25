@@ -27,7 +27,7 @@ export default function HotelDetails() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Hotel Not Found</h1>
-        <Link to="/hotels" className="text-blue-600 hover:underline">← Back to Hotels</Link>
+        <Link to="/hotels" className="text-orange-600 hover:underline">← Back to Hotels</Link>
       </div>
     );
   }
@@ -74,7 +74,7 @@ export default function HotelDetails() {
           {hotel.images.map((img, i) => (
             <button key={i} onClick={() => setActiveImage(i)}
               className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                activeImage === i ? "border-blue-500 scale-105" : "border-white/40 opacity-70 hover:opacity-100"
+                activeImage === i ? "border-orange-500 scale-105" : "border-white/40 opacity-70 hover:opacity-100"
               }`}>
               <img src={img} alt="" className="w-full h-full object-cover" />
             </button>
@@ -116,7 +116,7 @@ export default function HotelDetails() {
                   const Icon = AMENITY_ICONS[a] || Check;
                   return (
                     <div key={a} className="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm text-gray-700">
-                      <Icon className="w-4 h-4 text-blue-500" /> {a}
+                      <Icon className="w-4 h-4 text-orange-500" /> {a}
                     </div>
                   );
                 })}
@@ -130,7 +130,7 @@ export default function HotelDetails() {
                 {hotel.rooms.map((room) => (
                   <div key={room.id}
                     className={`bg-white rounded-xl border-2 p-5 transition-all cursor-pointer ${
-                      selectedRoom === room.id ? "border-blue-500 shadow-md" : "border-gray-100 hover:border-gray-200"
+                      selectedRoom === room.id ? "border-orange-500 shadow-md" : "border-gray-100 hover:border-gray-200"
                     }`}
                     onClick={() => setSelectedRoom(room.id)}
                   >
@@ -145,7 +145,7 @@ export default function HotelDetails() {
                             <p className="text-sm text-gray-500 mt-1">{room.description}</p>
                           </div>
                           {selectedRoom === room.id && (
-                            <div className="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+                            <div className="bg-orange-600 text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
                               <Check className="w-4 h-4" />
                             </div>
                           )}
@@ -165,7 +165,7 @@ export default function HotelDetails() {
 
                         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                           <div>
-                            <span className="text-xl font-bold text-blue-600">PKR {room.pricePerNight.toLocaleString()}</span>
+                            <span className="text-xl font-bold text-orange-600">PKR {room.pricePerNight.toLocaleString()}</span>
                             <span className="text-sm text-gray-400 ml-1">/ night</span>
                           </div>
                           <span className={`text-sm font-medium ${room.available ? "text-green-600" : "text-red-500"}`}>
@@ -188,7 +188,7 @@ export default function HotelDetails() {
               >
                 <div className="mb-4">
                   <span className="text-sm text-gray-400">Starting from</span>
-                  <p className="text-3xl font-bold text-blue-600">
+                  <p className="text-3xl font-bold text-orange-600">
                     PKR {hotel.rooms[0].pricePerNight.toLocaleString()}
                     <span className="text-sm font-normal text-gray-400 ml-1">/ night</span>
                   </p>
@@ -201,12 +201,12 @@ export default function HotelDetails() {
                   <div>
                     <label className="text-xs font-medium text-gray-500 mb-1 block">Check-in</label>
                     <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)}
-                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" />
                   </div>
                   <div>
                     <label className="text-xs font-medium text-gray-500 mb-1 block">Check-out</label>
                     <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)}
-                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" />
                   </div>
                 </div>
 
@@ -216,14 +216,12 @@ export default function HotelDetails() {
                   <div className="space-y-2">
                     {hotel.rooms.map((room) => (
                       <button key={room.id} onClick={() => setSelectedRoom(room.id)}
-                        className={`w-full text-left p-3 rounded-lg border text-sm transition-all ${
-                          selectedRoom === room.id
-                            ? "border-blue-500 bg-blue-50"
+                        className={`w-full text-left p-3 rounded-lg border text-sm transition-all ${selectedRoom === room.id ? "border-orange-500 bg-orange-50"
                             : "border-gray-200 hover:border-gray-300"
                         }`}>
                         <div className="flex justify-between items-center">
                           <span className="font-medium">{room.type}</span>
-                          <span className="text-blue-600 font-bold">PKR {room.pricePerNight.toLocaleString()}</span>
+                          <span className="text-orange-600 font-bold">PKR {room.pricePerNight.toLocaleString()}</span>
                         </div>
                       </button>
                     ))}
@@ -246,7 +244,7 @@ export default function HotelDetails() {
                     <div className="h-px bg-gray-100" />
                     <div className="flex justify-between">
                       <span className="font-semibold">Total</span>
-                      <span className="text-xl font-bold text-blue-600">PKR {(selected.pricePerNight * nights).toLocaleString()}</span>
+                      <span className="text-xl font-bold text-orange-600">PKR {(selected.pricePerNight * nights).toLocaleString()}</span>
                     </div>
                   </div>
                 )}
@@ -256,7 +254,7 @@ export default function HotelDetails() {
                   to={`/booking?hotel=${hotel.id}&room=${selectedRoom || ""}&checkin=${checkIn}&checkout=${checkOut}`}
                   className={`block w-full text-center py-3.5 rounded-xl font-semibold transition-colors ${
                     selectedRoom
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
+                      ? "bg-orange-600 text-white hover:bg-orange-700"
                       : "bg-gray-100 text-gray-400 cursor-not-allowed"
                   }`}
                 >

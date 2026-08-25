@@ -217,7 +217,7 @@ export default function ManageTours() {
                       <td className="px-5 py-3 text-gray-500 text-xs">—</td>
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-2">
-                          <button onClick={() => handleEdit(tour)} className="p-1.5 hover:bg-blue-50 rounded-lg text-blue-600 transition">
+                          <button onClick={() => handleEdit(tour)} className="p-1.5 hover:bg-orange-50 rounded-lg text-orange-600 transition">
                             <Edit3 className="w-4 h-4" />
                           </button>
                           <button onClick={() => handleDelete(tour.id)} className="p-1.5 hover:bg-red-50 rounded-lg text-red-500 transition">

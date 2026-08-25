@@ -60,7 +60,7 @@ export default function HeroSection() {
           >
             Discover the Majestic
             <br />
-            <span className="text-blue-400">North of Pakistan</span>
+            <span className="text-orange-400">North of Pakistan</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -91,7 +91,7 @@ export default function HeroSection() {
                 <select
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
-                  className="w-full pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 >
                   {DESTINATIONS.map((d) => (
                     <option key={d} value={d}>{d}</option>
@@ -109,7 +109,7 @@ export default function HeroSection() {
                 <select
                   value={pickup}
                   onChange={(e) => setPickup(e.target.value)}
-                  className="w-full pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 >
                   {PICKUP_POINTS.map((p) => (
                     <option key={p} value={p}>{p}</option>
@@ -128,7 +128,7 @@ export default function HeroSection() {
                   type="date"
                   value={travelDate}
                   onChange={(e) => setTravelDate(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function HeroSection() {
                 <select
                   value={budgetIndex}
                   onChange={(e) => setBudgetIndex(Number(e.target.value))}
-                  className="w-full pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 >
                   {BUDGET_RANGES.map((b, i) => (
                     <option key={i} value={i}>{b.label}</option>
@@ -162,7 +162,7 @@ export default function HeroSection() {
                 <Filter className="w-4 h-4" />
                 Filters
                 {activeFilterCount > 0 && (
-                  <span className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">{activeFilterCount}</span>
+                  <span className="bg-orange-600 text-white text-xs px-2 py-0.5 rounded-full">{activeFilterCount}</span>
                 )}
               </span>
               <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`} />
@@ -189,17 +189,17 @@ export default function HeroSection() {
             <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
               <span className="text-xs text-gray-400">Active:</span>
               {destination !== "All Destinations" && (
-                <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-xs px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-orange-50 text-orange-600 text-xs px-2.5 py-1 rounded-full">
                   {destination} <X className="w-3 h-3 cursor-pointer" onClick={() => setDestination("All Destinations")} />
                 </span>
               )}
               {pickup !== "All Pickup Points" && (
-                <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-xs px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-orange-50 text-orange-600 text-xs px-2.5 py-1 rounded-full">
                   {pickup} <X className="w-3 h-3 cursor-pointer" onClick={() => setPickup("All Pickup Points")} />
                 </span>
               )}
               {budgetIndex !== 0 && (
-                <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-xs px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-orange-50 text-orange-600 text-xs px-2.5 py-1 rounded-full">
                   {BUDGET_RANGES[budgetIndex].label} <X className="w-3 h-3 cursor-pointer" onClick={() => setBudgetIndex(0)} />
                 </span>
               )}
@@ -222,7 +222,7 @@ export default function HeroSection() {
             <MapPin className="w-12 h-12 text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-600 mb-2">No tours match your filters</h3>
             <p className="text-gray-400 mb-4">Try adjusting your search criteria</p>
-            <button onClick={clearFilters} className="text-blue-600 hover:underline font-medium">Clear all filters</button>
+            <button onClick={clearFilters} className="text-orange-600 hover:underline font-medium">Clear all filters</button>
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -245,7 +245,7 @@ export default function HeroSection() {
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{tour.title}</h3>
+                    <h3 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">{tour.title}</h3>
                     <div className="flex flex-wrap gap-1.5 mb-3">
                       {tour.destinations.slice(0, 3).map((d) => (
                         <span key={d} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">{d}</span>
@@ -261,10 +261,10 @@ export default function HeroSection() {
                     <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                       <div>
                         <span className="text-xs text-gray-400">From</span>
-                        <p className="text-blue-600 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
+                        <p className="text-orange-600 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
                         <span className="text-xs text-gray-400">per person</span>
                       </div>
-                      <span className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-blue-700 transition-colors">
+                      <span className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-orange-700 transition-colors">
                         View Details
                       </span>
                     </div>

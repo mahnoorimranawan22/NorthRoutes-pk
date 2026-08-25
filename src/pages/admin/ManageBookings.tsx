@@ -180,7 +180,7 @@ export default function ManageBookings() {
                             </>
                           )}
                           <button onClick={() => setSelectedBooking(booking.id)}
-                            className="p-1.5 hover:bg-blue-50 rounded-lg text-blue-600 transition" title="View Details">
+                            className="p-1.5 hover:bg-orange-50 rounded-lg text-orange-600 transition" title="View Details">
                             <Eye className="w-4 h-4" />
                           </button>
                         </div>

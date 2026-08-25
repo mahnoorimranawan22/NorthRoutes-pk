@@ -52,17 +52,17 @@ export default function Booking() {
     setStep((s) => Math.min(s + 1, 4));
   };
 
-  const inputCls = "w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#465FFF] focus:border-transparent";
+  const inputCls = "w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#EA580C] focus:border-transparent";
 
   return (
     <>
       <PageMeta title="Checkout - NorthRoutes PK" description="Complete your booking" />
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#465FFF] to-[#0EA5E9] text-white py-8 px-4">
+        <div className="bg-gradient-to-r from-[#EA580C] to-[#F97316] text-white py-8 px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-2xl md:text-3xl font-bold">Checkout</h1>
-            <p className="text-blue-100 mt-1">Complete your NorthRoutes PK booking</p>
+            <p className="text-orange-100 mt-1">Complete your NorthRoutes PK booking</p>
           </div>
         </div>
 
@@ -72,12 +72,12 @@ export default function Booking() {
             {steps.map((s, i) => (
               <div key={s.id} className="flex items-center flex-1 last:flex-initial">
                 <div className="flex flex-col items-center">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= s.id ? "bg-[#465FFF] text-white shadow-md" : "bg-gray-200 text-gray-500"}`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= s.id ? "bg-[#EA580C] text-white shadow-md" : "bg-gray-200 text-gray-500"}`}>
                     {step > s.id ? "✓" : s.id}
                   </div>
-                  <span className={`text-xs mt-2 font-medium hidden sm:block ${step >= s.id ? "text-[#465FFF]" : "text-gray-400"}`}>{s.label}</span>
+                  <span className={`text-xs mt-2 font-medium hidden sm:block ${step >= s.id ? "text-[#EA580C]" : "text-gray-400"}`}>{s.label}</span>
                 </div>
-                {i < steps.length - 1 && <div className={`flex-1 h-0.5 mx-2 sm:mx-4 ${step > s.id ? "bg-[#465FFF]" : "bg-gray-200"}`} />}
+                {i < steps.length - 1 && <div className={`flex-1 h-0.5 mx-2 sm:mx-4 ${step > s.id ? "bg-[#EA580C]" : "bg-gray-200"}`} />}
               </div>
             ))}
           </div>
@@ -100,13 +100,13 @@ export default function Booking() {
                           </div>
                           <div className="flex flex-wrap gap-1.5 mt-2">
                             {tour.destinations.map((d) => (
-                              <span key={d} className="px-2 py-0.5 bg-blue-50 text-blue-600 text-xs rounded-full">{d}</span>
+                              <span key={d} className="px-2 py-0.5 bg-orange-50 text-orange-600 text-xs rounded-full">{d}</span>
                             ))}
                           </div>
                         </div>
                         <div className="text-right">
                           <p className="text-xs text-gray-400">Per person</p>
-                          <p className="font-bold text-[#465FFF]">PKR {fmt(tour.pricePerPerson)}</p>
+                          <p className="font-bold text-[#EA580C]">PKR {fmt(tour.pricePerPerson)}</p>
                         </div>
                       </div>
                     </div>
@@ -114,16 +114,16 @@ export default function Booking() {
                     <div className="bg-white rounded-xl border p-5">
                       <h3 className="font-bold text-gray-900 mb-4">Trip Details</h3>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[#465FFF]" /><div><p className="text-xs text-gray-400">Pickup</p><p className="text-sm font-medium">{pickupOrigin}</p></div></div>
-                        <div className="flex items-center gap-2"><Users className="w-4 h-4 text-[#465FFF]" /><div><p className="text-xs text-gray-400">Guests</p><p className="text-sm font-medium">{guests}</p></div></div>
-                        <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#465FFF]" /><div><p className="text-xs text-gray-400">Travel Date</p><p className="text-sm font-medium">{travelDate}</p></div></div>
-                        <div className="flex items-center gap-2"><Car className="w-4 h-4 text-[#465FFF]" /><div><p className="text-xs text-gray-400">Transport</p><p className="text-sm font-medium">AC Van</p></div></div>
+                        <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[#EA580C]" /><div><p className="text-xs text-gray-400">Pickup</p><p className="text-sm font-medium">{pickupOrigin}</p></div></div>
+                        <div className="flex items-center gap-2"><Users className="w-4 h-4 text-[#EA580C]" /><div><p className="text-xs text-gray-400">Guests</p><p className="text-sm font-medium">{guests}</p></div></div>
+                        <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#EA580C]" /><div><p className="text-xs text-gray-400">Travel Date</p><p className="text-sm font-medium">{travelDate}</p></div></div>
+                        <div className="flex items-center gap-2"><Car className="w-4 h-4 text-[#EA580C]" /><div><p className="text-xs text-gray-400">Transport</p><p className="text-sm font-medium">AC Van</p></div></div>
                       </div>
                     </div>
 
                     <div className="bg-white rounded-xl border p-5">
                       <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-bold text-gray-900 flex items-center gap-2"><Building2 className="w-4 h-4 text-[#465FFF]" />Hotel Room Add-on</h3>
+                        <h3 className="font-bold text-gray-900 flex items-center gap-2"><Building2 className="w-4 h-4 text-[#EA580C]" />Hotel Room Add-on</h3>
                         <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-medium">Added</span>
                       </div>
                       <div className="flex items-center justify-between">
@@ -142,10 +142,10 @@ export default function Booking() {
                         <div className="flex justify-between"><span className="text-gray-600">Hotel ({hotelAddOn.nights} nights)</span><span>PKR {fmt(hotelTotal)}</span></div>
                         <div className="border-t pt-3 flex justify-between"><span className="text-gray-600">Subtotal</span><span>PKR {fmt(subtotal)}</span></div>
                         <div className="flex justify-between"><span className="text-gray-600">Tax (10%)</span><span>PKR {fmt(tax)}</span></div>
-                        <div className="border-t pt-3"><div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-[#465FFF]">PKR {fmt(total)}</span></div></div>
-                        <div className="bg-blue-50 rounded-lg p-3 mt-3">
-                          <p className="text-xs font-medium text-[#465FFF] mb-1">Pay Now (20% Deposit)</p>
-                          <p className="text-xl font-bold text-[#465FFF]">PKR {fmt(deposit)}</p>
+                        <div className="border-t pt-3"><div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-[#EA580C]">PKR {fmt(total)}</span></div></div>
+                        <div className="bg-orange-50 rounded-lg p-3 mt-3">
+                          <p className="text-xs font-medium text-[#EA580C] mb-1">Pay Now (20% Deposit)</p>
+                          <p className="text-xl font-bold text-[#EA580C]">PKR {fmt(deposit)}</p>
                           <p className="text-xs text-gray-500 mt-1">Balance PKR {fmt(balance)} due before departure</p>
                         </div>
                       </div>
@@ -178,14 +178,14 @@ export default function Booking() {
                     <h3 className="text-lg font-bold text-gray-900">Select Payment Method</h3>
 
                     {/* JazzCash */}
-                    <button onClick={() => setPayMethod("jazzcash")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "jazzcash" ? "border-[#465FFF] bg-blue-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
+                    <button onClick={() => setPayMethod("jazzcash")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "jazzcash" ? "border-[#EA580C] bg-orange-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center text-xl">📱</div>
                         <div className="flex-1"><p className="font-bold text-gray-900">JazzCash</p><p className="text-sm text-gray-500">Pay via Mobile Account or Voucher</p></div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "jazzcash" ? "border-[#465FFF] bg-[#465FFF]" : "border-gray-300"}`}>{payMethod === "jazzcash" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "jazzcash" ? "border-[#EA580C] bg-[#EA580C]" : "border-gray-300"}`}>{payMethod === "jazzcash" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
                       </div>
                       <AnimatePresence>{payMethod === "jazzcash" && (
-                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-blue-100">
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-orange-100">
                           <div className="space-y-3">
                             <div><label className="block text-xs font-medium text-gray-600 mb-1">JazzCash Account Number</label><input type="tel" placeholder="03XX XXXXXXX" onChange={(e) => setPayDetails({ ...payDetails, jazzcash: e.target.value })} className={inputCls} /></div>
                             <div className="bg-amber-50 rounded-lg p-3"><p className="text-xs text-amber-700"><AlertCircle className="w-3.5 h-3.5 inline mr-1" />You will receive a confirmation call/SMS to authorize PKR {fmt(deposit)} payment.</p></div>
@@ -195,14 +195,14 @@ export default function Booking() {
                     </button>
 
                     {/* EasyPaisa */}
-                    <button onClick={() => setPayMethod("easypaisa")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "easypaisa" ? "border-[#465FFF] bg-blue-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
+                    <button onClick={() => setPayMethod("easypaisa")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "easypaisa" ? "border-[#EA580C] bg-orange-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-xl">💚</div>
                         <div className="flex-1"><p className="font-bold text-gray-900">EasyPaisa</p><p className="text-sm text-gray-500">Pay via Mobile Account</p></div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "easypaisa" ? "border-[#465FFF] bg-[#465FFF]" : "border-gray-300"}`}>{payMethod === "easypaisa" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "easypaisa" ? "border-[#EA580C] bg-[#EA580C]" : "border-gray-300"}`}>{payMethod === "easypaisa" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
                       </div>
                       <AnimatePresence>{payMethod === "easypaisa" && (
-                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-blue-100">
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-orange-100">
                           <div className="space-y-3">
                             <div><label className="block text-xs font-medium text-gray-600 mb-1">EasyPaisa Account Number</label><input type="tel" placeholder="03XX XXXXXXX" onChange={(e) => setPayDetails({ ...payDetails, easypaisa: e.target.value })} className={inputCls} /></div>
                             <div className="bg-amber-50 rounded-lg p-3"><p className="text-xs text-amber-700"><AlertCircle className="w-3.5 h-3.5 inline mr-1" />You will receive an SMS to authorize payment of PKR {fmt(deposit)}.</p></div>
@@ -212,14 +212,14 @@ export default function Booking() {
                     </button>
 
                     {/* Bank Transfer */}
-                    <button onClick={() => setPayMethod("bank")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "bank" ? "border-[#465FFF] bg-blue-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
+                    <button onClick={() => setPayMethod("bank")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "bank" ? "border-[#EA580C] bg-orange-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-xl">🏦</div>
                         <div className="flex-1"><p className="font-bold text-gray-900">Bank Transfer</p><p className="text-sm text-gray-500">Direct bank transfer with proof upload</p></div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "bank" ? "border-[#465FFF] bg-[#465FFF]" : "border-gray-300"}`}>{payMethod === "bank" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "bank" ? "border-[#EA580C] bg-[#EA580C]" : "border-gray-300"}`}>{payMethod === "bank" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
                       </div>
                       <AnimatePresence>{payMethod === "bank" && (
-                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-blue-100">
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-orange-100">
                           <div className="space-y-3">
                             <div className="bg-gray-50 rounded-lg p-4 text-sm">
                               <p className="font-medium text-gray-900 mb-2">Transfer to:</p>
@@ -233,7 +233,7 @@ export default function Booking() {
                             <div><label className="block text-xs font-medium text-gray-600 mb-1">Sender Reference Number</label><input type="text" placeholder="Transaction reference" onChange={(e) => setPayDetails({ ...payDetails, bankRef: e.target.value })} className={inputCls} /></div>
                             <div>
                               <label className="block text-xs font-medium text-gray-600 mb-1"><Upload className="w-3.5 h-3.5 inline mr-1" />Upload Proof of Transaction</label>
-                              <label className="flex items-center justify-center w-full h-20 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#465FFF] transition">
+                              <label className="flex items-center justify-center w-full h-20 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#EA580C] transition">
                                 <div className="text-center">{proofFile ? <p className="text-sm text-green-600 font-medium">✓ {proofFile.name}</p> : <><Upload className="w-5 h-5 mx-auto text-gray-400" /><p className="text-xs text-gray-500 mt-1">Screenshot / receipt image</p></>}</div>
                                 <input type="file" accept="image/*" className="hidden" onChange={(e) => setProofFile(e.target.files?.[0] || null)} />
                               </label>
@@ -244,14 +244,14 @@ export default function Booking() {
                     </button>
 
                     {/* Card */}
-                    <button onClick={() => setPayMethod("card")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "card" ? "border-[#465FFF] bg-blue-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
+                    <button onClick={() => setPayMethod("card")} className={`w-full text-left p-5 rounded-xl border-2 transition-all ${payMethod === "card" ? "border-[#EA580C] bg-orange-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"}`}>
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-xl">💳</div>
+                        <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center text-xl">💳</div>
                         <div className="flex-1"><p className="font-bold text-gray-900">Debit / Credit Card</p><p className="text-sm text-gray-500">Visa, Mastercard, UnionPay</p></div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "card" ? "border-[#465FFF] bg-[#465FFF]" : "border-gray-300"}`}>{payMethod === "card" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === "card" ? "border-[#EA580C] bg-[#EA580C]" : "border-gray-300"}`}>{payMethod === "card" && <div className="w-2 h-2 bg-white rounded-full" />}</div>
                       </div>
                       <AnimatePresence>{payMethod === "card" && (
-                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-blue-100">
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-4 pt-4 border-t border-orange-100">
                           <div className="space-y-3">
                             <div><label className="block text-xs font-medium text-gray-600 mb-1">Card Number</label><input type="text" placeholder="XXXX XXXX XXXX XXXX" maxLength={19} onChange={(e) => setPayDetails({ ...payDetails, card: e.target.value })} className={inputCls} /></div>
                             <div className="grid grid-cols-2 gap-3">
@@ -299,14 +299,14 @@ export default function Booking() {
                       <p className="text-gray-500 mb-6">Your NorthRoutes PK trip has been booked successfully</p>
                       <div className="bg-gray-50 rounded-xl p-4 mb-6">
                         <p className="text-xs text-gray-400 mb-1">Booking Reference</p>
-                        <p className="text-2xl font-bold text-[#465FFF] font-mono tracking-wider">{bookingRef}</p>
+                        <p className="text-2xl font-bold text-[#EA580C] font-mono tracking-wider">{bookingRef}</p>
                       </div>
                       <div className="space-y-3 text-left text-sm mb-6">
                         <div className="flex justify-between py-2 border-b"><span className="text-gray-500">Tour</span><span className="font-medium text-right">{tour.title}</span></div>
                         <div className="flex justify-between py-2 border-b"><span className="text-gray-500">Pickup</span><span className="font-medium">{form.pickupPoint}</span></div>
                         <div className="flex justify-between py-2 border-b"><span className="text-gray-500">Guests</span><span className="font-medium">{guests}</span></div>
                         <div className="flex justify-between py-2 border-b"><span className="text-gray-500">Payment</span><span className="font-medium capitalize">{payMethod === "bank" ? "Bank Transfer" : payMethod}</span></div>
-                        <div className="flex justify-between py-2"><span className="text-gray-500">Amount Paid</span><span className="font-bold text-[#465FFF]">PKR {fmt(deposit)}</span></div>
+                        <div className="flex justify-between py-2"><span className="text-gray-500">Amount Paid</span><span className="font-bold text-[#EA580C]">PKR {fmt(deposit)}</span></div>
                       </div>
                       <div className="bg-amber-50 rounded-lg p-4 text-left mb-6">
                         <p className="text-sm text-amber-700 font-medium mb-1">What's Next?</p>
@@ -316,7 +316,7 @@ export default function Booking() {
                           <li>• Pickup details shared 24hrs before departure</li>
                         </ul>
                       </div>
-                      <a href="/" className="inline-flex items-center justify-center w-full bg-[#465FFF] text-white py-3 rounded-lg font-medium hover:bg-[#3B50DF] transition">Back to Home</a>
+                      <a href="/" className="inline-flex items-center justify-center w-full bg-[#EA580C] text-white py-3 rounded-lg font-medium hover:bg-[#3B50DF] transition">Back to Home</a>
                     </div>
                   </motion.div>
                 </div>
@@ -330,7 +330,7 @@ export default function Booking() {
               {step > 1 ? (
                 <button onClick={() => setStep((s) => s - 1)} className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition"><ChevronLeft className="w-4 h-4" /> Back</button>
               ) : <div />}
-              <button onClick={next} disabled={step === 3 && !payMethod} className="flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-[#465FFF] rounded-lg hover:bg-[#3B50DF] disabled:opacity-50 disabled:cursor-not-allowed transition shadow-md">
+              <button onClick={next} disabled={step === 3 && !payMethod} className="flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-[#EA580C] rounded-lg hover:bg-[#3B50DF] disabled:opacity-50 disabled:cursor-not-allowed transition shadow-md">
                 {step === 3 ? <><CheckCircle className="w-4 h-4" /> Confirm & Pay PKR {fmt(deposit)}</> : <>Continue <ChevronRight className="w-4 h-4" /></>}
               </button>
             </div>

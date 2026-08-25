@@ -9,13 +9,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center">
-                <Mountain className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-white">
-                North<span className="text-blue-400">Routes</span>
-                <span className="text-sm font-medium text-blue-400 ml-1">PK</span>
-              </span>
+            <div className="w-9 h-9 bg-orange-600 rounded-lg flex items-center justify-center">
+              <Mountain className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-white">
+              North<span className="text-orange-400">Routes</span>
+              <span className="text-sm font-medium text-orange-400 ml-1">PK</span>
+            </span>
             </Link>
             <p className="text-sm text-gray-400 mb-4">
               Discover the breathtaking beauty of Northern Pakistan with guided tours, premium stays, and unforgettable adventures.
@@ -40,7 +40,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {["Naran", "Batakundi", "Babusar Top", "Hunza", "Skardu", "Fairy Meadows"].map((dest) => (
                 <li key={dest}>
-                  <Link to={`/destinations/${dest.toLowerCase().replace(/\s+/g, "-")}`} className="hover:text-blue-400 transition-colors">
+                  <Link to={`/destinations/${dest.toLowerCase().replace(/\s+/g, "-")}`} className="hover:text-orange-400 transition-colors">
                     {dest}
                   </Link>
                 </li>
@@ -60,7 +60,7 @@ export default function Footer() {
                 { name: "Contact", path: "/" },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="hover:text-blue-400 transition-colors">
+                  <Link to={link.path} className="hover:text-orange-400 transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -73,11 +73,11 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Pickup Points</h3>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                <div className="w-2 h-2 bg-orange-500 rounded-full" />
                 Islamabad
               </li>
               <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                <div className="w-2 h-2 bg-orange-500 rounded-full" />
                 Abbottabad
               </li>
             </ul>
@@ -87,7 +87,7 @@ export default function Footer() {
                 {["Facebook", "Instagram", "WhatsApp"].map((social) => (
                   <span
                     key={social}
-                    className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
+                    className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 hover:bg-orange-600 hover:text-white transition-colors cursor-pointer"
                   >
                     {social[0]}
                   </span>

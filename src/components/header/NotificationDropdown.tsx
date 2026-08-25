@@ -163,7 +163,7 @@ export default function NotificationDropdown() {
               <DropdownItem
                 onItemClick={closeDropdown}
                 className={`flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5 ${
-                  notif.unread ? "bg-blue-50/50 dark:bg-blue-900/10" : ""
+                  notif.unread ? "bg-orange-50/50 dark:bg-orange-900/10" : ""
                 }`}
               >
                 <span className="relative block w-full h-10 rounded-full z-1 max-w-10 flex items-center justify-center text-xl bg-gray-100 dark:bg-gray-800">
@@ -187,7 +187,7 @@ export default function NotificationDropdown() {
                     <span
                       className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
                         notif.type === "booking"
-                          ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                          ? "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400"
                           : notif.type === "payment"
                           ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
                           : notif.type === "cancellation"

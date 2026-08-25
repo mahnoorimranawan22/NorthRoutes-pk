@@ -10,7 +10,7 @@ const stats = [
     change: "+1",
     trend: "up",
     icon: "🏔️",
-    color: "bg-blue-50 dark:bg-blue-900/20",
+    color: "bg-orange-50 dark:bg-orange-900/20",
   },
   {
     label: "Total Bookings",
@@ -176,7 +176,7 @@ export default function Home() {
               </h2>
               <Link
                 to="/admin/manage-bookings"
-                className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                className="text-sm text-orange-600 hover:text-orange-700 dark:text-orange-400"
               >
                 View All →
               </Link>
@@ -210,7 +210,7 @@ export default function Home() {
                     className="border-b border-gray-50 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50"
                   >
                     <td className="px-5 py-4">
-                      <span className="text-sm font-mono text-blue-600 dark:text-blue-400">
+                      <span className="text-sm font-mono text-orange-600 dark:text-orange-400">
                         {booking.id}
                       </span>
                       <p className="text-xs text-gray-400 mt-0.5">
@@ -273,7 +273,7 @@ export default function Home() {
               </h2>
               <Link
                 to="/admin/manage-tours"
-                className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                className="text-sm text-orange-600 hover:text-orange-700 dark:text-orange-400"
               >
                 Manage →
               </Link>
@@ -321,7 +321,7 @@ export default function Home() {
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                     <div
-                      className="bg-blue-600 h-2 rounded-full transition-all"
+                      className="bg-orange-600 h-2 rounded-full transition-all"
                       style={{ width: `${ps.percentage}%` }}
                     />
                   </div>
@@ -340,7 +340,7 @@ export default function Home() {
           </h2>
           <Link
             to="/admin/manage-hotels"
-            className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400"
+            className="text-sm text-orange-600 hover:text-orange-700 dark:text-orange-400"
           >
             Manage Hotels →
           </Link>
@@ -391,10 +391,10 @@ export default function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Link
           to="/admin/manage-tours"
-          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-blue-300 dark:hover:border-blue-700 transition-colors group"
+          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-orange-300 dark:hover:border-orange-700 transition-colors group"
         >
           <div className="text-3xl mb-3">🏔️</div>
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400">
             Manage Tours
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -404,10 +404,10 @@ export default function Home() {
 
         <Link
           to="/admin/manage-hotels"
-          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-blue-300 dark:hover:border-blue-700 transition-colors group"
+          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-orange-300 dark:hover:border-orange-700 transition-colors group"
         >
           <div className="text-3xl mb-3">🏨</div>
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400">
             Manage Hotels
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -417,10 +417,10 @@ export default function Home() {
 
         <Link
           to="/admin/manage-bookings"
-          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-blue-300 dark:hover:border-blue-700 transition-colors group"
+          className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-orange-300 dark:hover:border-orange-700 transition-colors group"
         >
           <div className="text-3xl mb-3">📋</div>
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400">
             Manage Bookings
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">

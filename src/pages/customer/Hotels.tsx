@@ -55,19 +55,19 @@ export default function Hotels() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text" placeholder="Search hotels or locations..." value={search} onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
             <div className="relative">
               <select value={location} onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-orange-500">
                 {LOCATION_FILTERS.map((l) => <option key={l} value={l}>{l}</option>)}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             </div>
             <div className="relative">
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-orange-500">
                 <option value="rating">Sort by Rating</option>
                 <option value="price-low">Price: Low to High</option>
                 <option value="price-high">Price: High to Low</option>
@@ -105,7 +105,7 @@ export default function Hotels() {
                 <div className="p-5">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h3 className="font-bold text-lg group-hover:text-blue-600 transition-colors">{hotel.name}</h3>
+                      <h3 className="font-bold text-lg group-hover:text-orange-600 transition-colors">{hotel.name}</h3>
                       <p className="flex items-center gap-1 text-sm text-gray-500 mt-0.5">
                         <MapPin className="w-3.5 h-3.5" /> {hotel.location}
                       </p>
@@ -133,12 +133,12 @@ export default function Hotels() {
                   <div className="flex items-end justify-between pt-3 border-t border-gray-100">
                     <div>
                       <span className="text-xs text-gray-400">From</span>
-                      <p className="text-blue-600 font-bold text-xl">
+                      <p className="text-orange-600 font-bold text-xl">
                         PKR {hotel.rooms[0].pricePerNight.toLocaleString()}
                         <span className="text-sm font-normal text-gray-400"> / night</span>
                       </p>
                     </div>
-                    <span className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-blue-700 transition-colors">
+                    <span className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-orange-700 transition-colors">
                       View Rooms
                     </span>
                   </div>

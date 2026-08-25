@@ -32,12 +32,12 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-9 h-9 bg-orange-600 rounded-lg flex items-center justify-center">
               <Mountain className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-900">
-              North<span className="text-blue-600">Routes</span>
-              <span className="text-sm font-medium text-blue-500 ml-1">PK</span>
+              North<span className="text-orange-600">Routes</span>
+              <span className="text-sm font-medium text-orange-500 ml-1">PK</span>
             </span>
           </Link>
 
@@ -54,7 +54,7 @@ export default function Navbar() {
                   to={link.path}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.path)
-                      ? "bg-blue-50 text-blue-600"
+                      ? "bg-orange-50 text-orange-600"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
                 >
@@ -69,7 +69,7 @@ export default function Navbar() {
                       <Link
                         key={child.path}
                         to={child.path}
-                        className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                        className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
                       >
                         {child.name}
                       </Link>
@@ -84,7 +84,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               to="/booking"
-              className="hidden sm:inline-flex bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+              className="hidden sm:inline-flex bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
             >
               Book Now
             </Link>
@@ -109,7 +109,7 @@ export default function Navbar() {
                   onClick={() => !link.children && setMobileOpen(false)}
                   className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.path)
-                      ? "bg-blue-50 text-blue-600"
+                      ? "bg-orange-50 text-orange-600"
                       : "text-gray-600 hover:bg-gray-50"
                   }`}
                 >
@@ -122,7 +122,7 @@ export default function Navbar() {
                         key={child.path}
                         to={child.path}
                         onClick={() => setMobileOpen(false)}
-                        className="block px-4 py-2 text-sm text-gray-500 hover:text-blue-600"
+                        className="block px-4 py-2 text-sm text-gray-500 hover:text-orange-600"
                       >
                         {child.name}
                       </Link>
@@ -134,7 +134,7 @@ export default function Navbar() {
             <Link
               to="/booking"
               onClick={() => setMobileOpen(false)}
-              className="block w-full text-center bg-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors mt-3"
+              className="block w-full text-center bg-orange-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors mt-3"
             >
               Book Now
             </Link>

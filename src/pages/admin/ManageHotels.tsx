@@ -211,7 +211,7 @@ export default function ManageHotels() {
                   }`}>
                     <div className="flex items-center gap-4">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        room.available ? "bg-blue-50 text-blue-600" : "bg-red-100 text-red-500"
+                        room.available ? "bg-orange-50 text-orange-600" : "bg-red-100 text-red-500"
                       }`}>
                         <Bed className="w-5 h-5" />
                       </div>
@@ -229,7 +229,7 @@ export default function ManageHotels() {
                         className={`p-1 rounded-lg transition ${room.available ? "text-green-500 hover:bg-green-50" : "text-red-500 hover:bg-red-50"}`}>
                         {room.available ? <ToggleRight className="w-6 h-6" /> : <ToggleLeft className="w-6 h-6" />}
                       </button>
-                      <button onClick={() => handleEditRoom(room)} className="p-1.5 hover:bg-blue-50 rounded-lg text-blue-600 transition">
+                      <button onClick={() => handleEditRoom(room)} className="p-1.5 hover:bg-orange-50 rounded-lg text-orange-600 transition">
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button onClick={() => handleDeleteRoom(selectedHotel!, room.id)} className="p-1.5 hover:bg-red-50 rounded-lg text-red-500 transition">

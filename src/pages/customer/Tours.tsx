@@ -27,7 +27,7 @@ export default function Tours() {
             placeholder="Search tours or destinations..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full md:w-96 pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full md:w-96 pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
 
@@ -51,7 +51,7 @@ export default function Tours() {
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">{tour.title}</h3>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-orange-600 transition-colors">{tour.title}</h3>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {tour.destinations.slice(0, 3).map((d) => (
                       <span key={d} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">{d}</span>
@@ -67,9 +67,9 @@ export default function Tours() {
                   <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                     <div>
                       <span className="text-xs text-gray-400">From</span>
-                      <p className="text-blue-600 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
+                      <p className="text-orange-600 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
                     </div>
-                    <span className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-blue-700 transition-colors">
+                    <span className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-orange-700 transition-colors">
                       View Details
                     </span>
                   </div>

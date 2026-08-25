@@ -76,7 +76,7 @@ export default function Destinations() {
                       </span>
                       <span>{dest.tourCount} tours</span>
                     </div>
-                    <span className="flex items-center gap-1 text-blue-600 text-sm font-medium group-hover:gap-2 transition-all">
+                    <span className="flex items-center gap-1 text-orange-600 text-sm font-medium group-hover:gap-2 transition-all">
                       Explore <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>

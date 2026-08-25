@@ -36,7 +36,7 @@ export default function TourDetails() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Tour Not Found</h1>
-        <Link to="/tours" className="text-blue-600 hover:underline">← Back to Tours</Link>
+        <Link to="/tours" className="text-orange-600 hover:underline">← Back to Tours</Link>
       </div>
     );
   }
@@ -79,7 +79,7 @@ export default function TourDetails() {
               key={i}
               onClick={() => setActiveImage(i)}
               className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                activeImage === i ? "border-blue-500 scale-105" : "border-white/50 opacity-70 hover:opacity-100"
+                activeImage === i ? "border-orange-500 scale-105" : "border-white/50 opacity-70 hover:opacity-100"
               }`}
             >
               <img src={img} alt="" className="w-full h-full object-cover" />
@@ -111,7 +111,7 @@ export default function TourDetails() {
             {/* Quick Info Bar */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex flex-wrap gap-6">
               <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Clock className="w-4 h-4 text-blue-500" /> {tour.duration}
+                <Clock className="w-4 h-4 text-orange-500" /> {tour.duration}
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" /> {tour.rating} rating
@@ -136,7 +136,7 @@ export default function TourDetails() {
                     >
                       <div className="flex items-center gap-4">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
-                          openDay === day.day ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-600"
+                          openDay === day.day ? "bg-orange-600 text-white" : "bg-orange-50 text-orange-600"
                         }`}>
                           {day.day}
                         </div>
@@ -184,7 +184,7 @@ export default function TourDetails() {
                   </thead>
                   <tbody className="divide-y divide-gray-100">
                     {GROUP_PRICING.map((g) => (
-                      <tr key={g.label} className={groupSize >= g.min && groupSize <= g.max ? "bg-blue-50" : ""}>
+                      <tr key={g.label} className={groupSize >= g.min && groupSize <= g.max ? "bg-orange-50" : ""}>
                         <td className="px-5 py-3 font-medium">{g.label}</td>
                         <td className="px-5 py-3">PKR {tour.pricePerPerson.toLocaleString()}</td>
                         <td className="px-5 py-3">
@@ -194,7 +194,7 @@ export default function TourDetails() {
                             <span className="text-gray-400">—</span>
                           )}
                         </td>
-                        <td className="px-5 py-3 font-bold text-blue-600">
+                        <td className="px-5 py-3 font-bold text-orange-600">
                           PKR {Math.round(tour.pricePerPerson * (1 - g.discount / 100)).toLocaleString()}
                         </td>
                       </tr>
@@ -249,7 +249,7 @@ export default function TourDetails() {
                 <div className="mb-4">
                   <span className="text-sm text-gray-400">Starting from</span>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-blue-600">PKR {tour.pricePerPerson.toLocaleString()}</span>
+                    <span className="text-3xl font-bold text-orange-600">PKR {tour.pricePerPerson.toLocaleString()}</span>
                     <span className="text-sm text-gray-400">/ person</span>
                   </div>
                 </div>
@@ -266,8 +266,8 @@ export default function TourDetails() {
                         onClick={() => setPickup(point)}
                         className={`py-2.5 px-3 rounded-lg text-sm font-medium border transition-all ${
                           pickup === point
-                            ? "bg-blue-600 text-white border-blue-600"
-                            : "bg-gray-50 text-gray-600 border-gray-200 hover:border-blue-300"
+                            ? "bg-orange-600 text-white border-orange-600"
+                            : "bg-gray-50 text-gray-600 border-gray-200 hover:border-orange-300"
                         }`}
                       >
                         {point}
@@ -311,7 +311,7 @@ export default function TourDetails() {
                     </label>
                     <button
                       onClick={() => setHotelAddon(!hotelAddon)}
-                      className={`relative w-11 h-6 rounded-full transition-colors ${hotelAddon ? "bg-blue-600" : "bg-gray-300"}`}
+                      className={`relative w-11 h-6 rounded-full transition-colors ${hotelAddon ? "bg-orange-600" : "bg-gray-300"}`}
                     >
                       <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform shadow-sm ${hotelAddon ? "translate-x-5" : ""}`} />
                     </button>
@@ -403,14 +403,14 @@ export default function TourDetails() {
                   <div className="h-px bg-gray-100" />
                   <div className="flex justify-between">
                     <span className="font-semibold">Grand Total</span>
-                    <span className="text-xl font-bold text-blue-600">PKR {Math.round(totalPrice).toLocaleString()}</span>
+                    <span className="text-xl font-bold text-orange-600">PKR {Math.round(totalPrice).toLocaleString()}</span>
                   </div>
                 </div>
 
                 {/* CTA */}
                 <Link
                   to={`/booking?tour=${tour.id}&pickup=${pickup}&guests=${groupSize}`}
-                  className="block w-full text-center bg-blue-600 text-white py-3.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+                  className="block w-full text-center bg-orange-600 text-white py-3.5 rounded-xl font-semibold hover:bg-orange-700 transition-colors"
                 >
                   Book This Tour
                 </Link>
@@ -421,7 +421,7 @@ export default function TourDetails() {
                     <Shield className="w-4 h-4 text-green-500" /> Free cancellation up to 48 hours
                   </div>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <Phone className="w-4 h-4 text-blue-500" /> 24/7 support: +92 300 1234567
+                    <Phone className="w-4 h-4 text-orange-500" /> 24/7 support: +92 300 1234567
                   </div>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
                     <Calendar className="w-4 h-4 text-purple-500" /> Pickup from {pickup}

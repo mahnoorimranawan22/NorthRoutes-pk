@@ -53,7 +53,7 @@ export default function DestinationDetail() {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
         <h1 className="text-2xl font-bold mb-4">Destination Not Found</h1>
-        <Link to="/destinations" className="text-blue-600 hover:underline">← Back to Destinations</Link>
+        <Link to="/destinations" className="text-orange-600 hover:underline">← Back to Destinations</Link>
       </div>
     );
   }
@@ -63,7 +63,7 @@ export default function DestinationDetail() {
       <PageMeta title={`${dest.name} - NorthRoutes PK`} description={dest.description} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <Link to="/destinations" className="inline-flex items-center gap-1 text-blue-600 hover:underline mb-6">
+          <Link to="/destinations" className="inline-flex items-center gap-1 text-orange-600 hover:underline mb-6">
             <ArrowLeft className="w-4 h-4" /> All Destinations
           </Link>
 
@@ -89,7 +89,7 @@ export default function DestinationDetail() {
               <div className="grid grid-cols-2 gap-3 mb-8">
                 {dest.highlights.map((h) => (
                   <div key={h} className="flex items-center gap-2 text-gray-600">
-                    <Compass className="w-4 h-4 text-blue-500" /> {h}
+                    <Compass className="w-4 h-4 text-orange-500" /> {h}
                   </div>
                 ))}
               </div>
@@ -102,7 +102,7 @@ export default function DestinationDetail() {
                 <div className="flex justify-between"><span className="text-gray-500">Altitude</span><span className="font-medium">{dest.altitude}</span></div>
                 <div className="flex justify-between"><span className="text-gray-500">Region</span><span className="font-medium">Northern Pakistan</span></div>
               </div>
-              <Link to="/tours" className="block w-full text-center bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition mt-6">
+              <Link to="/tours" className="block w-full text-center bg-orange-600 text-white py-3 rounded-lg font-medium hover:bg-orange-700 transition mt-6">
                 View Tours
               </Link>
             </div>
