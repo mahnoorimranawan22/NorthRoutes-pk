@@ -154,3 +154,65 @@ export async function getTourAvailability(req, res) {
     });
   }
 }
+
+// POST /api/tours - Create a new tour (admin)
+export async function createTour(req, res) {
+  try {
+    const tour = await Tour.create(req.body);
+    res.status(201).json({
+      success: true,
+      message: "Tour created successfully.",
+      data: tour,
+    });
+  } catch (error) {
+    console.error("Create tour error:", error);
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to create tour.",
+    });
+  }
+}
+
+// PUT /api/tours/:id - Update a tour (admin)
+export async function updateTour(req, res) {
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!tour) {
+      return res.status(404).json({ success: false, message: "Tour not found." });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Tour updated successfully.",
+      data: tour,
+    });
+  } catch (error) {
+    console.error("Update tour error:", error);
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to update tour.",
+    });
+  }
+}
+
+// DELETE /api/tours/:id - Delete a tour (admin)
+export async function deleteTour(req, res) {
+  try {
+    const tour = await Tour.findByIdAndDelete(req.params.id);
+    if (!tour) {
+      return res.status(404).json({ success: false, message: "Tour not found." });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Tour deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Delete tour error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete tour.",
+    });
+  }
+}

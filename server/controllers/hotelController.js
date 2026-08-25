@@ -162,3 +162,67 @@ export async function getHotelAvailability(req, res) {
     });
   }
 }
+
+// POST /api/hotels - Create a new hotel (admin)
+export async function createHotel(req, res) {
+  try {
+    const hotel = await Hotel.create(req.body);
+    res.status(201).json({
+      success: true,
+      message: "Hotel created successfully.",
+      data: hotel,
+    });
+  } catch (error) {
+    console.error("Create hotel error:", error);
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to create hotel.",
+    });
+  }
+}
+
+// PUT /api/hotels/:id - Update a hotel (admin)
+export async function updateHotel(req, res) {
+  try {
+    const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!hotel) {
+      return res.status(404).json({ success: false, message: "Hotel not found." });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Hotel updated successfully.",
+      data: hotel,
+    });
+  } catch (error) {
+    console.error("Update hotel error:", error);
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to update hotel.",
+    });
+  }
+}
+
+// DELETE /api/hotels/:id - Delete a hotel (admin)
+export async function deleteHotel(req, res) {
+  try {
+    const hotel = await Hotel.findByIdAndDelete(req.params.id);
+    if (!hotel) {
+      return res.status(404).json({ success: false, message: "Hotel not found." });
+    }
+    // Also delete associated rooms
+    await Room.deleteMany({ hotel: hotel._id });
+    res.status(200).json({
+      success: true,
+      message: "Hotel deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Delete hotel error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete hotel.",
+    });
+  }
+}

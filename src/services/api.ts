@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -81,12 +81,32 @@ export const hotelsAPI = {
 };
 
 // ── Bookings ──────────────────────────────────────────────────
+export interface GuestInfo {
+  name: string;
+  age?: number;
+  gender?: "male" | "female" | "other";
+  idType?: "cnic" | "passport" | "other";
+  idNumber?: string;
+  phone?: string;
+  isChild?: boolean;
+}
+
 export interface BookingPayload {
-  type: "tour_only" | "hotel_only" | "tour_hotel";
-  tour?: { tourId: string; date: string; guests: number; pickupPoint: string };
-  hotel?: { hotelId: string; roomId: string; checkIn: string; checkOut: string; guests: number };
-  customer: { name: string; email: string; phone: string; cnic: string };
-  payment: { method: string; details?: any };
+  bookingType: "tour_only" | "hotel_only" | "tour_plus_hotel";
+  tourId?: string;
+  hotelId?: string;
+  roomId?: string;
+  pickupPoint?: string;
+  dropOffPoint?: string;
+  guests: GuestInfo[];
+  adultCount?: number;
+  childCount?: number;
+  tourStartDate?: string;
+  checkInDate?: string;
+  checkOutDate?: string;
+  specialRequests?: string;
+  dietaryRequirements?: string[];
+  paymentMethod?: string;
 }
 
 export const bookingsAPI = {
