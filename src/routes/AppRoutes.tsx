@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { AuthProvider } from "../context/AuthContext";
+import ProtectedRoute from "../components/common/ProtectedRoute";
 
 // Customer Pages
 import CustomerHome from "../pages/customer/Home";
@@ -42,6 +44,7 @@ import NotFound from "../pages/OtherPage/NotFound";
 export default function AppRoutes() {
   return (
     <Router basename={import.meta.env.MODE === "production" ? "/NorthRoutes-pk" : "/"}>
+      <AuthProvider>
       <ScrollToTop />
       <Routes>
         {/* Customer Routes (with Navbar + Footer) */}
@@ -56,8 +59,8 @@ export default function AppRoutes() {
           <Route path="/destinations/:slug" element={<DestinationDetail />} />
         </Route>
 
-        {/* Admin Routes (inside admin layout) */}
-        <Route path="/admin" element={<AppLayout />}>
+        {/* Admin Routes (inside admin layout) - Protected */}
+        <Route path="/admin" element={<ProtectedRoute requireAdmin><AppLayout /></ProtectedRoute>}>
           <Route index element={<Home />} />
           <Route path="profile" element={<UserProfiles />} />
           <Route path="calendar" element={<Calendar />} />
@@ -85,6 +88,7 @@ export default function AppRoutes() {
         {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </AuthProvider>
     </Router>
   );
 }
