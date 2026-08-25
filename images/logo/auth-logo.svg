@@ -1,19 +1,25 @@
 <svg width="200" height="80" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Icon mark (centered, larger) -->
-  <rect x="82" y="0" width="36" height="36" rx="8" fill="#EA580C"/>
+  <rect x="82" y="0" width="36" height="36" rx="8" fill="url(#authGrad)"/>
+  <defs>
+    <linearGradient id="authGrad" x1="82" y1="0" x2="118" y2="36">
+      <stop offset="0%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+  </defs>
   <path d="M84 28L93 13L97 19L99 15L103 28H84Z" fill="white" fill-opacity="0.4"/>
   <path d="M93 28L101.5 7L106 14L110 8L114 28H93Z" fill="white" fill-opacity="0.85"/>
   <path d="M109 10.5L110.5 8L112 10.5L110.5 9.8L109 10.5Z" fill="white"/>
   <path d="M88 29C90 27 92.5 26 96 26.5C99 27 100 25 102 24C104 23 106 24 109 22C111 21 112 20 114 19" 
-        stroke="#1E293B" stroke-width="2" stroke-linecap="round" fill="none"/>
+        stroke="#EA580C" stroke-width="2" stroke-linecap="round" fill="none"/>
   
-  <!-- Two-tone text using tspan -->
-  <text text-anchor="middle" font-family="Roboto Serif, Georgia, serif" font-size="20" font-weight="700">
+  <!-- Two-tone text -->
+  <text text-anchor="middle" font-family="Poppins, sans-serif" font-size="20" font-weight="700">
     <tspan x="100" y="56" fill="#1E293B">North</tspan>
     <tspan fill="#EA580C">Routes</tspan>
-    <tspan fill="#EA580C" font-size="12"> PK</tspan>
+    <tspan fill="#16A34A" font-size="12"> PK</tspan>
   </text>
   
   <!-- Tagline -->
-  <text x="100" y="72" text-anchor="middle" font-family="Roboto Serif, Georgia, serif" font-size="10" fill="#6B7280">Discover the Majestic North of Pakistan</text>
+  <text x="100" y="72" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Discover the Majestic North of Pakistan</text>
 </svg>
