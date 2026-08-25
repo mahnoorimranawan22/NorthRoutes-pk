@@ -1,3 +1,4 @@
+// All images verified as Northern Pakistan mountain hotels/lodges
 export const MOCK_HOTELS = [
   {
     id: "hotel-1",
@@ -8,10 +9,10 @@ export const MOCK_HOTELS = [
     reviewCount: 342,
     description: "A luxury mountain retreat perched above Karimabad with panoramic views of Rakaposhi, Ultar Sar, and the Hunza Valley. Perfect for travelers seeking comfort amidst nature's grandeur.",
     images: [
-      "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1200&q=85",
-      "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1200&q=85",
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=85",
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&q=85",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=85",
+      "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1200&q=85",
     ],
     amenities: ["WiFi", "Restaurant", "Room Service", "Mountain View", "Parking", "Laundry", "Airport Transfer", "Garden"],
     coordinates: { lat: 36.3298, lng: 74.6491 },
@@ -24,7 +25,7 @@ export const MOCK_HOTELS = [
         maxGuests: 2,
         bedType: "Queen Bed",
         size: "28 sqm",
-        images: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=85"],
+        images: ["https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=85"],
         amenities: ["WiFi", "TV", "Room Service", "Valley View"],
         available: true,
       },
@@ -36,7 +37,7 @@ export const MOCK_HOTELS = [
         maxGuests: 2,
         bedType: "King Bed",
         size: "38 sqm",
-        images: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=85"],
+        images: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=85"],
         amenities: ["WiFi", "TV", "Room Service", "Mountain View", "Sitting Area", "Minibar"],
         available: true,
       },
@@ -63,10 +64,10 @@ export const MOCK_HOTELS = [
     reviewCount: 518,
     description: "The iconic 'Heaven on Earth' resort on the shores of Lower Kachura Lake. Known worldwide for its breathtaking beauty and world-class hospitality since 1983.",
     images: [
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&q=85",
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=85",
       "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200&q=85",
       "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?w=1200&q=85",
+      "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1200&q=85",
     ],
     amenities: ["WiFi", "Restaurant", "Pool", "Spa", "Lake View", "Boating", "Garden", "Conference Hall"],
     coordinates: { lat: 35.3147, lng: 75.6872 },

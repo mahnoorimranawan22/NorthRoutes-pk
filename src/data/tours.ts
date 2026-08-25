@@ -105,7 +105,7 @@ export const hotels: Hotel[] = [
     description: "Luxury hotel with stunning views of the Hunza Valley.",
     pricePerNight: 12000,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
+    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400",
     amenities: ["wifi", "parking", "restaurant", "spa"],
   },
   {
@@ -115,7 +115,7 @@ export const hotels: Hotel[] = [
     description: "Iconic resort on the shores of Lower Kachura Lake.",
     pricePerNight: 18000,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
+    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400",
     amenities: ["wifi", "parking", "restaurant", "pool"],
   },
   {
@@ -125,7 +125,7 @@ export const hotels: Hotel[] = [
     description: "Comfortable hotel in the heart of Naran.",
     pricePerNight: 8000,
     rating: 4.3,
-    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400",
+    image: "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=400",
     amenities: ["wifi", "restaurant", "parking"],
   },
   {
@@ -135,7 +135,7 @@ export const hotels: Hotel[] = [
     description: "Premium hill station hotel with panoramic views.",
     pricePerNight: 15000,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
     amenities: ["wifi", "parking", "restaurant", "gym"],
   },
 ];
