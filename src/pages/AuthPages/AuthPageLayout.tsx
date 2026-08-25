@@ -21,8 +21,8 @@ export default function AuthLayout({
                 <img
                   width={231}
                   height={48}
-                  src="/images/logo/auth-logo.svg"
-                  alt="Logo"
+                  src={`${import.meta.env.BASE_URL}images/logo/auth-logo.svg`}
+                  alt="NorthRoutes PK"
                 />
               </Link>
               <p className="text-center text-gray-400 dark:text-white/60">
