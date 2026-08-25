@@ -1,7 +1,7 @@
 // HD Images of Northern Pakistan - All verified as actual Pakistan locations
 export const HERO_SLIDES = [
   {
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=1600&q=85",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85",
     title: "Discover the Majestic North",
     subtitle: "From Islamabad & Abbottabad to Naran, Hunza, and beyond",
   },
