@@ -1,6 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router";
+import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "../context/AuthContext";
 import ProtectedRoute from "../components/common/ProtectedRoute";
+import PageTransition from "../components/common/PageTransition";
 
 // Customer Pages
 import CustomerHome from "../pages/customer/Home";
@@ -41,22 +43,21 @@ import SignIn from "../pages/AuthPages/SignIn";
 import SignUp from "../pages/AuthPages/SignUp";
 import NotFound from "../pages/OtherPage/NotFound";
 
-export default function AppRoutes() {
+function AnimatedRoutes() {
+  const location = useLocation();
   return (
-    <Router basename={import.meta.env.MODE === "production" ? "/NorthRoutes-pk" : "/"}>
-      <AuthProvider>
-      <ScrollToTop />
-      <Routes>
+      <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         {/* Customer Routes (with Navbar + Footer) */}
         <Route element={<CustomerLayout />}>
-          <Route path="/" element={<CustomerHome />} />
-          <Route path="/tours" element={<Tours />} />
-          <Route path="/tours/:id" element={<TourDetails />} />
-          <Route path="/hotels" element={<Hotels />} />
-          <Route path="/hotels/:slug" element={<HotelDetails />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/destinations" element={<Destinations />} />
-          <Route path="/destinations/:slug" element={<DestinationDetail />} />
+          <Route path="/" element={<PageTransition><CustomerHome /></PageTransition>} />
+          <Route path="/tours" element={<PageTransition><Tours /></PageTransition>} />
+          <Route path="/tours/:id" element={<PageTransition><TourDetails /></PageTransition>} />
+          <Route path="/hotels" element={<PageTransition><Hotels /></PageTransition>} />
+          <Route path="/hotels/:slug" element={<PageTransition><HotelDetails /></PageTransition>} />
+          <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
+          <Route path="/destinations" element={<PageTransition><Destinations /></PageTransition>} />
+          <Route path="/destinations/:slug" element={<PageTransition><DestinationDetail /></PageTransition>} />
         </Route>
 
         {/* Admin Routes (inside admin layout) - Protected */}
@@ -88,6 +89,16 @@ export default function AppRoutes() {
         {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </AnimatePresence>
+  );
+}
+
+export default function AppRoutes() {
+  return (
+    <Router basename={import.meta.env.MODE === "production" ? "/NorthRoutes-pk" : "/"}>
+      <AuthProvider>
+      <ScrollToTop />
+      <AnimatedRoutes />
       </AuthProvider>
     </Router>
   );

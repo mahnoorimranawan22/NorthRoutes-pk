@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Mountain, ChevronDown } from "lucide-react";
 
 const navLinks = [
@@ -63,19 +64,33 @@ export default function Navbar() {
                 </Link>
 
                 {/* Dropdown */}
+                <AnimatePresence>
                 {link.children && dropdownOpen === link.name && (
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
-                    {link.children.map((child) => (
-                      <Link
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="absolute top-full left-0 mt-1 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50"
+                  >
+                    {link.children.map((child, i) => (
+                      <motion.div
                         key={child.path}
-                        to={child.path}
-                        className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.05 }}
                       >
-                        {child.name}
-                      </Link>
+                        <Link
+                          to={child.path}
+                          className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                        >
+                          {child.name}
+                        </Link>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
@@ -99,11 +114,23 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
+      <AnimatePresence>
       {mobileOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white">
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="md:hidden border-t border-gray-100 bg-white overflow-hidden"
+        >
           <div className="px-4 py-3 space-y-1">
-            {navLinks.map((link) => (
-              <div key={link.name}>
+            {navLinks.map((link, i) => (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.06 }}
+              >
                 <Link
                   to={link.path}
                   onClick={() => !link.children && setMobileOpen(false)}
@@ -129,7 +156,7 @@ export default function Navbar() {
                     ))}
                   </div>
                 )}
-              </div>
+              </motion.div>
             ))}
             <Link
               to="/booking"
@@ -139,8 +166,9 @@ export default function Navbar() {
               Book Now
             </Link>
           </div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </nav>
   );
 }

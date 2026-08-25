@@ -230,6 +230,25 @@ layer(base);
     font-weight: 400;
     line-height: 1.6;
   }
+  /* Smooth global transitions */
+  a, button, input, select, textarea {
+    transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition-duration: 200ms;
+  }
+  a:hover, button:hover {
+    transform: translateY(-1px);
+  }
+  a:active, button:active {
+    transform: translateY(0) scale(0.98);
+  }
+  img {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
+  }
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @utility menu-item {

@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 import { Mountain, Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
@@ -84,22 +85,31 @@ export default function Footer() {
             <div className="mt-6">
               <h4 className="text-white font-semibold text-sm mb-3">Follow Us</h4>
               <div className="flex gap-3">
-                {["Facebook", "Instagram", "WhatsApp"].map((social) => (
-                  <span
+                {["Facebook", "Instagram", "WhatsApp"].map((social, i) => (
+                  <motion.span
                     key={social}
+                    whileHover={{ scale: 1.15, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 hover:bg-green-600 hover:text-white transition-colors cursor-pointer"
                   >
                     {social[0]}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-500">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-500"
+        >
           &copy; {new Date().getFullYear()} NorthRoutes PK. All rights reserved.
-        </div>
+        </motion.div>
       </div>
     </footer>
   );
