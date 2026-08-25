@@ -2,6 +2,8 @@ import PageMeta from "../../components/common/PageMeta";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { MapPin, Star, ArrowRight } from "lucide-react";
+import HeroSlider from "../../components/common/HeroSlider";
+import { DESTINATION_SLIDES } from "../../data/sliderImages";
 
 const destinations = [
   {
@@ -42,11 +44,20 @@ export default function Destinations() {
   return (
     <>
       <PageMeta title="Destinations - NorthRoutes PK" description="Explore Northern Pakistan's top destinations" />
+      <HeroSlider
+        slides={DESTINATION_SLIDES}
+        height="h-[280px] md:h-[340px]"
+        overlay="from-black/60 to-black/30"
+        autoPlayInterval={5000}
+      >
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold font-heading text-white mb-2 drop-shadow-lg">
+          Destinations
+        </motion.h1>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gray-200 text-lg drop-shadow-md">
+          Explore the breathtaking beauty of Northern Pakistan
+        </motion.p>
+      </HeroSlider>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <h1 className="text-4xl font-bold font-heading text-gray-900 mb-2">Destinations</h1>
-          <p className="text-gray-500 text-lg mb-10">Explore the breathtaking beauty of Northern Pakistan</p>
-        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {destinations.map((dest, i) => (

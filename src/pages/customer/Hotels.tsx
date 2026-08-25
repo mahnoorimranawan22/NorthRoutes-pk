@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Search, Star, MapPin, Wifi, Car, UtensilsCrossed, Dumbbell, Waves, TreePine, ChevronDown } from "lucide-react";
 import { MOCK_HOTELS } from "../../data/mockHotels";
 import PageMeta from "../../components/common/PageMeta";
+import HeroSlider from "../../components/common/HeroSlider";
+import { HOTEL_SLIDES } from "../../data/sliderImages";
 
 const AMENITY_ICONS: Record<string, typeof Wifi> = {
   WiFi: Wifi, Parking: Car, Restaurant: UtensilsCrossed, Gym: Dumbbell,
@@ -33,19 +35,20 @@ export default function Hotels() {
     <>
       <PageMeta title="Hotels - NorthRoutes PK" description="Find the best accommodations in Northern Pakistan" />
 
-      {/* Hero */}
-      <div className="relative h-[200px] md:h-[260px] overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1400&q=85" alt="Hotels" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-bold font-heading text-white mb-2">
-            Hotels & Accommodations
-          </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gray-200">
-            Comfortable stays across Northern Pakistan
-          </motion.p>
-        </div>
-      </div>
+      {/* Hero Slider */}
+      <HeroSlider
+        slides={HOTEL_SLIDES}
+        height="h-[280px] md:h-[340px]"
+        overlay="from-black/60 to-black/30"
+        autoPlayInterval={5000}
+      >
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-bold font-heading text-white mb-2 drop-shadow-lg">
+          Hotels & Accommodations
+        </motion.h1>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gray-200 drop-shadow-md">
+          Comfortable stays across Northern Pakistan
+        </motion.p>
+      </HeroSlider>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Filters */}

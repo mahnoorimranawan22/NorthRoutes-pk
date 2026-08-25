@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { Search, MapPin, Calendar, DollarSign, Star, Clock, ChevronDown, X, Filter } from "lucide-react";
 import { MOCK_TOURS } from "../../data/mockTours";
+import HeroSlider from "../common/HeroSlider";
+import { HERO_SLIDES } from "../../data/sliderImages";
 
 const DESTINATIONS = ["All Destinations", "Naran", "Batakundi", "Babusar Top", "Hunza"];
 const PICKUP_POINTS = ["All Pickup Points", "Islamabad", "Abbottabad"];
@@ -43,35 +45,32 @@ export default function HeroSection() {
 
   return (
     <div className="relative">
-      {/* Hero Banner */}
-      <div className="relative h-[400px] md:h-[500px] overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85"
-          alt="Northern Pakistan Mountains"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/70 via-teal-900/40 to-blue-950/70" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold font-heading text-white mb-4"
-          >
-            Discover the Majestic
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-green-300 to-blue-400">North of Pakistan</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-gray-200 text-lg md:text-xl max-w-2xl"
-          >
-            Curated tours from Islamabad & Abbottabad to Naran, Hunza, and beyond
-          </motion.p>
-        </div>
-      </div>
+      {/* Hero Banner Slider */}
+      <HeroSlider
+        slides={HERO_SLIDES}
+        height="h-[450px] md:h-[550px]"
+        overlay="from-emerald-950/70 via-teal-900/40 to-blue-950/70"
+        autoPlayInterval={6000}
+      >
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-3xl md:text-5xl lg:text-6xl font-bold font-heading text-white mb-4 text-center drop-shadow-lg"
+        >
+          Discover the Majestic
+          <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-green-300 to-blue-400">North of Pakistan</span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-gray-200 text-lg md:text-xl max-w-2xl text-center drop-shadow-md"
+        >
+          Curated tours from Islamabad & Abbottabad to Naran, Hunza, and beyond
+        </motion.p>
+      </HeroSlider>
 
       {/* Search & Filter Bar */}
       <div className="max-w-6xl mx-auto px-4 -mt-20 relative z-10">
