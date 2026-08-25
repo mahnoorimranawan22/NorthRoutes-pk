@@ -1,19 +1,25 @@
 <svg width="200" height="36" viewBox="0 0 200 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Icon mark -->
-  <rect width="36" height="36" rx="8" fill="#EA580C"/>
+  <!-- Icon mark - green mountain -->
+  <rect width="36" height="36" rx="8" fill="url(#logoGrad)"/>
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="36" y2="36">
+      <stop offset="0%" stop-color="#16A34A"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+  </defs>
   <path d="M2 28L11 13L15 19L17 15L21 28H2Z" fill="white" fill-opacity="0.4"/>
   <path d="M11 28L19.5 7L24 14L28 8L32 28H11Z" fill="white" fill-opacity="0.85"/>
   <path d="M27 10.5L28.5 8L30 10.5L28.5 9.8L27 10.5Z" fill="white"/>
   <path d="M6 29C8 27 10.5 26 14 26.5C17 27 18 25 20 24C22 23 24 24 27 22C29 21 30 20 32 19" 
-        stroke="#1E293B" stroke-width="2" stroke-linecap="round" fill="none"/>
+        stroke="#EA580C" stroke-width="2" stroke-linecap="round" fill="none"/>
   
   <!-- "North" text -->
-  <text x="46" y="24" font-family="Roboto Serif, Georgia, serif" font-size="18" font-weight="700" fill="#1E293B">North</text>
+  <text x="46" y="24" font-family="Poppins, sans-serif" font-size="18" font-weight="700" fill="#1E293B">North</text>
   
   <!-- "Routes" text -->
-  <text x="103" y="24" font-family="Roboto Serif, Georgia, serif" font-size="18" font-weight="700" fill="#EA580C">Routes</text>
+  <text x="103" y="24" font-family="Poppins, sans-serif" font-size="18" font-weight="700" fill="#EA580C">Routes</text>
   
   <!-- "PK" badge -->
-  <rect x="167" y="10" width="26" height="16" rx="4" fill="#EA580C" fill-opacity="0.1"/>
-  <text x="171" y="22" font-family="Roboto Serif, Georgia, serif" font-size="11" font-weight="700" fill="#EA580C">PK</text>
+  <rect x="167" y="10" width="26" height="16" rx="4" fill="#16A34A" fill-opacity="0.1"/>
+  <text x="171" y="22" font-family="Poppins, sans-serif" font-size="11" font-weight="700" fill="#16A34A">PK</text>
 </svg>

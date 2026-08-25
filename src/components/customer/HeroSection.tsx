@@ -46,21 +46,21 @@ export default function HeroSection() {
       {/* Hero Banner */}
       <div className="relative h-[400px] md:h-[500px] overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400"
+          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400"
           alt="Northern Pakistan Mountains"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-green-900/60 via-emerald-900/30 to-blue-900/60" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold font-heading text-white mb-4"
           >
             Discover the Majestic
             <br />
-            <span className="text-orange-400">North of Pakistan</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-green-400 to-blue-400">North of Pakistan</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 md:p-6"
+          className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-nature-snow-200 p-4 md:p-6"
         >
           {/* Desktop Filter Row */}
           <div className="hidden md:grid grid-cols-4 gap-4">
@@ -212,7 +212,7 @@ export default function HeroSection() {
       {/* Tour Cards */}
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold font-heading text-gray-900">
             {filteredTours.length} Tour{filteredTours.length !== 1 ? "s" : ""} Found
           </h2>
         </div>
@@ -245,7 +245,7 @@ export default function HeroSection() {
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">{tour.title}</h3>
+                    <h3 className="font-bold font-heading text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors">{tour.title}</h3>
                     <div className="flex flex-wrap gap-1.5 mb-3">
                       {tour.destinations.slice(0, 3).map((d) => (
                         <span key={d} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">{d}</span>
@@ -261,10 +261,10 @@ export default function HeroSection() {
                     <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                       <div>
                         <span className="text-xs text-gray-400">From</span>
-                        <p className="text-orange-600 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
+                        <p className="text-green-700 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
                         <span className="text-xs text-gray-400">per person</span>
                       </div>
-                      <span className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-orange-700 transition-colors">
+                      <span className="bg-gradient-to-r from-orange-500 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:from-orange-600 group-hover:to-green-700 transition-all shadow-sm">
                         View Details
                       </span>
                     </div>

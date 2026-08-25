@@ -38,7 +38,7 @@ export default function Hotels() {
         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400" alt="Hotels" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-bold text-white mb-2">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-bold font-heading text-white mb-2">
             Hotels & Accommodations
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gray-200">
@@ -105,7 +105,7 @@ export default function Hotels() {
                 <div className="p-5">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h3 className="font-bold text-lg group-hover:text-orange-600 transition-colors">{hotel.name}</h3>
+                      <h3 className="font-bold font-heading text-lg group-hover:text-green-600 transition-colors">{hotel.name}</h3>
                       <p className="flex items-center gap-1 text-sm text-gray-500 mt-0.5">
                         <MapPin className="w-3.5 h-3.5" /> {hotel.location}
                       </p>
@@ -133,12 +133,12 @@ export default function Hotels() {
                   <div className="flex items-end justify-between pt-3 border-t border-gray-100">
                     <div>
                       <span className="text-xs text-gray-400">From</span>
-                      <p className="text-orange-600 font-bold text-xl">
+                      <p className="text-green-700 font-bold text-xl">
                         PKR {hotel.rooms[0].pricePerNight.toLocaleString()}
                         <span className="text-sm font-normal text-gray-400"> / night</span>
                       </p>
                     </div>
-                    <span className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-orange-700 transition-colors">
+                    <span className="bg-gradient-to-r from-orange-500 to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:from-orange-600 group-hover:to-blue-700 transition-all shadow-sm">
                       View Rooms
                     </span>
                   </div>

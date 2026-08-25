@@ -129,7 +129,7 @@ export default function Home() {
       />
 
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold font-heading text-gray-900 dark:text-white">
           NorthRoutes PK Dashboard
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -171,7 +171,7 @@ export default function Home() {
         <div className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
           <div className="p-5 border-b border-gray-200 dark:border-gray-800">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-lg font-semibold font-heading text-gray-900 dark:text-white">
                 Recent Bookings
               </h2>
               <Link
@@ -268,7 +268,7 @@ export default function Home() {
           {/* Popular Tours */}
           <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-lg font-semibold font-heading text-gray-900 dark:text-white">
                 Popular Tours
               </h2>
               <Link

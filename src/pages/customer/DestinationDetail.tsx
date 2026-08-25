@@ -71,7 +71,7 @@ export default function DestinationDetail() {
             <img src={dest.image} alt={dest.name} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{dest.name}</h1>
+              <h1 className="text-4xl md:text-5xl font-bold font-heading text-white mb-2">{dest.name}</h1>
               <div className="flex items-center gap-4 text-white/80 text-sm">
                 <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Northern Pakistan</span>
                 <span className="flex items-center gap-1"><Mountain className="w-4 h-4" /> {dest.altitude}</span>
@@ -82,10 +82,10 @@ export default function DestinationDetail() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold mb-4">About {dest.name}</h2>
+              <h2 className="text-2xl font-bold font-heading mb-4">About {dest.name}</h2>
               <p className="text-gray-600 leading-relaxed mb-8">{dest.description}</p>
 
-              <h3 className="text-xl font-semibold mb-4">Highlights</h3>
+              <h3 className="text-xl font-semibold font-heading mb-4">Highlights</h3>
               <div className="grid grid-cols-2 gap-3 mb-8">
                 {dest.highlights.map((h) => (
                   <div key={h} className="flex items-center gap-2 text-gray-600">
@@ -96,13 +96,13 @@ export default function DestinationDetail() {
             </div>
 
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 h-fit">
-              <h3 className="font-semibold text-lg mb-4">Plan Your Visit</h3>
+              <h3 className="font-semibold font-heading text-lg mb-4">Plan Your Visit</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between"><span className="text-gray-500">Best Time</span><span className="font-medium">{dest.bestTime}</span></div>
                 <div className="flex justify-between"><span className="text-gray-500">Altitude</span><span className="font-medium">{dest.altitude}</span></div>
                 <div className="flex justify-between"><span className="text-gray-500">Region</span><span className="font-medium">Northern Pakistan</span></div>
               </div>
-              <Link to="/tours" className="block w-full text-center bg-orange-600 text-white py-3 rounded-lg font-medium hover:bg-orange-700 transition mt-6">
+              <Link to="/tours" className="block w-full text-center bg-gradient-to-r from-orange-500 to-green-600 text-white py-3 rounded-lg font-medium font-heading hover:from-orange-600 hover:to-green-700 transition-all shadow-sm mt-6">
                 View Tours
               </Link>
             </div>

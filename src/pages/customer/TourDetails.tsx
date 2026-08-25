@@ -99,7 +99,7 @@ export default function TourDetails() {
               <span key={d} className="bg-white/20 backdrop-blur text-white text-xs px-2.5 py-1 rounded-full">{d}</span>
             ))}
           </div>
-          <h1 className="text-2xl md:text-4xl font-bold text-white">{tour.title}</h1>
+          <h1 className="text-2xl md:text-4xl font-bold font-heading text-white">{tour.title}</h1>
         </div>
       </div>
 
@@ -126,7 +126,7 @@ export default function TourDetails() {
 
             {/* Itinerary */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <h2 className="text-2xl font-bold mb-4">Day-by-Day Itinerary</h2>
+              <h2 className="text-2xl font-bold font-heading mb-4">Day-by-Day Itinerary</h2>
               <div className="space-y-3">
                 {tour.itinerary.map((day) => (
                   <div key={day.day} className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
@@ -136,7 +136,7 @@ export default function TourDetails() {
                     >
                       <div className="flex items-center gap-4">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
-                          openDay === day.day ? "bg-orange-600 text-white" : "bg-orange-50 text-orange-600"
+                          openDay === day.day ? "bg-green-600 text-white" : "bg-green-50 text-green-600"
                         }`}>
                           {day.day}
                         </div>
@@ -171,7 +171,7 @@ export default function TourDetails() {
 
             {/* Pricing Table */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <h2 className="text-2xl font-bold mb-4">Group Pricing</h2>
+              <h2 className="text-2xl font-bold font-heading mb-4">Group Pricing</h2>
               <div className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
                 <table className="w-full text-sm">
                   <thead className="bg-gray-50">
@@ -194,7 +194,7 @@ export default function TourDetails() {
                             <span className="text-gray-400">—</span>
                           )}
                         </td>
-                        <td className="px-5 py-3 font-bold text-orange-600">
+                        <td className="px-5 py-3 font-bold text-green-600">
                           PKR {Math.round(tour.pricePerPerson * (1 - g.discount / 100)).toLocaleString()}
                         </td>
                       </tr>
@@ -206,7 +206,7 @@ export default function TourDetails() {
 
             {/* Inclusions & Exclusions */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-              <h2 className="text-2xl font-bold mb-4">What's Included</h2>
+              <h2 className="text-2xl font-bold font-heading mb-4">What's Included</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Inclusions */}
                 <div className="bg-green-50 rounded-xl p-5 border border-green-100">
@@ -249,7 +249,7 @@ export default function TourDetails() {
                 <div className="mb-4">
                   <span className="text-sm text-gray-400">Starting from</span>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-orange-600">PKR {tour.pricePerPerson.toLocaleString()}</span>
+                    <span className="text-3xl font-bold font-heading text-green-600">PKR {tour.pricePerPerson.toLocaleString()}</span>
                     <span className="text-sm text-gray-400">/ person</span>
                   </div>
                 </div>
@@ -266,8 +266,8 @@ export default function TourDetails() {
                         onClick={() => setPickup(point)}
                         className={`py-2.5 px-3 rounded-lg text-sm font-medium border transition-all ${
                           pickup === point
-                            ? "bg-orange-600 text-white border-orange-600"
-                            : "bg-gray-50 text-gray-600 border-gray-200 hover:border-orange-300"
+                            ? "bg-green-600 text-white border-green-600"
+                            : "bg-gray-50 text-gray-600 border-gray-200 hover:border-green-300"
                         }`}
                       >
                         {point}
@@ -403,14 +403,14 @@ export default function TourDetails() {
                   <div className="h-px bg-gray-100" />
                   <div className="flex justify-between">
                     <span className="font-semibold">Grand Total</span>
-                    <span className="text-xl font-bold text-orange-600">PKR {Math.round(totalPrice).toLocaleString()}</span>
+                    <span className="text-xl font-bold text-green-700">PKR {Math.round(totalPrice).toLocaleString()}</span>
                   </div>
                 </div>
 
                 {/* CTA */}
                 <Link
                   to={`/booking?tour=${tour.id}&pickup=${pickup}&guests=${groupSize}`}
-                  className="block w-full text-center bg-orange-600 text-white py-3.5 rounded-xl font-semibold hover:bg-orange-700 transition-colors"
+                  className="block w-full text-center bg-gradient-to-r from-orange-500 to-green-600 text-white py-3.5 rounded-xl font-semibold font-heading hover:from-orange-600 hover:to-green-700 transition-all shadow-lg"
                 >
                   Book This Tour
                 </Link>

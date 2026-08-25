@@ -17,7 +17,7 @@ export default function Tours() {
     <>
       <PageMeta title="Tours - NorthRoutes PK" description="Browse our curated tours" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h1 className="text-3xl font-bold mb-2">Our Tours</h1>
+        <h1 className="text-3xl font-bold font-heading mb-2">Our Tours</h1>
         <p className="text-gray-500 mb-6">Find the perfect adventure in Northern Pakistan</p>
 
         <div className="relative mb-8">
@@ -51,7 +51,7 @@ export default function Tours() {
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-orange-600 transition-colors">{tour.title}</h3>
+                  <h3 className="font-bold font-heading text-lg mb-2 group-hover:text-green-600 transition-colors">{tour.title}</h3>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {tour.destinations.slice(0, 3).map((d) => (
                       <span key={d} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">{d}</span>
@@ -67,9 +67,9 @@ export default function Tours() {
                   <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                     <div>
                       <span className="text-xs text-gray-400">From</span>
-                      <p className="text-orange-600 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
+                      <p className="text-green-700 font-bold text-xl">PKR {tour.pricePerPerson.toLocaleString()}</p>
                     </div>
-                    <span className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-orange-700 transition-colors">
+                    <span className="bg-gradient-to-r from-orange-500 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:from-orange-600 group-hover:to-green-700 transition-all shadow-sm">
                       View Details
                     </span>
                   </div>

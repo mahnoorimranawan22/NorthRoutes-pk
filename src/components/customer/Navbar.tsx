@@ -32,12 +32,12 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-orange-600 rounded-lg flex items-center justify-center">
+            <div className="w-9 h-9 bg-gradient-to-br from-green-600 to-emerald-700 rounded-lg flex items-center justify-center">
               <Mountain className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-gray-900">
+            <span className="text-xl font-bold font-heading text-gray-900">
               North<span className="text-orange-600">Routes</span>
-              <span className="text-sm font-medium text-orange-500 ml-1">PK</span>
+              <span className="text-sm font-medium text-green-600 ml-1">PK</span>
             </span>
           </Link>
 

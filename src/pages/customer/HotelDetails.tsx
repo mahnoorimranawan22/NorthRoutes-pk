@@ -90,7 +90,7 @@ export default function HotelDetails() {
               <span className="text-xs text-gray-400">({hotel.reviewCount} reviews)</span>
             </div>
           </div>
-          <h1 className="text-2xl md:text-4xl font-bold text-white">{hotel.name}</h1>
+          <h1 className="text-2xl md:text-4xl font-bold font-heading text-white">{hotel.name}</h1>
           <p className="flex items-center gap-1 text-white/80 text-sm mt-1">
             <MapPin className="w-4 h-4" /> {hotel.location}
           </p>
@@ -104,19 +104,19 @@ export default function HotelDetails() {
           <div className="lg:col-span-2 space-y-8">
             {/* About */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <h2 className="text-2xl font-bold mb-3">About {hotel.name}</h2>
+              <h2 className="text-2xl font-bold font-heading mb-3">About {hotel.name}</h2>
               <p className="text-gray-600 leading-relaxed">{hotel.description}</p>
             </motion.div>
 
             {/* Amenities */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <h2 className="text-2xl font-bold mb-4">Amenities</h2>
+              <h2 className="text-2xl font-bold font-heading mb-4">Amenities</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {hotel.amenities.map((a) => {
                   const Icon = AMENITY_ICONS[a] || Check;
                   return (
                     <div key={a} className="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm text-gray-700">
-                      <Icon className="w-4 h-4 text-orange-500" /> {a}
+                      <Icon className="w-4 h-4 text-green-500" /> {a}
                     </div>
                   );
                 })}
@@ -125,7 +125,7 @@ export default function HotelDetails() {
 
             {/* Rooms */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <h2 className="text-2xl font-bold mb-4">Available Rooms</h2>
+              <h2 className="text-2xl font-bold font-heading mb-4">Available Rooms</h2>
               <div className="space-y-4">
                 {hotel.rooms.map((room) => (
                   <div key={room.id}
@@ -141,7 +141,7 @@ export default function HotelDetails() {
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <h3 className="font-bold text-lg">{room.type}</h3>
+                            <h3 className="font-bold font-heading text-lg">{room.type}</h3>
                             <p className="text-sm text-gray-500 mt-1">{room.description}</p>
                           </div>
                           {selectedRoom === room.id && (
@@ -165,7 +165,7 @@ export default function HotelDetails() {
 
                         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                           <div>
-                            <span className="text-xl font-bold text-orange-600">PKR {room.pricePerNight.toLocaleString()}</span>
+                            <span className="text-xl font-bold text-green-700">PKR {room.pricePerNight.toLocaleString()}</span>
                             <span className="text-sm text-gray-400 ml-1">/ night</span>
                           </div>
                           <span className={`text-sm font-medium ${room.available ? "text-green-600" : "text-red-500"}`}>
@@ -244,7 +244,7 @@ export default function HotelDetails() {
                     <div className="h-px bg-gray-100" />
                     <div className="flex justify-between">
                       <span className="font-semibold">Total</span>
-                      <span className="text-xl font-bold text-orange-600">PKR {(selected.pricePerNight * nights).toLocaleString()}</span>
+                      <span className="text-xl font-bold text-green-700">PKR {(selected.pricePerNight * nights).toLocaleString()}</span>
                     </div>
                   </div>
                 )}
@@ -252,9 +252,9 @@ export default function HotelDetails() {
                 {/* CTA */}
                 <Link
                   to={`/booking?hotel=${hotel.id}&room=${selectedRoom || ""}&checkin=${checkIn}&checkout=${checkOut}`}
-                  className={`block w-full text-center py-3.5 rounded-xl font-semibold transition-colors ${
+                  className={`block w-full text-center py-3.5 rounded-xl font-semibold font-heading transition-all ${
                     selectedRoom
-                      ? "bg-orange-600 text-white hover:bg-orange-700"
+                      ? "bg-gradient-to-r from-orange-500 to-blue-600 text-white hover:from-orange-600 hover:to-blue-700 shadow-sm"
                       : "bg-gray-100 text-gray-400 cursor-not-allowed"
                   }`}
                 >

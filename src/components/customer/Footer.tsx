@@ -3,18 +3,18 @@ import { Mountain, Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-gradient-to-b from-gray-900 to-emerald-950 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-            <div className="w-9 h-9 bg-orange-600 rounded-lg flex items-center justify-center">
+            <div className="w-9 h-9 bg-gradient-to-br from-green-600 to-emerald-700 rounded-lg flex items-center justify-center">
               <Mountain className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">
+            <span className="text-xl font-bold font-heading text-white">
               North<span className="text-orange-400">Routes</span>
-              <span className="text-sm font-medium text-orange-400 ml-1">PK</span>
+              <span className="text-sm font-medium text-green-400 ml-1">PK</span>
             </span>
             </Link>
             <p className="text-sm text-gray-400 mb-4">
@@ -36,7 +36,7 @@ export default function Footer() {
 
           {/* Popular Destinations */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Destinations</h3>
+            <h3 className="text-white font-semibold font-heading mb-4">Destinations</h3>
             <ul className="space-y-2 text-sm">
               {["Naran", "Batakundi", "Babusar Top", "Hunza", "Skardu", "Fairy Meadows"].map((dest) => (
                 <li key={dest}>
@@ -50,7 +50,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-white font-semibold font-heading mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               {[
                 { name: "All Tours", path: "/tours" },
@@ -70,14 +70,14 @@ export default function Footer() {
 
           {/* Pickup Points */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Pickup Points</h3>
+            <h3 className="text-white font-semibold font-heading mb-4">Pickup Points</h3>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-orange-500 rounded-full" />
+                <div className="w-2 h-2 bg-green-500 rounded-full" />
                 Islamabad
               </li>
               <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-orange-500 rounded-full" />
+                <div className="w-2 h-2 bg-green-500 rounded-full" />
                 Abbottabad
               </li>
             </ul>
@@ -87,7 +87,7 @@ export default function Footer() {
                 {["Facebook", "Instagram", "WhatsApp"].map((social) => (
                   <span
                     key={social}
-                    className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 hover:bg-orange-600 hover:text-white transition-colors cursor-pointer"
+                    className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 hover:bg-green-600 hover:text-white transition-colors cursor-pointer"
                   >
                     {social[0]}
                   </span>

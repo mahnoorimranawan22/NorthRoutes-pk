@@ -44,7 +44,7 @@ export default function Destinations() {
       <PageMeta title="Destinations - NorthRoutes PK" description="Explore Northern Pakistan's top destinations" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Destinations</h1>
+          <h1 className="text-4xl font-bold font-heading text-gray-900 mb-2">Destinations</h1>
           <p className="text-gray-500 text-lg mb-10">Explore the breathtaking beauty of Northern Pakistan</p>
         </motion.div>
 
@@ -64,7 +64,7 @@ export default function Destinations() {
                   <img src={dest.image} alt={dest.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-bold text-white">{dest.name}</h3>
+                    <h3 className="text-2xl font-bold font-heading text-white">{dest.name}</h3>
                   </div>
                 </div>
                 <div className="p-6">

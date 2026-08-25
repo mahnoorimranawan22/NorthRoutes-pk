@@ -59,7 +59,7 @@ export default function Booking() {
       <PageMeta title="Checkout - NorthRoutes PK" description="Complete your booking" />
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#EA580C] to-[#F97316] text-white py-8 px-4">
+        <div className="bg-gradient-to-r from-green-700 via-green-600 to-orange-500 text-white py-8 px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-2xl md:text-3xl font-bold">Checkout</h1>
             <p className="text-orange-100 mt-1">Complete your NorthRoutes PK booking</p>
@@ -75,9 +75,9 @@ export default function Booking() {
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= s.id ? "bg-[#EA580C] text-white shadow-md" : "bg-gray-200 text-gray-500"}`}>
                     {step > s.id ? "✓" : s.id}
                   </div>
-                  <span className={`text-xs mt-2 font-medium hidden sm:block ${step >= s.id ? "text-[#EA580C]" : "text-gray-400"}`}>{s.label}</span>
+                  <span className={`text-xs mt-2 font-medium hidden sm:block ${step >= s.id ? "text-green-600" : "text-gray-400"}`}>{s.label}</span>
                 </div>
-                {i < steps.length - 1 && <div className={`flex-1 h-0.5 mx-2 sm:mx-4 ${step > s.id ? "bg-[#EA580C]" : "bg-gray-200"}`} />}
+                {i < steps.length - 1 && <div className={`flex-1 h-0.5 mx-2 sm:mx-4 ${step > s.id ? "bg-green-600" : "bg-gray-200"}`} />}
               </div>
             ))}
           </div>
@@ -106,7 +106,7 @@ export default function Booking() {
                         </div>
                         <div className="text-right">
                           <p className="text-xs text-gray-400">Per person</p>
-                          <p className="font-bold text-[#EA580C]">PKR {fmt(tour.pricePerPerson)}</p>
+                          <p className="font-bold text-green-700">PKR {fmt(tour.pricePerPerson)}</p>
                         </div>
                       </div>
                     </div>
@@ -145,7 +145,7 @@ export default function Booking() {
                         <div className="border-t pt-3"><div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-[#EA580C]">PKR {fmt(total)}</span></div></div>
                         <div className="bg-orange-50 rounded-lg p-3 mt-3">
                           <p className="text-xs font-medium text-[#EA580C] mb-1">Pay Now (20% Deposit)</p>
-                          <p className="text-xl font-bold text-[#EA580C]">PKR {fmt(deposit)}</p>
+                          <p className="text-xl font-bold text-green-700">PKR {fmt(deposit)}</p>
                           <p className="text-xs text-gray-500 mt-1">Balance PKR {fmt(balance)} due before departure</p>
                         </div>
                       </div>
@@ -306,7 +306,7 @@ export default function Booking() {
                         <div className="flex justify-between py-2 border-b"><span className="text-gray-500">Pickup</span><span className="font-medium">{form.pickupPoint}</span></div>
                         <div className="flex justify-between py-2 border-b"><span className="text-gray-500">Guests</span><span className="font-medium">{guests}</span></div>
                         <div className="flex justify-between py-2 border-b"><span className="text-gray-500">Payment</span><span className="font-medium capitalize">{payMethod === "bank" ? "Bank Transfer" : payMethod}</span></div>
-                        <div className="flex justify-between py-2"><span className="text-gray-500">Amount Paid</span><span className="font-bold text-[#EA580C]">PKR {fmt(deposit)}</span></div>
+                        <div className="flex justify-between py-2"><span className="text-gray-500">Amount Paid</span><span className="font-bold text-green-700">PKR {fmt(deposit)}</span></div>
                       </div>
                       <div className="bg-amber-50 rounded-lg p-4 text-left mb-6">
                         <p className="text-sm text-amber-700 font-medium mb-1">What's Next?</p>
