@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "react-router";
 import {
   CheckCircle, ChevronRight, ChevronLeft, MapPin, Calendar,
   Users, Building2, Upload, AlertCircle, Phone,
@@ -18,12 +19,20 @@ const steps = [
 const fmt = (n: number) => n.toLocaleString("en-PK");
 
 export default function Booking() {
+  const [searchParams] = useSearchParams();
   const [step, setStep] = useState(1);
-  const tour = MOCK_TOURS[0];
-  const guests = 3;
-  const pickupOrigin = "Islamabad";
-  const travelDate = "2026-03-15";
-  const hotelAddOn = { hotelName: "Hunza Serena Inn", roomType: "Deluxe Room", nights: 4, pricePerNight: 18000 };
+
+  // Read from URL params
+  const tourId = searchParams.get("tour") || MOCK_TOURS[0].id;
+  const tour = MOCK_TOURS.find((t) => t.id === tourId) || MOCK_TOURS[0];
+  const urlGuests = parseInt(searchParams.get("guests") || "1", 10);
+  const urlPickup = searchParams.get("pickup") || "Islamabad";
+  const urlDate = searchParams.get("date") || "2026-03-15";
+
+  const [guests, setGuests] = useState(urlGuests);
+  const [pickupOrigin, setPickupOrigin] = useState(urlPickup);
+  const travelDate = urlDate;
+  const [hotelAddOnEnabled, setHotelAddOnEnabled] = useState(false);
 
   const [form, setForm] = useState({
     fullName: "", email: "", phone: "", cnic: "",
@@ -34,11 +43,12 @@ export default function Booking() {
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [bookingRef, setBookingRef] = useState("");
 
+  const hotelAddOn = hotelAddOnEnabled ? { hotelName: "Hunza Serena Inn", roomType: "Deluxe Room", nights: 4, pricePerNight: 18000 } : null;
   const basePrice = tour.pricePerPerson * guests;
   const discount = guests >= 8 ? 0.10 : guests >= 4 ? 0.05 : 0;
   const tourDiscount = Math.round(basePrice * discount);
   const tourTotal = basePrice - tourDiscount;
-  const hotelTotal = hotelAddOn.pricePerNight * hotelAddOn.nights;
+  const hotelTotal = hotelAddOn ? hotelAddOn.pricePerNight * hotelAddOn.nights : 0;
   const subtotal = tourTotal + hotelTotal;
   const tax = Math.round(subtotal * 0.10);
   const total = subtotal + tax;
@@ -124,12 +134,19 @@ export default function Booking() {
                     <div className="bg-white rounded-xl border p-5">
                       <div className="flex items-center justify-between mb-3">
                         <h3 className="font-bold text-gray-900 flex items-center gap-2"><Building2 className="w-4 h-4 text-[#EA580C]" />Hotel Room Add-on</h3>
-                        <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-medium">Added</span>
+                        <button onClick={() => setHotelAddOnEnabled(!hotelAddOnEnabled)} className={`relative w-12 h-6 rounded-full transition-colors ${hotelAddOnEnabled ? "bg-green-500" : "bg-gray-300"}`}>
+                          <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${hotelAddOnEnabled ? "translate-x-6" : ""}`} />
+                        </button>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <div><p className="font-medium">{hotelAddOn.hotelName}</p><p className="text-sm text-gray-500">{hotelAddOn.roomType} · {hotelAddOn.nights} nights</p></div>
-                        <div className="text-right"><p className="text-sm text-gray-400">PKR {fmt(hotelAddOn.pricePerNight)}/night × {hotelAddOn.nights}</p><p className="font-bold text-gray-900">PKR {fmt(hotelTotal)}</p></div>
-                      </div>
+                      {hotelAddOnEnabled && hotelAddOn && (
+                        <div className="flex items-center justify-between">
+                          <div><p className="font-medium">{hotelAddOn.hotelName}</p><p className="text-sm text-gray-500">{hotelAddOn.roomType} · {hotelAddOn.nights} nights</p></div>
+                          <div className="text-right"><p className="text-sm text-gray-400">PKR {fmt(hotelAddOn.pricePerNight)}/night × {hotelAddOn.nights}</p><p className="font-bold text-gray-900">PKR {fmt(hotelTotal)}</p></div>
+                        </div>
+                      )}
+                      {!hotelAddOnEnabled && (
+                        <p className="text-sm text-gray-400">Toggle to add a hotel room to your booking</p>
+                      )}
                     </div>
                   </div>
 
@@ -139,7 +156,7 @@ export default function Booking() {
                       <div className="space-y-3 text-sm">
                         <div className="flex justify-between"><span className="text-gray-600">Tour ({guests} × PKR {fmt(tour.pricePerPerson)})</span><span>PKR {fmt(basePrice)}</span></div>
                         {discount > 0 && <div className="flex justify-between text-green-600"><span>Group Discount ({discount * 100}%)</span><span>-PKR {fmt(tourDiscount)}</span></div>}
-                        <div className="flex justify-between"><span className="text-gray-600">Hotel ({hotelAddOn.nights} nights)</span><span>PKR {fmt(hotelTotal)}</span></div>
+                        {hotelAddOnEnabled && hotelAddOn && <div className="flex justify-between"><span className="text-gray-600">Hotel ({hotelAddOn.nights} nights)</span><span>PKR {fmt(hotelTotal)}</span></div>}
                         <div className="border-t pt-3 flex justify-between"><span className="text-gray-600">Subtotal</span><span>PKR {fmt(subtotal)}</span></div>
                         <div className="flex justify-between"><span className="text-gray-600">Tax (10%)</span><span>PKR {fmt(tax)}</span></div>
                         <div className="border-t pt-3"><div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-[#EA580C]">PKR {fmt(total)}</span></div></div>
@@ -271,7 +288,7 @@ export default function Booking() {
                       <h3 className="font-bold text-gray-900 mb-4">Payment Summary</h3>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between text-gray-600"><span>Tour Package</span><span>PKR {fmt(tourTotal)}</span></div>
-                        <div className="flex justify-between text-gray-600"><span>Hotel Add-on</span><span>PKR {fmt(hotelTotal)}</span></div>
+                        {hotelAddOnEnabled && hotelAddOn && <div className="flex justify-between text-gray-600"><span>Hotel Add-on</span><span>PKR {fmt(hotelTotal)}</span></div>}
                         <div className="flex justify-between text-gray-600"><span>Tax (10%)</span><span>PKR {fmt(tax)}</span></div>
                         <div className="border-t pt-2 flex justify-between font-bold"><span>Total</span><span>PKR {fmt(total)}</span></div>
                       </div>
