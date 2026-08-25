@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useParallax } from "../../hooks/useParallax";
 
 interface Slide {
   image: string;
@@ -68,6 +69,8 @@ export default function HeroSlider({
     }),
   };
 
+  const parallaxStyle = useParallax(0.15);
+
   return (
     <div className={`relative ${height} overflow-hidden`}>
       {/* Slides */}
@@ -85,7 +88,8 @@ export default function HeroSlider({
           <img
             src={slides[current].image}
             alt={slides[current].title || "Northern Pakistan"}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover scale-105"
+            style={parallaxStyle}
           />
         </motion.div>
       </AnimatePresence>
