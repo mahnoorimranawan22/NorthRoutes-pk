@@ -8,7 +8,12 @@ export const MOCK_TOURS = [
     duration: "5 Days / 4 Nights",
     pricePerPerson: 38000,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1586016413664-864c0dd76f53?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80",
+      "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1200&q=80",
+    ],
     inclusions: ["Luxury Transport", "Hotel Stays", "Breakfast & Dinner", "Tour Guide", "Toll Taxes"],
     exclusions: ["Personal Expenses", "Lunch", "Boating & Entry Tickets"],
     itinerary: [
@@ -28,7 +33,12 @@ export const MOCK_TOURS = [
     duration: "3 Days / 2 Nights",
     pricePerPerson: 22000,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80",
+      "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1200&q=80",
+    ],
     inclusions: ["AC Transport", "Hotel Accommodations", "Daily Breakfast", "Jeep Fare for Saif-ul-Malook"],
     exclusions: ["Lunch & Dinner", "Tips", "Extras"],
     itinerary: [

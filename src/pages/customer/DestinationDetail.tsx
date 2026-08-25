@@ -14,7 +14,7 @@ const destinationData: Record<string, {
   naran: {
     name: "Naran",
     description: "Naran is a scenic valley town in the Kaghan Valley, Khyber Pakhtunkhwa, Pakistan. Known for its lush green meadows, pine forests, and the famous Lake Saif-ul-Malook, it's one of the most popular tourist destinations in Pakistan.",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1400&q=85",
     highlights: ["Lake Saif-ul-Malook", "Kaghan Valley", "Shogran Meadows", "Siri Paye"],
     bestTime: "May - September",
     altitude: "2,438m",
@@ -22,7 +22,7 @@ const destinationData: Record<string, {
   batakundi: {
     name: "Batakundi",
     description: "Batakundi is a serene village located near Naran in the Kaghan Valley. It offers stunning views of the surrounding mountains and is a perfect stopover for travelers heading to Babusar Top or Fairy Meadows.",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1400&q=85",
     highlights: ["Riverside Views", "Mountain Trekking", "Peaceful Retreats", "Proximity to Naran"],
     bestTime: "June - August",
     altitude: "2,800m",
@@ -30,7 +30,7 @@ const destinationData: Record<string, {
   "babusar-top": {
     name: "Babusar Top",
     description: "Babusar Top is a high mountain pass at 4,173 meters that connects the Kaghan Valley with Chilas and the Karakoram Highway. It offers breathtaking panoramic views of Nanga Parbat and the surrounding peaks.",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=85",
     highlights: ["Nanga Parbat Views", "Mountain Pass", "Photography", "Adventure Drive"],
     bestTime: "June - September",
     altitude: "4,173m",
@@ -38,7 +38,7 @@ const destinationData: Record<string, {
   hunza: {
     name: "Hunza",
     description: "Hunza is a magical valley in Gilgit-Baltistan, famous for its ancient forts, crystal-clear lakes, and stunning mountain scenery. It's often called the 'Shangri-La' of Pakistan.",
-    image: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1200",
+    image: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1400&q=85",
     highlights: ["Attabad Lake", "Baltit Fort", "Eagle's Nest", "Passu Cones"],
     bestTime: "March - October",
     altitude: "2,438m",

@@ -41,7 +41,7 @@ export default function TourDetails() {
     );
   }
 
-  const galleryImages = [tour.image, tour.image, tour.image];
+  const galleryImages = tour.gallery || [tour.image, tour.image, tour.image];
   const groupTier = GROUP_PRICING.find((g) => groupSize >= g.min && groupSize <= g.max) || GROUP_PRICING[0];
   const discountedPrice = tour.pricePerPerson * (1 - groupTier.discount / 100);
   const tourTotal = discountedPrice * groupSize;

@@ -46,11 +46,11 @@ export default function HeroSection() {
       {/* Hero Banner */}
       <div className="relative h-[400px] md:h-[500px] overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400"
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85"
           alt="Northern Pakistan Mountains"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-green-900/60 via-emerald-900/30 to-blue-900/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/70 via-teal-900/40 to-blue-950/70" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -60,7 +60,7 @@ export default function HeroSection() {
           >
             Discover the Majestic
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-green-400 to-blue-400">North of Pakistan</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-green-300 to-blue-400">North of Pakistan</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-nature-snow-200 p-4 md:p-6"
+          className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/50 p-4 md:p-6"
         >
           {/* Desktop Filter Row */}
           <div className="hidden md:grid grid-cols-4 gap-4">

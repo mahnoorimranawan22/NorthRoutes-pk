@@ -35,7 +35,7 @@ export default function Hotels() {
 
       {/* Hero */}
       <div className="relative h-[200px] md:h-[260px] overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400" alt="Hotels" className="w-full h-full object-cover" />
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&q=85" alt="Hotels" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-bold font-heading text-white mb-2">
