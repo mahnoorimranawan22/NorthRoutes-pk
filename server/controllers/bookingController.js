@@ -366,3 +366,142 @@ export async function getBookingByRef(req, res) {
     });
   }
 }
+
+// PUT /api/bookings/:id/cancel - Cancel a booking
+export async function cancelBooking(req, res) {
+  try {
+    const booking = await Booking.findById(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({ success: false, message: "Booking not found." });
+    }
+
+    // Check ownership
+    if (booking.user.toString() !== req.user._id.toString() && req.user.role === "user") {
+      return res.status(403).json({ success: false, message: "Not authorized." });
+    }
+
+    if (booking.status === "cancelled" || booking.status === "completed") {
+      return res.status(400).json({
+        success: false,
+        message: `Cannot cancel a ${booking.status} booking.`,
+      });
+    }
+
+    booking.status = "cancelled";
+    booking.cancelledAt = new Date();
+    booking.cancelReason = req.body.reason || "Cancelled by user";
+    await booking.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Booking cancelled successfully.",
+      data: { bookingRef: booking.bookingRef, status: booking.status },
+    });
+  } catch (error) {
+    console.error("Cancel booking error:", error);
+    res.status(500).json({ success: false, message: "Failed to cancel booking." });
+  }
+}
+
+// GET /api/bookings/admin/all - Get all bookings (admin)
+export async function getAllBookings(req, res) {
+  try {
+    const {
+      status,
+      bookingType,
+      paymentStatus,
+      sort = "-createdAt",
+      page = 1,
+      limit = 20,
+    } = req.query;
+
+    const filter = {};
+    if (status) filter.status = status;
+    if (bookingType) filter.bookingType = bookingType;
+    if (paymentStatus) filter.paymentStatus = paymentStatus;
+
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const total = await Booking.countDocuments(filter);
+    const bookings = await Booking.find(filter)
+      .sort(sort)
+      .skip(skip)
+      .limit(parseInt(limit))
+      .populate("user", "name email phone")
+      .populate("tour", "title slug image")
+      .populate("hotel", "name slug");
+
+    res.status(200).json({
+      success: true,
+      count: bookings.length,
+      total,
+      totalPages: Math.ceil(total / parseInt(limit)),
+      currentPage: parseInt(page),
+      data: bookings,
+    });
+  } catch (error) {
+    console.error("Get all bookings error:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch bookings." });
+  }
+}
+
+// GET /api/bookings/admin/:id - Get booking by ID (admin)
+export async function getBookingById(req, res) {
+  try {
+    const booking = await Booking.findById(req.params.id)
+      .populate("user", "name email phone role")
+      .populate("tour", "title slug image duration destinations")
+      .populate("hotel", "name slug images")
+      .populate("room", "type bedType images");
+
+    if (!booking) {
+      return res.status(404).json({ success: false, message: "Booking not found." });
+    }
+
+    res.status(200).json({ success: true, data: booking });
+  } catch (error) {
+    console.error("Get booking by ID error:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch booking." });
+  }
+}
+
+// PUT /api/bookings/admin/:id/status - Update booking status (admin)
+export async function updateBookingStatus(req, res) {
+  try {
+    const { status, paymentStatus, paymentMethod, transactionId, internalNotes } = req.body;
+
+    const validStatuses = ["pending", "confirmed", "in_progress", "completed", "cancelled", "no_show"];
+    const validPaymentStatuses = ["pending", "deposit_paid", "fully_paid", "refunded", "failed"];
+
+    const update = { internalNotes };
+    if (status && validStatuses.includes(status)) {
+      update.status = status;
+      if (status === "confirmed") update.confirmedAt = new Date();
+      if (status === "cancelled") update.cancelledAt = new Date();
+    }
+    if (paymentStatus && validPaymentStatuses.includes(paymentStatus)) {
+      update.paymentStatus = paymentStatus;
+      if (paymentStatus === "fully_paid") update.paymentDate = new Date();
+    }
+    if (paymentMethod) update.paymentMethod = paymentMethod;
+    if (transactionId) update.transactionId = transactionId;
+
+    const booking = await Booking.findByIdAndUpdate(req.params.id, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!booking) {
+      return res.status(404).json({ success: false, message: "Booking not found." });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Booking status updated.",
+      data: booking,
+    });
+  } catch (error) {
+    console.error("Update booking status error:", error);
+    res.status(500).json({ success: false, message: "Failed to update booking status." });
+  }
+}

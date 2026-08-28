@@ -111,8 +111,73 @@ export interface BookingPayload {
 
 export const bookingsAPI = {
   create: (data: BookingPayload) => api.post("/bookings", data),
-  getMyBookings: () => api.get("/bookings"),
+  getMyBookings: () => api.get("/bookings/my-bookings"),
   getByRef: (ref: string) => api.get(`/bookings/${ref}`),
+  cancel: (id: string, reason?: string) => api.put(`/bookings/${id}/cancel`, { reason }),
+};
+
+// ── Destinations ──────────────────────────────────────────────
+export interface DestinationQuery {
+  search?: string;
+  province?: string;
+  category?: string;
+  bestSeason?: string;
+  featured?: string;
+  sort?: string;
+  page?: number;
+  limit?: number;
+}
+
+export const destinationsAPI = {
+  getAll: (params?: DestinationQuery) => api.get("/destinations", { params }),
+  getById: (id: string) => api.get(`/destinations/${id}`),
+  toggleFavorite: (id: string) => api.post(`/destinations/${id}/favorite`),
+  getFavorites: () => api.get("/destinations/favorites"),
+  create: (data: any) => api.post("/destinations", data),
+  update: (id: string, data: any) => api.put(`/destinations/${id}`, data),
+  delete: (id: string) => api.delete(`/destinations/${id}`),
+};
+
+// ── Reviews ────────────────────────────────────────────────────
+export interface ReviewPayload {
+  targetType: "tour" | "destination" | "hotel";
+  targetId: string;
+  rating: number;
+  title?: string;
+  comment: string;
+  visitDate?: string;
+  travelType?: "solo" | "couple" | "family" | "friends" | "business";
+  wouldRecommend?: boolean;
+}
+
+export const reviewsAPI = {
+  getForTarget: (targetType: string, targetId: string, params?: { sort?: string; page?: number; limit?: number }) =>
+    api.get(`/reviews/${targetType}/${targetId}`, { params }),
+  create: (data: ReviewPayload) => api.post("/reviews", data),
+  update: (id: string, data: Partial<ReviewPayload>) => api.put(`/reviews/${id}`, data),
+  delete: (id: string) => api.delete(`/reviews/${id}`),
+  // Admin
+  getAll: (params?: { targetType?: string; isApproved?: string; page?: number }) =>
+    api.get("/reviews/admin/all", { params }),
+  moderate: (id: string, data: { isApproved: boolean; isFeatured?: boolean; moderationNote?: string }) =>
+    api.put(`/reviews/admin/${id}/moderate`, data),
+};
+
+// ── Admin ──────────────────────────────────────────────────────
+export const adminAPI = {
+  // Users
+  getUsers: (params?: { role?: string; search?: string; page?: number }) =>
+    api.get("/admin/users", { params }),
+  getUserById: (id: string) => api.get(`/admin/users/${id}`),
+  updateUserRole: (id: string, role: string) => api.put(`/admin/users/${id}/role`, { role }),
+  deleteUser: (id: string) => api.delete(`/admin/users/${id}`),
+
+  // Bookings
+  getAllBookings: (params?: { status?: string; bookingType?: string; page?: number }) =>
+    api.get("/bookings/admin/all", { params }),
+  getBookingById: (id: string) => api.get(`/bookings/admin/${id}`),
+  updateBookingStatus: (id: string, data: { status?: string; paymentStatus?: string; internalNotes?: string }) =>
+    api.put(`/bookings/admin/${id}/status`, data),
 };
 
 // ── Health ────────────────────────────────────────────────────

@@ -11,6 +11,9 @@ import authRoutes from "./routes/auth.js";
 import tourRoutes from "./routes/tours.js";
 import hotelRoutes from "./routes/hotels.js";
 import bookingRoutes from "./routes/bookings.js";
+import destinationRoutes from "./routes/destinations.js";
+import reviewRoutes from "./routes/reviews.js";
+import userRoutes from "./routes/users.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -35,6 +38,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tours", tourRoutes);
 app.use("/api/hotels", hotelRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/destinations", destinationRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/admin/users", userRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {
@@ -88,6 +94,9 @@ async function startServer() {
       console.log(`   POST /api/bookings`);
       console.log(`   GET  /api/bookings`);
       console.log(`   GET  /api/bookings/:ref\n`);
+      console.log(`   GET  /api/destinations\n`);
+      console.log(`   GET  /api/reviews/:targetType/:targetId\n`);
+      console.log(`   GET  /api/admin/users\n`);
     });
   } catch (error) {
     console.error("❌ Failed to start server:", error);

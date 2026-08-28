@@ -1,204 +1,478 @@
-# TailAdmin React - Free React Tailwind Admin Dashboard Template
+# 🏔️ NorthRoutes PK — Full-Stack Travel Platform
 
-TailAdmin is a free and open-source admin dashboard template built on **React and Tailwind CSS**, providing developers
-with everything they need to create a comprehensive, data-driven back-end,
-dashboard, or admin panel solution for upcoming web projects.
+A complete travel and tourism platform for Northern Pakistan, featuring tour booking, hotel reservations, destination exploration, and an admin CMS. Built with React, Express.js, MongoDB, and JWT authentication.
 
-With TailAdmin, you get access to all the necessary dashboard UI components, elements, and pages required to build a
-feature-rich and complete dashboard or admin panel. Whether you're building dashboard or admin panel for a complex web
-application or a simple website, TailAdmin is the perfect solution to help you get up and running quickly.
+**Live Frontend:** [https://mahnoorimranawan22.github.io/NorthRoutes-pk/](https://mahnoorimranawan22.github.io/NorthRoutes-pk/)
 
-![TailAdmin React.js Dashboard Preview](./banner.png)
+---
 
-## Overview
+## 📋 Table of Contents
 
-TailAdmin provides essential UI components and layouts for building feature-rich, data-driven admin dashboards and
-control panels. It's built on:
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Database Setup](#database-setup)
+- [Running Locally](#running-locally)
+- [API Endpoints](#api-endpoints)
+- [Authentication Flow](#authentication-flow)
+- [Admin Setup](#admin-setup)
+- [Deployment](#deployment)
+- [Limitations & Improvements](#limitations--improvements)
 
-- React 19
-- TypeScript
-- Tailwind CSS v4
+---
 
-### Quick Links
+## 🛠️ Tech Stack
 
-- [✨ Visit Website](https://tailadmin.com)
-- [📄 Documentation](https://tailadmin.com/docs)
-- [⬇️ Download](https://tailadmin.com/download)
-- [🖌️ Figma Design File (Community Edition)](https://www.figma.com/community/file/1214477970819985778)
-- [⚡ Get PRO Version](https://tailadmin.com/pricing)
+### Frontend
+- **React 19** with TypeScript
+- **Tailwind CSS v4** for styling
+- **React Router v7** for routing
+- **Framer Motion** for animations
+- **Axios** for API calls
+- **Lucide React** for icons
+- **Swiper** for image sliders
 
-### Demos
+### Backend
+- **Node.js** with Express.js
+- **MongoDB** with Mongoose ODM
+- **JWT** (JSON Web Tokens) for authentication
+- **bcryptjs** for password hashing
+- **CORS** configured for frontend-backend communication
 
-- [Free Version](https://free-react-demo.tailadmin.com/)
-- [Pro Version](https://react-demo.tailadmin.com)
+### Database
+- **MongoDB Atlas** (cloud) or local MongoDB
 
-### Other Versions
+### Deployment
+- **Frontend:** GitHub Pages (auto-deploy via GitHub Actions)
+- **Backend:** Render / Railway / any Node.js host
+- **Database:** MongoDB Atlas free tier
 
-- [HTML Version](https://github.com/TailAdmin/tailadmin-free-tailwind-dashboard-template)
-- [Next.js Version](https://github.com/TailAdmin/free-nextjs-admin-dashboard)
-- [Vue.js Version](https://github.com/TailAdmin/vue-tailwind-admin-dashboard)
-- [Angular Version](https://github.com/TailAdmin/free-angular-tailwind-dashboard)
-- [Laravel Version](https://github.com/TailAdmin/tailadmin-laravel)
+---
 
-## Installation
+## ✨ Features
 
-### Prerequisites
+### Customer-Facing
+- 🏠 Homepage with HD image slider of Northern Pakistan
+- 🗺️ 8 Destinations (Hunza, Skardu, Naran, Babusar Top, Fairy Meadows, Swat, Murree, Neelum Valley)
+- 🚌 5 Tour Packages with day-by-day itineraries
+- 🏨 4 Hotels with room types and nightly pricing
+- 🔍 Advanced search & filter (destination, pickup point, budget, date)
+- 📱 Mobile-first responsive design
+- ✨ Page transitions, parallax effects, animated counters
+- 💳 Multi-step checkout with Pakistani payment methods (JazzCash, EasyPaisa, Bank Transfer, Card)
+- ⭐ Reviews and ratings system
+- ❤️ Favorite destinations
+- 👤 User registration and login
 
-To get started with TailAdmin, ensure you have the following prerequisites installed and set up:
+### Admin CMS
+- 📊 Dashboard with booking analytics
+- 🚌 Manage Tours (CRUD)
+- 🏨 Manage Hotels & Rooms (CRUD)
+- 🗺️ Manage Destinations (CRUD)
+- 📋 Manage Bookings (view all, update status)
+- 👥 Manage Users (view all, change roles)
+- ⭐ Moderate Reviews
 
-- Node.js 18.x or later (recommended to use Node.js 20.x or later)
+---
 
-### Cloning the Repository
+## 📁 Project Structure
 
-Clone the repository using the following command:
-
-```bash
-git clone https://github.com/TailAdmin/free-react-tailwind-admin-dashboard.git
+```
+NorthRoutes-pk/
+├── public/                    # Static assets (images, logos, favicons)
+├── server/                    # Backend API
+│   ├── config/
+│   │   └── db.js             # MongoDB connection
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── tourController.js
+│   │   ├── hotelController.js
+│   │   ├── bookingController.js
+│   │   ├── destinationController.js
+│   │   ├── reviewController.js
+│   │   └── userController.js
+│   ├── middleware/
+│   │   └── auth.js           # JWT auth + role authorization
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Tour.js
+│   │   ├── Hotel.js
+│   │   ├── Room.js
+│   │   ├── Booking.js
+│   │   ├── Destination.js
+│   │   ├── Review.js
+│   │   └── index.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── tours.js
+│   │   ├── hotels.js
+│   │   ├── bookings.js
+│   │   ├── destinations.js
+│   │   ├── reviews.js
+│   │   └── users.js
+│   ├── utils/
+│   │   └── jwt.js            # Token generation & verification
+│   ├── server.js              # Express entry point
+│   ├── seed.js                # Database seeder
+│   ├── .env.example
+│   └── package.json
+├── src/                       # Frontend React app
+│   ├── components/
+│   │   ├── common/            # Reusable UI (PageTransition, GridShape, etc.)
+│   │   ├── customer/          # Customer-facing (Navbar, Footer, Hero, etc.)
+│   │   └── admin/             # Admin CMS components
+│   ├── context/
+│   │   └── AuthContext.tsx    # Authentication state
+│   ├── data/                  # Mock data (tours, hotels, destinations)
+│   ├── hooks/
+│   │   ├── useParallax.ts
+│   │   └── useScrollReveal.ts
+│   ├── pages/
+│   │   ├── customer/          # Home, Tours, Hotels, Booking, etc.
+│   │   ├── admin/             # Admin dashboard pages
+│   │   └── AuthPages/         # Sign-in, Sign-up
+│   ├── routes/
+│   │   └── AppRoutes.tsx
+│   ├── services/
+│   │   └── api.ts             # Axios API service layer
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── .gitignore
+├── index.html
+├── package.json
+├── vite.config.ts
+└── tailwind.config.js
 ```
 
-> Windows Users: place the repository near the root of your drive if you face issues while cloning.
+---
 
-1. Install dependencies:
+## 🚀 Installation
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+### Prerequisites
+- Node.js 18+ (recommended 20+)
+- MongoDB (local or Atlas)
+- Git
 
-2. Start the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+### Clone & Install
 
-## Components
+```bash
+git clone https://github.com/mahnoorimranawan22/NorthRoutes-pk.git
+cd NorthRoutes-pk
 
-TailAdmin is a pre-designed starting point for building a web-based dashboard using React.js and Tailwind CSS. The
-template includes:
+# Install frontend dependencies
+npm install
 
-- Sophisticated and accessible sidebar
-- Data visualization components
-- Prebuilt profile management and 404 page
-- Tables and Charts(Line and Bar)
-- Authentication forms and input elements
-- Alerts, Dropdowns, Modals, Buttons and more
-- FAQ & Accordion, Testimonials, and Carousels
-- Can't forget Dark Mode 🕶️
+# Install backend dependencies
+cd server
+npm install
+cd ..
+```
 
-All components are built with React and styled using Tailwind CSS for easy customization.
+---
 
-## Feature Comparison
+## 🔐 Environment Variables
 
-### Free Version
+### Backend (`server/.env`)
 
-- 1 Unique Dashboard
-- 35+ dashboard components
-- 50+ UI elements
-- Basic Figma design files
-- Community support
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/northroutes-pk?retryWrites=true&w=majority
+JWT_SECRET=your_secure_jwt_secret_here
+JWT_EXPIRES_IN=7d
+CLIENT_URL=http://localhost:5173
+NODE_ENV=development
+```
 
-### Pro Version
+### Frontend (`.env.local`)
 
-- 7 Unique Dashboards: Analytics, Ecommerce, Marketing, CRM, SaaS, Stocks, Logistics (more coming soon)
-- 500+ dashboard components and UI elements
-- Complete Figma design file
-- Email support
+```env
+VITE_API_URL=http://localhost:5000/api
+```
 
-To learn more about pro version features and pricing, visit our [pricing page](https://tailadmin.com/pricing).
+See `server/.env.example` for a template.
 
-## Changelog
+---
 
-### Version 2.3.0 - [April 28, 2026]
-- Added **AI Dashboard** with token usage and revenue tracking.
-- Added **Sales Dashboard** with retention and multi-channel analytics.
-- Added **Finance Dashboard** with cashflow and balance management.
-- Introduced **6 New Layout variations** for improved UI flexibility.
-- Integrated **Advanced Data Visualization** with 7+ new chart types.
+## 🗄️ Database Setup
 
-### Version 2.1.0 - [Dec 30, 2025]
+### Option 1: MongoDB Atlas (Recommended)
 
-- Resolved Date Picker positioning and input issues in Charts.
+1. Create a free account at [mongodb.com](https://www.mongodb.com/)
+2. Create a cluster (free tier M0)
+3. Create a database user
+4. Get your connection string
+5. Add it to `server/.env` as `MONGODB_URI`
 
-### Version 2.0.2 - [March 25, 2025]
+### Option 2: Local MongoDB
 
-- Upgraded to React 19
-- Included overrides for packages to prevent peer dependency errors.
-- Migrated from react-flatpickr to flatpickr package for React 19 support
+1. Install MongoDB Community Edition
+2. Start the service
+3. Use `mongodb://localhost:27017/northroutes-pk` as your URI
 
-### Version 2.0.1 - [February 27, 2025]
+### Seed the Database
 
-#### Update Overview
+```bash
+cd server
+node seed.js
+```
 
-- Upgraded to Tailwind CSS v4 for better performance and efficiency.
-- Updated class usage to match the latest syntax and features.
-- Replaced deprecated class and optimized styles.
+This creates:
+- Admin user: `admin@northroutespk.com` / `admin123456`
+- 8 destinations (Hunza, Skardu, Naran, etc.)
+- 5 tour packages
+- 4 hotels with rooms
 
-#### Next Steps
+---
 
-- Run npm install or yarn install to update dependencies.
-- Check for any style changes or compatibility issues.
-- Refer to the Tailwind CSS v4 [Migration Guide](https://tailwindcss.com/docs/upgrade-guide) on this release. if needed.
-- This update keeps the project up to date with the latest Tailwind improvements. 🚀
+## 🏃 Running Locally
 
-### Version 2.0.0 - [February 2025]
+### Start Backend
 
-A major update with comprehensive redesign and modern React patterns implementation.
+```bash
+cd server
+node server.js
+# API runs on http://localhost:5000
+```
 
-#### Major Improvements
+### Start Frontend
 
-- Complete UI redesign with modern React patterns
-- New features: collapsible sidebar, chat, and calendar
-- Improved performance and accessibility
-- Updated data visualization using ApexCharts
+```bash
+npm run dev
+# Frontend runs on http://localhost:5173
+```
 
-#### Key Features
+### Start Both (concurrent)
 
-- Redesigned dashboards (Ecommerce, Analytics, Marketing, CRM)
-- Enhanced navigation with React Router integration
-- Advanced tables with sorting and filtering
-- Calendar with drag-and-drop support
-- New UI components and improved existing ones
+```bash
+# Terminal 1
+cd server && node server.js
 
-#### Breaking Changes
+# Terminal 2
+npm run dev
+```
 
-- Updated sidebar component API
-- Migrated charts to ApexCharts
-- Revised authentication system
+---
 
-[Read more](https://tailadmin.com/docs/update-logs/react) on this release.
+## 📡 API Endpoints
 
-### Version 1.3.7 - [June 20, 2024]
+### Authentication
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/auth/register` | Register new user | No |
+| POST | `/api/auth/login` | Login | No |
+| GET | `/api/auth/me` | Get current user | Yes |
 
-#### Enhancements
+### Tours
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/tours` | List tours (filters: destination, pickup, budget, date) | No |
+| GET | `/api/tours/:slug` | Get tour by slug | No |
+| GET | `/api/tours/:slug/availability` | Available dates | No |
+| POST | `/api/tours` | Create tour | Admin |
+| PUT | `/api/tours/:id` | Update tour | Admin |
+| DELETE | `/api/tours/:id` | Delete tour | Admin |
 
-1. Remove Repetition of DefaultLayout in every Pages
-2. Add ClickOutside Component for reduce repeated functionality in Header Message, Notification and User Dropdowns.
+### Hotels
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/hotels` | List hotels (filters: destination, star rating, price) | No |
+| GET | `/api/hotels/:id` | Get hotel with rooms | No |
+| GET | `/api/hotels/:id/availability` | Room availability | No |
+| POST | `/api/hotels` | Create hotel | Admin |
+| PUT | `/api/hotels/:id` | Update hotel | Admin |
+| DELETE | `/api/hotels/:id` | Delete hotel | Admin |
 
-### Version 1.3.6 - [Jan 31, 2024]
+### Destinations
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/destinations` | List destinations (filters: province, category, search) | No |
+| GET | `/api/destinations/:id` | Get destination | No |
+| POST | `/api/destinations` | Create destination | Admin |
+| PUT | `/api/destinations/:id` | Update destination | Admin |
+| DELETE | `/api/destinations/:id` | Delete destination | Admin |
+| POST | `/api/destinations/:id/favorite` | Toggle favorite | Yes |
+| GET | `/api/destinations/favorites` | Get user's favorites | Yes |
 
-#### Enhancements
+### Bookings
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/bookings` | Create booking | Yes |
+| GET | `/api/bookings/my-bookings` | Get user's bookings | Yes |
+| GET | `/api/bookings/:ref` | Get booking by reference | Yes |
+| PUT | `/api/bookings/:id/cancel` | Cancel booking | Yes |
+| GET | `/api/bookings/admin/all` | Get all bookings | Admin |
+| GET | `/api/bookings/admin/:id` | Get booking by ID | Admin |
+| PUT | `/api/bookings/admin/:id/status` | Update booking status | Admin |
 
-1. Integrate flatpickr in [Date Picker/Form Elements]
-2. Change color after select an option [Select Element/Form Elements].
-3. Make it functional [Multiselect Dropdown/Form Elements].
-4. Make best value editable [Pricing Table One/Pricing Table].
-5. Rearrange Folder structure.
+### Reviews
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/reviews/:targetType/:targetId` | Get reviews for target | No |
+| POST | `/api/reviews` | Create review | Yes |
+| PUT | `/api/reviews/:id` | Update own review | Yes |
+| DELETE | `/api/reviews/:id` | Delete own review | Yes |
+| GET | `/api/reviews/admin/all` | Get all reviews | Admin |
+| PUT | `/api/reviews/admin/:id/moderate` | Moderate review | Admin |
 
-### Version 1.2.0 - [Apr 28, 2023]
+### Admin Users
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/admin/users` | List all users | Admin |
+| GET | `/api/admin/users/:id` | Get user by ID | Admin |
+| PUT | `/api/admin/users/:id/role` | Update user role | Super Admin |
+| DELETE | `/api/admin/users/:id` | Delete user | Super Admin |
 
-- Add Typescript in TailAdmin React.
+---
 
-### Version 1.0.0 - Initial Release - [Mar 13, 2023]
+## 🔑 Authentication Flow
 
-- Initial release of TailAdmin React.
+1. **Register/Login** → Server validates credentials, hashes password with bcrypt (12 rounds)
+2. **JWT Token** → Server generates access token (7 days) + refresh token (30 days)
+3. **Frontend Storage** → Token stored in `localStorage` as `nr_token`
+4. **API Requests** → Axios interceptor attaches `Authorization: Bearer <token>` header
+5. **Protected Routes** → `protect` middleware verifies token, attaches `req.user`
+6. **Admin Routes** → `authorize('admin', 'super_admin')` middleware checks role
+7. **401 Response** → Auto-logout, redirect to sign-in page
 
-## License
+---
 
-TailAdmin React.js Free Version is released under the MIT License.
+## 👑 Admin Setup
 
-## Support
+### Create Admin via Seed Script
+```bash
+cd server && node seed.js
+# Admin: admin@northroutespk.com / admin123456
+```
 
-If you find this project helpful, please consider giving it a star on GitHub. Your support helps us continue developing
-and maintaining this template.
+### Create Admin Manually
+```bash
+# Register a normal account, then in MongoDB:
+db.users.updateOne(
+  { email: "your@email.com" },
+  { $set: { role: "admin" } }
+)
+```
+
+### Admin Access
+- Sign in with admin credentials
+- Navigate to `/admin` for the Admin CMS
+- Only users with `admin` or `super_admin` role can access
+
+---
+
+## 🚢 Deployment
+
+### Frontend (GitHub Pages)
+
+Already configured with GitHub Actions. Push to `master` branch to auto-deploy.
+
+### Backend (Render - Free)
+
+1. Create account at [render.com](https://render.com)
+2. New → Web Service
+3. Connect GitHub repo
+4. Settings:
+   - **Build Command:** `cd server && npm install`
+   - **Start Command:** `cd server && node server.js`
+   - **Port:** 5000
+5. Add Environment Variables:
+   - `MONGODB_URI` — Your MongoDB Atlas connection string
+   - `JWT_SECRET` — A secure random string
+   - `CLIENT_URL` — Your frontend URL (e.g., `https://mahnoorimranawan22.github.io`)
+   - `NODE_ENV` — `production`
+6. Deploy → Copy the Render URL
+
+### Connect Frontend to Backend
+
+Update `.env.local` or `src/services/api.ts`:
+
+```typescript
+const API_BASE = import.meta.env.VITE_API_URL || "https://your-render-url.onrender.com/api";
+```
+
+For production, add to GitHub repo → Settings → Secrets:
+```
+VITE_API_URL = https://your-render-url.onrender.com/api
+```
+
+---
+
+## 🧪 Testing
+
+### Test Authentication
+```bash
+# Register
+curl -X POST http://localhost:5000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test User","email":"test@test.com","password":"password123"}'
+
+# Login
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@test.com","password":"password123"}'
+
+# Get current user (with token)
+curl http://localhost:5000/api/auth/me \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Test Tours
+```bash
+# List all tours
+curl http://localhost:5000/api/tours
+
+# Filter by destination
+curl "http://localhost:5000/api/tours?destination=Hunza"
+
+# Get single tour
+curl http://localhost:5000/api/tours/hunza-valley-babusar-expedition
+```
+
+### Test Bookings
+```bash
+# Create booking (with token)
+curl -X POST http://localhost:5000/api/bookings \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{"bookingType":"tour_only","tourId":"TOUR_ID","guests":[{"name":"Test","isChild":false}],"pickupPoint":"Islamabad","tourStartDate":"2026-09-15"}'
+```
+
+---
+
+## ⚠️ Limitations & Improvements
+
+### Current Limitations
+1. **Payment is simulated** — JazzCash/EasyPaisa/Bank Transfer forms collect info but don't process real payments
+2. **Email notifications** — Not implemented (booking confirmations are UI-only)
+3. **Image uploads** — Admin forms reference image URLs, no file upload yet
+4. **Reviews** — Frontend review submission UI not yet built (API is ready)
+5. **Favorites** — API ready, frontend UI not yet integrated
+
+### Suggested Improvements
+1. **Real Payment Gateway** — Integrate JazzCash/EasyPaisa API or Stripe
+2. **Email Service** — SendGrid/Nodemailer for booking confirmations
+3. **Image Upload** — Multer + Cloudinary for admin image management
+4. **Review UI** — Add review forms on tour/hotel detail pages
+5. **Favorites UI** — Heart icon on destination cards
+6. **WhatsApp Integration** — Click-to-WhatsApp for inquiries
+7. **PWA Support** — Service worker for offline access
+8. **SEO** — Dynamic meta tags for each page
+9. **Analytics** — Google Analytics for visitor tracking
+10. **Rate Limiting** — Express rate limiter for API protection
+
+---
+
+## 📄 License
+
+This project is proprietary. All rights reserved.
+
+---
+
+## 🤝 Support
+
+For issues or questions, contact: admin@northroutespk.com
+
+Built with ❤️ for Pakistan's Northern Tourism
