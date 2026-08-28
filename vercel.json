@@ -11,5 +11,7 @@
       "src": "/api/(.*)",
       "dest": "api/index.js"
     }
-  ]
+  ],
+  "installCommand": "npm install",
+  "buildCommand": "echo 'No build needed for API'"
 }
