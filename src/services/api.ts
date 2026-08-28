@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+const API_BASE = import.meta.env.VITE_API_URL || "https://north-routes-pk-b3k1.vercel.app/api";
 
 const api = axios.create({
   baseURL: API_BASE,
