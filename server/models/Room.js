@@ -105,7 +105,7 @@ RoomSchema.virtual("isAvailable").get(function () {
 });
 
 // Pre-save: auto-generate slug
-RoomSchema.pre("save", function (next) {
+RoomSchema.pre("save", function () {
   if (this.isModified("type") && !this.slug) {
     this.slug = this.type
       .toLowerCase()
@@ -115,7 +115,6 @@ RoomSchema.pre("save", function (next) {
   if (this.isModified("totalRooms")) {
     this.totalRoomsCount = this.totalRooms;
   }
-  next();
 });
 
 const Room = mongoose.model("Room", RoomSchema);

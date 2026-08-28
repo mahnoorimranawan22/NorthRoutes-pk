@@ -74,14 +74,13 @@ DestinationSchema.virtual("ratingDisplay").get(function () {
 });
 
 // Pre-save: auto-generate slug
-DestinationSchema.pre("save", function (next) {
+DestinationSchema.pre("save", function () {
   if (this.isModified("name") && !this.slug) {
     this.slug = this.name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
   }
-  next();
 });
 
 const Destination = mongoose.model("Destination", DestinationSchema);

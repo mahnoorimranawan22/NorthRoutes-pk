@@ -131,14 +131,13 @@ TourSchema.virtual("availableDatesCount").get(function () {
 });
 
 // Pre-save: auto-generate slug
-TourSchema.pre("save", function (next) {
+TourSchema.pre("save", function () {
   if (this.isModified("title") && !this.slug) {
     this.slug = this.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
   }
-  next();
 });
 
 const Tour = mongoose.model("Tour", TourSchema);

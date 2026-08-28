@@ -179,7 +179,7 @@ BookingSchema.virtual("canCancel").get(function () {
 });
 
 // Pre-save: generate booking reference
-BookingSchema.pre("save", function (next) {
+BookingSchema.pre("save", function () {
   if (!this.bookingRef) {
     const prefix = this.bookingType === "tour_only" ? "TR"
       : this.bookingType === "hotel_only" ? "HT"
@@ -188,16 +188,14 @@ BookingSchema.pre("save", function (next) {
     const random = Math.random().toString(36).substring(2, 6).toUpperCase();
     this.bookingRef = `${prefix}-${timestamp}-${random}`;
   }
-  next();
 });
 
 // Pre-save: calculate balance
-BookingSchema.pre("save", function (next) {
+BookingSchema.pre("save", function () {
   if (this.priceBreakdown) {
     this.priceBreakdown.balanceDue =
       this.priceBreakdown.grandTotal - this.priceBreakdown.depositPaid;
   }
-  next();
 });
 
 const Booking = mongoose.model("Booking", BookingSchema);

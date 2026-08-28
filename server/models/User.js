@@ -97,13 +97,12 @@ UserSchema.virtual("displayName").get(function () {
 });
 
 // Pre-save: hash password
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+UserSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 12);
   if (!this.isNew) {
     this.passwordChangedAt = Date.now() - 1000;
   }
-  next();
 });
 
 // Method: compare passwords

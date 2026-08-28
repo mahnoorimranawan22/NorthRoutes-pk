@@ -1,3 +1,6 @@
+import dns from "dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -16,7 +19,7 @@ import reviewRoutes from "./routes/reviews.js";
 import userRoutes from "./routes/users.js";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT, 10) || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/northroutes-pk";
 
 // ===== MIDDLEWARE =====
