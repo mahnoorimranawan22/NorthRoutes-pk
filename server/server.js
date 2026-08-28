@@ -1,6 +1,3 @@
-import dns from "dns";
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
-
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -8,6 +5,14 @@ import dotenv from "dotenv";
 
 // Load env vars
 dotenv.config();
+
+// Fix DNS for MongoDB Atlas SRV on local networks (safe to ignore on cloud)
+import dns from "dns";
+try { dns.setServers(["8.8.8.8", "8.8.4.4"]); } catch {}
+
+// Trust proxy for Render/Railway
+const app = express();
+app.set("trust proxy", 1);
 
 // Import routes
 import authRoutes from "./routes/auth.js";
@@ -18,7 +23,6 @@ import destinationRoutes from "./routes/destinations.js";
 import reviewRoutes from "./routes/reviews.js";
 import userRoutes from "./routes/users.js";
 
-const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/northroutes-pk";
 
@@ -82,7 +86,7 @@ async function startServer() {
       console.log("⚠️  No MongoDB URI — running in API-only mode");
     }
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log(`\n🚀 NorthRoutes PK API running on http://localhost:${PORT}`);
       console.log(`📋 Routes:`);
       console.log(`   POST /api/auth/register`);
