@@ -1,10 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dns from "dns";
-
-// Fix DNS for MongoDB Atlas SRV on local/dev environments
-try { dns.setServers(["8.8.8.8", "8.8.4.4"]); } catch {}
 
 const app = express();
 
@@ -21,47 +17,429 @@ let isConnected = false;
 async function connectDB() {
   if (isConnected) return;
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+      console.error("MONGODB_URI not set");
+      return;
+    }
+    await mongoose.connect(uri);
     isConnected = true;
+    console.log("Connected to MongoDB");
   } catch (err) {
     console.error("MongoDB error:", err.message);
   }
 }
 
-// Import routes from server/ directory
-import authRoutes from "../server/routes/auth.js";
-import tourRoutes from "../server/routes/tours.js";
-import hotelRoutes from "../server/routes/hotels.js";
-import bookingRoutes from "../server/routes/bookings.js";
-import destinationRoutes from "../server/routes/destinations.js";
-import reviewRoutes from "../server/routes/reviews.js";
-import userRoutes from "../server/routes/users.js";
+// ===== Inline Models (to avoid import path issues) =====
 
-// Mount routes
-app.use("/api/auth", authRoutes);
-app.use("/api/tours", tourRoutes);
-app.use("/api/hotels", hotelRoutes);
-app.use("/api/bookings", bookingRoutes);
-app.use("/api/destinations", destinationRoutes);
-app.use("/api/reviews", reviewRoutes);
-app.use("/api/admin/users", userRoutes);
+// User Model
+const UserSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true, lowercase: true },
+  password: { type: String, required: true, select: false },
+  role: { type: String, enum: ["user", "admin", "super_admin"], default: "user" },
+  phone: { type: String },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Destination" }],
+  isActive: { type: Boolean, default: true },
+  lastLoginAt: { type: Date },
+  loginCount: { type: Number, default: 0 },
+  refreshToken: { type: String, select: false },
+}, { timestamps: true });
 
-// Health check
+// Tour Model
+const TourSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
+  description: { type: String, required: true },
+  shortDescription: { type: String },
+  destinations: [{ type: String }],
+  pickupPoints: [{ type: String }],
+  duration: { type: String, required: true },
+  totalDays: { type: Number },
+  totalNights: { type: Number },
+  pricePerPerson: { type: Number, required: true },
+  currency: { type: String, default: "PKR" },
+  groupPricing: [{ minPersons: Number, maxPersons: Number, discountPercent: Number }],
+  inclusions: [{ type: String }],
+  exclusions: [{ type: String }],
+  availableDates: [{ startDate: Date, endDate: Date, availableSpots: Number, status: String }],
+  maxGroupSize: { type: Number },
+  image: { type: String },
+  images: [{ type: String }],
+  rating: { type: Number, default: 0 },
+  reviewCount: { type: Number, default: 0 },
+  category: { type: String },
+  difficulty: { type: String },
+  isFeatured: { type: Boolean, default: false },
+  isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+// Hotel Model
+const HotelSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
+  description: { type: String, required: true },
+  destination: { type: String },
+  address: { type: String },
+  city: { type: String },
+  starRating: { type: Number },
+  rating: { type: Number, default: 0 },
+  reviewCount: { type: Number, default: 0 },
+  amenities: [{ name: String, icon: String, category: String }],
+  totalRooms: { type: Number },
+  startingPricePerNight: { type: Number },
+  currency: { type: String, default: "PKR" },
+  images: [{ type: String }],
+  isFeatured: { type: Boolean, default: false },
+  isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+// Room Model
+const RoomSchema = new mongoose.Schema({
+  hotel: { type: mongoose.Schema.Types.ObjectId, ref: "Hotel" },
+  type: { type: String, required: true },
+  slug: { type: String },
+  description: { type: String },
+  bedType: { type: String },
+  sizeSqm: { type: Number },
+  maxGuests: { type: Number },
+  pricePerNight: { type: Number },
+  totalRooms: { type: Number },
+  totalRoomsCount: { type: Number },
+  amenities: [{ name: String }],
+  images: [{ type: String }],
+  isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+// Booking Model
+const BookingSchema = new mongoose.Schema({
+  bookingRef: { type: String, required: true, unique: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  bookingType: { type: String, required: true },
+  tour: { type: mongoose.Schema.Types.ObjectId, ref: "Tour" },
+  tourTitle: { type: String },
+  tourStartDate: { type: Date },
+  hotel: { type: mongoose.Schema.Types.ObjectId, ref: "Hotel" },
+  hotelName: { type: String },
+  room: { type: mongoose.Schema.Types.ObjectId, ref: "Room" },
+  roomType: { type: String },
+  pickupPoint: { type: String },
+  guests: [{ name: String, isChild: Boolean }],
+  totalGuests: { type: Number },
+  adultCount: { type: Number },
+  childCount: { type: Number },
+  priceBreakdown: { type: mongoose.Schema.Types.Mixed },
+  paymentMethod: { type: String },
+  paymentStatus: { type: String, default: "pending" },
+  status: { type: String, default: "pending" },
+  specialRequests: { type: String },
+  checkInDate: { type: Date },
+  checkOutDate: { type: Date },
+  totalNights: { type: Number },
+}, { timestamps: true });
+
+// Destination Model
+const DestinationSchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true },
+  slug: { type: String, required: true, unique: true },
+  location: { type: String },
+  province: { type: String },
+  description: { type: String },
+  shortDescription: { type: String },
+  images: [{ type: String }],
+  coverImage: { type: String },
+  activities: [{ type: String }],
+  bestSeason: { type: String },
+  altitude: { type: String },
+  climate: { type: String },
+  category: { type: String },
+  rating: { type: Number, default: 0 },
+  reviewCount: { type: Number, default: 0 },
+  howToReach: { type: mongoose.Schema.Types.Mixed },
+  isFeatured: { type: Boolean, default: false },
+  isActive: { type: Boolean, default: true },
+}, { timestamps: true });
+
+// Review Model
+const ReviewSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  targetType: { type: String, required: true },
+  targetId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  targetModel: { type: String },
+  rating: { type: Number, required: true },
+  title: { type: String },
+  comment: { type: String, required: true },
+  isApproved: { type: Boolean, default: true },
+}, { timestamps: true });
+
+// Get or create models
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
+const Tour = mongoose.models.Tour || mongoose.model("Tour", TourSchema);
+const Hotel = mongoose.models.Hotel || mongoose.model("Hotel", HotelSchema);
+const Room = mongoose.models.Room || mongoose.model("Room", RoomSchema);
+const Booking = mongoose.models.Booking || mongoose.model("Booking", BookingSchema);
+const Destination = mongoose.models.Destination || mongoose.model("Destination", DestinationSchema);
+const Review = mongoose.models.Review || mongoose.model("Review", ReviewSchema);
+
+// ===== JWT Helpers (inline) =====
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+
+const JWT_SECRET = process.env.JWT_SECRET || "nr-pk-secret-2026-production";
+
+function generateToken(user) {
+  return jwt.sign({ id: user._id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: "7d" });
+}
+
+// Auth middleware
+async function protect(req, res, next) {
+  try {
+    let token;
+    if (req.headers.authorization?.startsWith("Bearer")) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+    if (!token) return res.status(401).json({ success: false, message: "Not authorized" });
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (!user || !user.isActive) return res.status(401).json({ success: false, message: "User not found" });
+    req.user = user;
+    next();
+  } catch {
+    return res.status(401).json({ success: false, message: "Invalid token" });
+  }
+}
+
+function authorize(...roles) {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) return res.status(403).json({ success: false, message: "Not authorized" });
+    next();
+  };
+}
+
+// ===== Routes =====
+
+// Health
 app.get("/api/health", async (req, res) => {
   await connectDB();
-  res.status(200).json({
-    success: true,
-    message: "NorthRoutes PK API is running",
-    db: isConnected ? "connected" : "disconnected",
-  });
+  res.json({ success: true, message: "NorthRoutes PK API is running", db: isConnected ? "connected" : "disconnected" });
 });
 
-// 404 handler
+// Auth
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    await connectDB();
+    const { name, email, password, phone } = req.body;
+    if (!name || !email || !password) return res.status(400).json({ success: false, message: "All fields required" });
+    const existing = await User.findOne({ email: email.toLowerCase() });
+    if (existing) return res.status(409).json({ success: false, message: "Email already exists" });
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = await User.create({ name, email: email.toLowerCase(), password: hashedPassword, phone });
+    const token = generateToken(user);
+    res.status(201).json({ success: true, data: { user: { id: user._id, name: user.name, email: user.email, role: user.role }, token } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.post("/api/auth/login", async (req, res) => {
+  try {
+    await connectDB();
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ success: false, message: "All fields required" });
+    const user = await User.findOne({ email: email.toLowerCase() }).select("+password");
+    if (!user) return res.status(401).json({ success: false, message: "Invalid credentials" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ success: false, message: "Invalid credentials" });
+    const token = generateToken(user);
+    user.lastLoginAt = new Date();
+    user.loginCount = (user.loginCount || 0) + 1;
+    await user.save({ validateBeforeSave: false });
+    res.json({ success: true, data: { user: { id: user._id, name: user.name, email: user.email, role: user.role }, token } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/auth/me", protect, async (req, res) => {
+  res.json({ success: true, data: { user: { id: req.user._id, name: req.user.name, email: req.user.email, role: req.user.role } } });
+});
+
+// Tours
+app.get("/api/tours", async (req, res) => {
+  try {
+    await connectDB();
+    const { destination, pickup, budget, category, search, page = 1, limit = 12 } = req.query;
+    const filter = { isActive: true };
+    if (destination) filter.destinations = { $in: [destination] };
+    if (pickup) filter.pickupPoints = { $in: [pickup] };
+    if (category) filter.category = category;
+    if (search) filter.$or = [{ title: { $regex: search, $options: "i" } }, { destinations: { $regex: search, $options: "i" } }];
+    if (budget) {
+      const ranges = { "under-25000": { $lt: 25000 }, "25000-35000": { $gte: 25000, $lte: 35000 }, "35000-50000": { $gte: 35000, $lte: 50000 }, "above-50000": { $gt: 50000 } };
+      if (ranges[budget]) filter.pricePerPerson = ranges[budget];
+    }
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const total = await Tour.countDocuments(filter);
+    const tours = await Tour.find(filter).sort("-createdAt").skip(skip).limit(parseInt(limit));
+    res.json({ success: true, count: tours.length, total, data: tours });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/tours/:slug", async (req, res) => {
+  try {
+    await connectDB();
+    const tour = await Tour.findOne({ slug: req.params.slug, isActive: true });
+    if (!tour) return res.status(404).json({ success: false, message: "Tour not found" });
+    res.json({ success: true, data: tour });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Hotels
+app.get("/api/hotels", async (req, res) => {
+  try {
+    await connectDB();
+    const { destination, starRating, minPrice, maxPrice, page = 1, limit = 12 } = req.query;
+    const filter = { isActive: true };
+    if (destination) filter.destination = destination;
+    if (starRating) filter.starRating = parseInt(starRating);
+    if (minPrice || maxPrice) {
+      filter.startingPricePerNight = {};
+      if (minPrice) filter.startingPricePerNight.$gte = parseInt(minPrice);
+      if (maxPrice) filter.startingPricePerNight.$lte = parseInt(maxPrice);
+    }
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const total = await Hotel.countDocuments(filter);
+    const hotels = await Hotel.find(filter).sort("-rating").skip(skip).limit(parseInt(limit));
+    res.json({ success: true, count: hotels.length, total, data: hotels });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/hotels/:id", async (req, res) => {
+  try {
+    await connectDB();
+    const hotel = await Hotel.findById(req.params.id);
+    if (!hotel) return res.status(404).json({ success: false, message: "Hotel not found" });
+    const rooms = await Room.find({ hotel: hotel._id, isActive: true });
+    res.json({ success: true, data: { ...hotel.toObject(), rooms } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Destinations
+app.get("/api/destinations", async (req, res) => {
+  try {
+    await connectDB();
+    const { search, province, category, featured, page = 1, limit = 20 } = req.query;
+    const filter = { isActive: true };
+    if (search) filter.$or = [{ name: { $regex: search, $options: "i" } }, { description: { $regex: search, $options: "i" } }];
+    if (province) filter.province = province;
+    if (category) filter.category = category;
+    if (featured === "true") filter.isFeatured = true;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const total = await Destination.countDocuments(filter);
+    const destinations = await Destination.find(filter).sort("-createdAt").skip(skip).limit(parseInt(limit));
+    res.json({ success: true, count: destinations.length, total, data: destinations });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/destinations/:id", async (req, res) => {
+  try {
+    await connectDB();
+    const dest = await Destination.findOne({ $or: [{ _id: req.params.id }, { slug: req.params.id }], isActive: true });
+    if (!dest) return res.status(404).json({ success: false, message: "Destination not found" });
+    res.json({ success: true, data: dest });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Bookings
+app.post("/api/bookings", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const { bookingType, tourId, guests, pickupPoint, paymentMethod, specialRequests } = req.body;
+    if (!guests || !guests.length) return res.status(400).json({ success: false, message: "Guests required" });
+
+    let tourTitle = "", tour = null, pricePerPerson = 0;
+    if (tourId) {
+      tour = await Tour.findById(tourId);
+      if (!tour) return res.status(404).json({ success: false, message: "Tour not found" });
+      tourTitle = tour.title;
+      pricePerPerson = tour.pricePerPerson;
+    }
+
+    const totalGuests = guests.length;
+    const grandTotal = pricePerPerson * totalGuests;
+    const taxes = Math.round(grandTotal * 0.10);
+    const total = grandTotal + taxes;
+    const depositPaid = Math.round(total * 0.20);
+
+    const prefix = bookingType === "tour_only" ? "TR" : "HT";
+    const bookingRef = `${prefix}-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
+    const booking = await Booking.create({
+      bookingRef, user: req.user._id, bookingType, tour: tourId || null, tourTitle,
+      tourStartDate: req.body.tourStartDate, pickupPoint, guests, totalGuests,
+      adultCount: totalGuests, paymentMethod: paymentMethod || "bank_transfer",
+      priceBreakdown: { tourTotal: grandTotal, taxes, grandTotal: total, depositPaid, balanceDue: total - depositPaid, currency: "PKR" },
+      specialRequests,
+    });
+
+    res.status(201).json({ success: true, data: { bookingRef: booking.bookingRef, id: booking._id, status: booking.status, priceBreakdown: booking.priceBreakdown } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/bookings/my-bookings", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const bookings = await Booking.find({ user: req.user._id }).sort("-createdAt");
+    res.json({ success: true, count: bookings.length, data: bookings });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Reviews
+app.get("/api/reviews/:targetType/:targetId", async (req, res) => {
+  try {
+    await connectDB();
+    const reviews = await Review.find({ targetType: req.params.targetType, targetId: req.params.targetId, isApproved: true }).sort("-createdAt").populate("user", "name");
+    res.json({ success: true, count: reviews.length, data: reviews });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Favorites
+app.post("/api/destinations/:id/favorite", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const user = await User.findById(req.user._id);
+    const idx = user.favorites.findIndex(f => f.toString() === req.params.id);
+    if (idx > -1) { user.favorites.splice(idx, 1); await user.save({ validateBeforeSave: false }); res.json({ success: true, data: { isFavorited: false } }); }
+    else { user.favorites.push(req.params.id); await user.save({ validateBeforeSave: false }); res.json({ success: true, data: { isFavorited: true } }); }
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 404
 app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });
 });
 
-// Vercel serverless handler
+// Vercel handler
 export default async function handler(req, res) {
   await connectDB();
   return app(req, res);
