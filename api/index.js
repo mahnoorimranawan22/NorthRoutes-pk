@@ -434,9 +434,14 @@ app.post("/api/destinations/:id/favorite", protect, async (req, res) => {
   }
 });
 
+// Root redirect to frontend
+app.get("/", (req, res) => {
+  res.redirect("https://mahnoorimranawan22.github.io/NorthRoutes-pk/");
+});
+
 // 404
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+  res.status(404).json({ success: false, message: "Route not found. Use /api/* endpoints." });
 });
 
 // Vercel handler
