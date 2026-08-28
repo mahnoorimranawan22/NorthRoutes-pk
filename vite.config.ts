@@ -4,7 +4,7 @@ import svgr from "vite-plugin-svgr";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/NorthRoutes-pk/" : "/",
+  base: process.env.VERCEL ? "/" : (mode === "production" ? "/NorthRoutes-pk/" : "/"),
   plugins: [
     react(),
     svgr({
