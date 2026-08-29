@@ -6,7 +6,13 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL || "https://mahnoorimranawan22.github.io",
+  origin: [
+    process.env.CLIENT_URL,
+    "https://mahnoorimranawan22.github.io",
+    "https://north-routes-pk.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+  ].filter(Boolean),
   credentials: true,
 }));
 app.use(express.json());
@@ -434,9 +440,357 @@ app.post("/api/destinations/:id/favorite", protect, async (req, res) => {
   }
 });
 
-// Root redirect to frontend
+// ===== Tour CRUD (Admin) =====
+app.post("/api/tours", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const data = req.body;
+    if (!data.slug && data.title) {
+      data.slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+    const tour = await Tour.create(data);
+    res.status(201).json({ success: true, data: tour });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/tours/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!tour) return res.status(404).json({ success: false, message: "Tour not found" });
+    res.json({ success: true, data: tour });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.delete("/api/tours/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const tour = await Tour.findByIdAndDelete(req.params.id);
+    if (!tour) return res.status(404).json({ success: false, message: "Tour not found" });
+    res.json({ success: true, message: "Tour deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/tours/:slug/availability", async (req, res) => {
+  try {
+    await connectDB();
+    const tour = await Tour.findOne({ slug: req.params.slug, isActive: true });
+    if (!tour) return res.status(404).json({ success: false, message: "Tour not found" });
+    res.json({ success: true, data: { availableDates: tour.availableDates || [], maxGroupSize: tour.maxGroupSize } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// ===== Hotel CRUD (Admin) =====
+app.post("/api/hotels", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const data = req.body;
+    if (!data.slug && data.name) {
+      data.slug = data.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+    const hotel = await Hotel.create(data);
+    if (data.rooms && data.rooms.length) {
+      for (const r of data.rooms) { await Room.create({ ...r, hotel: hotel._id }); }
+    }
+    res.status(201).json({ success: true, data: hotel });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/hotels/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!hotel) return res.status(404).json({ success: false, message: "Hotel not found" });
+    res.json({ success: true, data: hotel });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.delete("/api/hotels/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const hotel = await Hotel.findByIdAndDelete(req.params.id);
+    if (!hotel) return res.status(404).json({ success: false, message: "Hotel not found" });
+    await Room.deleteMany({ hotel: req.params.id });
+    res.json({ success: true, message: "Hotel deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/hotels/:id/availability", async (req, res) => {
+  try {
+    await connectDB();
+    const hotel = await Hotel.findById(req.params.id);
+    if (!hotel) return res.status(404).json({ success: false, message: "Hotel not found" });
+    const rooms = await Room.find({ hotel: hotel._id, isActive: true });
+    res.json({ success: true, data: { rooms, totalRooms: hotel.totalRooms } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// ===== Destination CRUD (Admin) =====
+app.post("/api/destinations", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const data = req.body;
+    if (!data.slug && data.name) {
+      data.slug = data.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+    const dest = await Destination.create(data);
+    res.status(201).json({ success: true, data: dest });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/destinations/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const dest = await Destination.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!dest) return res.status(404).json({ success: false, message: "Destination not found" });
+    res.json({ success: true, data: dest });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.delete("/api/destinations/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const dest = await Destination.findByIdAndDelete(req.params.id);
+    if (!dest) return res.status(404).json({ success: false, message: "Destination not found" });
+    res.json({ success: true, message: "Destination deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/destinations/favorites", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const user = await User.findById(req.user._id).populate("favorites");
+    res.json({ success: true, data: user.favorites || [] });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// ===== Booking Extended =====
+app.get("/api/bookings/admin/all", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const { status, bookingType, page = 1, limit = 20 } = req.query;
+    const filter = {};
+    if (status) filter.status = status;
+    if (bookingType) filter.bookingType = bookingType;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const total = await Booking.countDocuments(filter);
+    const bookings = await Booking.find(filter).sort("-createdAt").skip(skip).limit(parseInt(limit)).populate("user", "name email");
+    res.json({ success: true, count: bookings.length, total, data: bookings });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/bookings/admin/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const booking = await Booking.findById(req.params.id).populate("user", "name email phone");
+    if (!booking) return res.status(404).json({ success: false, message: "Booking not found" });
+    res.json({ success: true, data: booking });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/bookings/admin/:id/status", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const { status, paymentStatus, internalNotes } = req.body;
+    const update = {};
+    if (status) update.status = status;
+    if (paymentStatus) update.paymentStatus = paymentStatus;
+    if (internalNotes) update.internalNotes = internalNotes;
+    const booking = await Booking.findByIdAndUpdate(req.params.id, update, { new: true });
+    if (!booking) return res.status(404).json({ success: false, message: "Booking not found" });
+    res.json({ success: true, data: booking });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/bookings/:ref", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const booking = await Booking.findOne({ bookingRef: req.params.ref });
+    if (!booking) return res.status(404).json({ success: false, message: "Booking not found" });
+    res.json({ success: true, data: booking });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/bookings/:id/cancel", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const booking = await Booking.findOneAndUpdate(
+      { _id: req.params.id, user: req.user._id },
+      { status: "cancelled", cancellationReason: req.body.reason },
+      { new: true }
+    );
+    if (!booking) return res.status(404).json({ success: false, message: "Booking not found" });
+    res.json({ success: true, data: booking });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// ===== Reviews CRUD =====
+app.post("/api/reviews", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const { targetType, targetId, rating, title, comment } = req.body;
+    if (!targetType || !targetId || !rating || !comment) return res.status(400).json({ success: false, message: "All fields required" });
+    const review = await Review.create({ user: req.user._id, targetType, targetId, targetModel: targetType, rating, title, comment });
+    res.status(201).json({ success: true, data: review });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/reviews/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const review = await Review.findOneAndUpdate({ _id: req.params.id, user: req.user._id }, req.body, { new: true });
+    if (!review) return res.status(404).json({ success: false, message: "Review not found" });
+    res.json({ success: true, data: review });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.delete("/api/reviews/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    const review = await Review.findByIdAndDelete(req.params.id);
+    if (!review) return res.status(404).json({ success: false, message: "Review not found" });
+    res.json({ success: true, message: "Review deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/reviews/admin/all", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const { targetType, isApproved, page = 1, limit = 20 } = req.query;
+    const filter = {};
+    if (targetType) filter.targetType = targetType;
+    if (isApproved !== undefined) filter.isApproved = isApproved === "true";
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const reviews = await Review.find(filter).sort("-createdAt").skip(skip).limit(parseInt(limit)).populate("user", "name email");
+    res.json({ success: true, count: reviews.length, data: reviews });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/reviews/admin/:id/moderate", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const { isApproved, isFeatured, moderationNote } = req.body;
+    const review = await Review.findByIdAndUpdate(req.params.id, { isApproved, isFeatured, moderationNote }, { new: true });
+    if (!review) return res.status(404).json({ success: false, message: "Review not found" });
+    res.json({ success: true, data: review });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// ===== Admin Users =====
+app.get("/api/admin/users", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const { role, search, page = 1, limit = 20 } = req.query;
+    const filter = {};
+    if (role) filter.role = role;
+    if (search) filter.$or = [{ name: { $regex: search, $options: "i" } }, { email: { $regex: search, $options: "i" } }];
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const total = await User.countDocuments(filter);
+    const users = await User.find(filter).select("-password").sort("-createdAt").skip(skip).limit(parseInt(limit));
+    res.json({ success: true, count: users.length, total, data: users });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get("/api/admin/users/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
+    const user = await User.findById(req.params.id).select("-password");
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    res.json({ success: true, data: user });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put("/api/admin/users/:id/role", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Super admin only" });
+    const user = await User.findByIdAndUpdate(req.params.id, { role: req.body.role }, { new: true }).select("-password");
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    res.json({ success: true, data: user });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.delete("/api/admin/users/:id", protect, async (req, res) => {
+  try {
+    await connectDB();
+    if (req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Super admin only" });
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    res.json({ success: true, message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Root - health check (Vercel rewrites frontend to index.html)
 app.get("/", (req, res) => {
-  res.redirect("https://mahnoorimranawan22.github.io/NorthRoutes-pk/");
+  res.json({ success: true, message: "NorthRoutes PK - Full Stack API", frontend: process.env.CLIENT_URL || "https://mahnoorimranawan22.github.io/NorthRoutes-pk/" });
 });
 
 // 404
