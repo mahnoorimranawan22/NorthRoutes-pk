@@ -3,14 +3,16 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
 // https://vite.dev/config/
+// VERCEL env var is set during build on Vercel, undefined locally
+const isVercel = process.env.VERCEL === "1";
+
 export default defineConfig(({ mode }) => ({
-  base: process.env.VERCEL ? "/" : (mode === "production" ? "/NorthRoutes-pk/" : "/"),
+  base: isVercel ? "/" : (mode === "production" ? "/NorthRoutes-pk/" : "/"),
   plugins: [
     react(),
     svgr({
       svgrOptions: {
         icon: true,
-        // This will transform your SVG to a React component
         exportType: "named",
         namedExport: "ReactComponent",
       },

@@ -69,7 +69,7 @@ function AnimatedRoutes() {
 
 export default function AppRoutes() {
   return (
-    <Router basename={import.meta.env.VERCEL ? "/" : (import.meta.env.MODE === "production" ? "/NorthRoutes-pk" : "/")}>
+    <Router basename={window.location.hostname.includes("vercel.app") ? "/" : (import.meta.env.MODE === "production" ? "/NorthRoutes-pk" : "/")}>
       <AuthProvider>
         <ScrollToTop />
         <AnimatedRoutes />
