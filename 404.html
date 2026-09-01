@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Passu Peaks Travels</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script>
-      // GitHub Pages SPA redirect: capture the path and redirect to index.html
-      var pathSegmentsToKeep = 1; // Keep "/NorthRoutes-pk"
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
-    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/NorthRoutes-pk/favicon.svg" />
+    <link rel="apple-touch-icon" href="/NorthRoutes-pk/favicon.svg" />
+    <meta name="theme-color" content="#16a34a" />
+    <meta name="msapplication-TileColor" content="#16a34a" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passu Peaks Travels - Discover Pakistan's North</title>
+    <script type="module" crossorigin src="/NorthRoutes-pk/assets/index-WnEikWmu.js"></script>
+    <link rel="stylesheet" crossorigin href="/NorthRoutes-pk/assets/index-CrEuWm2L.css">
   </head>
-  <body></body>
+  <body class="dark:bg-gray-900">
+    <div id="root"></div>
+    <!-- GitHub Pages SPA redirect recovery -->
+    <script>
+      (function(l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&');
+          }).join('?');
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      }(window.location))
+    </script>
+  </body>
 </html>
