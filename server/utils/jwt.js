@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "northroutes-pk-secret-key-2026";
+const JWT_SECRET = process.env.JWT_SECRET || "passupeaks-travels-secret-key-2026";
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "7d";
 
 export function generateToken(user) {

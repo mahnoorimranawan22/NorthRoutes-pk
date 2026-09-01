@@ -8,7 +8,7 @@ dotenv.config();
 
 // Fix DNS for MongoDB Atlas SRV on local networks (safe to ignore on cloud)
 import dns from "dns";
-try { dns.setServers(["8.8.8.8", "8.8.4.4"]); } catch {}
+try { dns.setServers(["8.8.8.8", "8.8.4.4"]); } catch { }
 
 // Trust proxy for Render/Railway
 const app = express();
@@ -24,7 +24,7 @@ import reviewRoutes from "./routes/reviews.js";
 import userRoutes from "./routes/users.js";
 
 const PORT = parseInt(process.env.PORT, 10) || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/northroutes-pk";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/passupeaks-travels";
 
 // ===== MIDDLEWARE =====
 app.use(cors({
@@ -79,7 +79,7 @@ app.use((err, req, res, next) => {
 async function startServer() {
   try {
     // Connect to MongoDB (skip if no URI provided — for testing)
-    if (MONGODB_URI && MONGODB_URI !== "mongodb://localhost:27017/northroutes-pk") {
+    if (MONGODB_URI && MONGODB_URI !== "mongodb://localhost:27017/passupeaks-travels") {
       await mongoose.connect(MONGODB_URI);
       console.log("✅ Connected to MongoDB");
     } else {

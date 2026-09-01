@@ -587,7 +587,7 @@ function testModelExports() {
 
 // ===== RUN ALL TESTS =====
 console.log("\n╔══════════════════════════════════════════════╗");
-console.log("║  🧪  NORTHROUTES PK — SCHEMA TEST SUITE     ║");
+console.log("║  🧪  PASSU PEAKS TRAVELS — SCHEMA TEST SUITE ║");
 console.log("╚══════════════════════════════════════════════╝");
 
 const results = [

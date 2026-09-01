@@ -1,8 +1,8 @@
-# 🏔️ NorthRoutes PK — Full-Stack Travel Platform
+# 🏔️ Passu Peaks Travels — Full-Stack Travel Platform
 
 A complete travel and tourism platform for Northern Pakistan, featuring tour booking, hotel reservations, destination exploration, and an admin CMS. Built with React, Express.js, MongoDB, and JWT authentication.
 
-**Live Frontend:** [https://mahnoorimranawan22.github.io/NorthRoutes-pk/](https://mahnoorimranawan22.github.io/NorthRoutes-pk/)
+**Live Frontend:** [https://passupeaks.pk/](https://passupeaks.pk/)
 
 ---
 
@@ -210,7 +210,7 @@ See `server/.env.example` for a template.
 
 1. Install MongoDB Community Edition
 2. Start the service
-3. Use `mongodb://localhost:27017/northroutes-pk` as your URI
+3. Use `mongodb://localhost:27017/passupeaks-travels` as your URI
 
 ### Seed the Database
 
@@ -220,7 +220,7 @@ node seed.js
 ```
 
 This creates:
-- Admin user: `admin@northroutespk.com` / `admin123456`
+- Admin user: `admin@passupeaks.pk` / `admin123456`
 - 8 destinations (Hunza, Skardu, Naran, etc.)
 - 5 tour packages
 - 4 hotels with rooms

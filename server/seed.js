@@ -11,7 +11,7 @@ import Tour from "./models/Tour.js";
 import Hotel from "./models/Hotel.js";
 import Room from "./models/Room.js";
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/northroutes-pk";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/passupeaks-travels";
 
 // ===== DESTINATIONS DATA =====
 const destinations = [

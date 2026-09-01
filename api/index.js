@@ -191,7 +191,7 @@ const Review = mongoose.models.Review || mongoose.model("Review", ReviewSchema);
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-const JWT_SECRET = process.env.JWT_SECRET || "nr-pk-secret-2026-production";
+const JWT_SECRET = process.env.JWT_SECRET || "passupeaks-secret-2026-production";
 
 function generateToken(user) {
   return jwt.sign({ id: user._id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: "7d" });

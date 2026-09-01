@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname.includes("vercel.app") ? "/api" : "https://north-routes-pk.vercel.app/api");
+const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname.includes("vercel.app") ? "/api" : "https://passu-peaks-travels.vercel.app/api");
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -10,7 +10,7 @@ const api = axios.create({
 
 // Auth token interceptor
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("nr_token");
+  const token = localStorage.getItem("passupeaks_token") || localStorage.getItem("nr_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -22,7 +22,9 @@ api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
+      localStorage.removeItem("passupeaks_token");
       localStorage.removeItem("nr_token");
+      localStorage.removeItem("passupeaks_user");
       localStorage.removeItem("nr_user");
       if (window.location.pathname.startsWith("/admin")) {
         window.location.href = "/signin";

@@ -467,7 +467,7 @@ function testMiddleware() {
 
 // ===== RUN ALL TESTS =====
 console.log("\n╔══════════════════════════════════════════════╗");
-console.log("║  🧪  NORTHROUTES PK — API TEST SUITE         ║");
+console.log("║  🧪  PASSU PEAKS TRAVELS — API TEST SUITE   ║");
 console.log("╚══════════════════════════════════════════════╝");
 
 const beforeTests = passed;

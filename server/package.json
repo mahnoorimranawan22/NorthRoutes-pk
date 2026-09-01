@@ -1,8 +1,8 @@
 {
-  "name": "northroutes-pk-backend",
+  "name": "passu-peaks-travels-backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "NorthRoutes PK REST API - Travel & Tourism Platform Backend",
+  "description": "Passu Peaks Travels REST API - Travel & Tourism Platform Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

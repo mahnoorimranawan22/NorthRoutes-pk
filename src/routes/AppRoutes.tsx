@@ -67,9 +67,16 @@ function AnimatedRoutes() {
   );
 }
 
+function getBasename() {
+  const path = window.location.pathname;
+  // GitHub Pages serves from /NorthRoutes-pk/
+  if (path.startsWith("/NorthRoutes-pk/")) return "/NorthRoutes-pk";
+  return "/";
+}
+
 export default function AppRoutes() {
   return (
-    <Router basename="/">
+    <Router basename={getBasename()}>
       <AuthProvider>
         <ScrollToTop />
         <AnimatedRoutes />
