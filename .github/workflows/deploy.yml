@@ -27,6 +27,9 @@ jobs:
       - name: Build
         run: npm run build -- --base=/NorthRoutes-pk/
 
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp dist/index.html dist/404.html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

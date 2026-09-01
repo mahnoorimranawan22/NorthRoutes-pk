@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/NorthRoutes-pk/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#16a34a" />
     <title>Passu Peaks Travels</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script>
-      // GitHub Pages SPA redirect: capture the path and redirect to index.html
+      // GitHub Pages SPA redirect: rewrite path to index.html for React Router
       var pathSegmentsToKeep = 1; // Keep "/NorthRoutes-pk"
       var l = window.location;
       l.replace(
@@ -17,5 +19,7 @@
       );
     </script>
   </head>
-  <body></body>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
