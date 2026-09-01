@@ -1,37 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Plus, Trash2, Edit3, Save, X, Search, Bed, DollarSign,
-  Calendar, CheckCircle, AlertCircle, Home, ToggleLeft, ToggleRight
+  Plus, Trash2, Edit3, Save, X, Search, Bed, Home,
+  CheckCircle, AlertCircle, ToggleLeft, ToggleRight, Loader2
 } from "lucide-react";
-import { MOCK_HOTELS } from "../../data/mockHotels";
-
-interface RoomForm {
-  type: string;
-  bedType: string;
-  pricePerNight: number;
-  sizeSqm: number;
-  maxGuests: number;
-  description: string;
-  amenities: string[];
-  available: boolean;
-}
+import { hotelsAPI } from "../../services/api";
 
 export default function ManageHotels() {
-  const [hotels, setHotels] = useState(MOCK_HOTELS);
+  const [hotels, setHotels] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedHotel, setSelectedHotel] = useState<string | null>(null);
-  const [editingRoom, setEditingRoom] = useState<string | null>(null);
-  const [roomForm, setRoomForm] = useState<RoomForm>({
-    type: "", bedType: "Queen Bed", pricePerNight: 0, sizeSqm: 25,
-    maxGuests: 2, description: "", amenities: [], available: true,
-  });
-  const [showRoomForm, setShowRoomForm] = useState(false);
+  const [editingHotel, setEditingHotel] = useState<any>(null);
+  const [showHotelForm, setShowHotelForm] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
-  const [hotelRooms, setHotelRooms] = useState<Record<string, any[]>>(() => {
-    const map: Record<string, any[]> = {};
-    MOCK_HOTELS.forEach((h) => { map[h.id] = [...h.rooms]; });
-    return map;
+  const [saving, setSaving] = useState(false);
+  const [hotelForm, setHotelForm] = useState({
+    name: "", description: "", shortDescription: "", destination: "", address: "", city: "",
+    starRating: 3, startingPricePerNight: 0, phone: "", email: "",
+    amenities: [] as string[], images: [] as string[],
   });
 
   const showToast = (type: "success" | "error", message: string) => {
@@ -39,51 +26,85 @@ export default function ManageHotels() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const filtered = hotels.filter((h) =>
-    h.name.toLowerCase().includes(search.toLowerCase()) ||
-    h.location.toLowerCase().includes(search.toLowerCase())
+  const fetchHotels = async () => {
+    try {
+      setLoading(true);
+      const res = await hotelsAPI.getAll({ limit: 100 });
+      setHotels(res.data.data || []);
+    } catch (err: any) {
+      showToast("error", "Failed to load hotels");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { fetchHotels(); }, []);
+
+  const filtered = hotels.filter((h: any) =>
+    h.name?.toLowerCase().includes(search.toLowerCase()) ||
+    h.location?.toLowerCase().includes(search.toLowerCase()) ||
+    h.destination?.toLowerCase().includes(search.toLowerCase())
   );
 
-  const activeHotel = selectedHotel ? hotels.find((h) => h.id === selectedHotel) : null;
-  const activeRooms = selectedHotel ? hotelRooms[selectedHotel] || [] : [];
+  const activeHotel = selectedHotel ? hotels.find((h: any) => h._id === selectedHotel) : null;
 
-  const handleSaveRoom = () => {
-    if (!selectedHotel || !roomForm.type || roomForm.pricePerNight <= 0) {
-      showToast("error", "Please fill all required fields");
+  const handleSaveHotel = async () => {
+    if (!hotelForm.name || !hotelForm.destination) {
+      showToast("error", "Name and destination are required");
       return;
     }
-
-    const rooms = hotelRooms[selectedHotel] || [];
-    if (editingRoom) {
-      const updated = rooms.map((r) => r.id === editingRoom ? { ...r, ...roomForm } : r);
-      setHotelRooms({ ...hotelRooms, [selectedHotel]: updated });
-      showToast("success", "Room updated successfully");
-    } else {
-      const newRoom = { ...roomForm, id: `room-${Date.now()}` };
-      setHotelRooms({ ...hotelRooms, [selectedHotel]: [...rooms, newRoom] });
-      showToast("success", "Room added successfully");
+    try {
+      setSaving(true);
+      const payload = {
+        ...hotelForm,
+        slug: hotelForm.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+        currency: "PKR",
+        checkInTime: "14:00",
+        checkOutTime: "12:00",
+        cancellationPolicy: "Free cancellation up to 24 hours before check-in.",
+        totalRooms: 20,
+      };
+      if (editingHotel) {
+        await hotelsAPI.update(editingHotel._id, payload);
+        showToast("success", "Hotel updated");
+      } else {
+        await hotelsAPI.create(payload);
+        showToast("success", "Hotel created");
+      }
+      setShowHotelForm(false);
+      setEditingHotel(null);
+      setHotelForm({ name: "", description: "", shortDescription: "", destination: "", address: "", city: "", starRating: 3, startingPricePerNight: 0, phone: "", email: "", amenities: [], images: [] });
+      fetchHotels();
+    } catch (err: any) {
+      showToast("error", err.response?.data?.message || "Failed to save hotel");
+    } finally {
+      setSaving(false);
     }
-    setRoomForm({ type: "", bedType: "Queen Bed", pricePerNight: 0, sizeSqm: 25, maxGuests: 2, description: "", amenities: [], available: true });
-    setEditingRoom(null);
-    setShowRoomForm(false);
   };
 
-  const handleDeleteRoom = (hotelId: string, roomId: string) => {
-    setHotelRooms({ ...hotelRooms, [hotelId]: hotelRooms[hotelId].filter((r) => r.id !== roomId) });
-    showToast("success", "Room deleted");
+  const handleDeleteHotel = async (id: string) => {
+    if (!confirm("Delete this hotel?")) return;
+    try {
+      await hotelsAPI.delete(id);
+      showToast("success", "Hotel deleted");
+      if (selectedHotel === id) setSelectedHotel(null);
+      fetchHotels();
+    } catch (err: any) {
+      showToast("error", err.response?.data?.message || "Failed to delete");
+    }
   };
 
-  const handleEditRoom = (room: any) => {
-    setRoomForm({ ...room });
-    setEditingRoom(room.id);
-    setShowRoomForm(true);
-  };
-
-  const toggleRoomAvailability = (hotelId: string, roomId: string) => {
-    const rooms = hotelRooms[hotelId].map((r) =>
-      r.id === roomId ? { ...r, available: !r.available } : r
-    );
-    setHotelRooms({ ...hotelRooms, [hotelId]: rooms });
+  const handleEditHotel = (hotel: any) => {
+    setHotelForm({
+      name: hotel.name || "", description: hotel.description || "", shortDescription: hotel.shortDescription || "",
+      destination: hotel.destination || "", address: hotel.address || hotel.location || "", city: hotel.city || "",
+      starRating: hotel.starRating || 3, startingPricePerNight: hotel.startingPricePerNight || 0,
+      phone: hotel.phone || "", email: hotel.email || "",
+      amenities: hotel.amenities?.map((a: any) => typeof a === "string" ? a : a.name) || [],
+      images: hotel.images || [],
+    });
+    setEditingHotel(hotel);
+    setShowHotelForm(true);
   };
 
   return (
@@ -102,156 +123,146 @@ export default function ManageHotels() {
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Manage Hotels & Rooms</h1>
-          <p className="text-sm text-gray-500">{hotels.length} hotels · {Object.values(hotelRooms).flat().length} total rooms</p>
+          <h1 className="text-2xl font-bold">Manage Hotels</h1>
+          <p className="text-sm text-gray-500">{loading ? "Loading..." : `${hotels.length} hotels`}</p>
         </div>
+        <button onClick={() => { setHotelForm({ name: "", description: "", shortDescription: "", destination: "", address: "", city: "", starRating: 3, startingPricePerNight: 0, phone: "", email: "", amenities: [], images: [] }); setEditingHotel(null); setShowHotelForm(true); }}
+          className="flex items-center gap-2 bg-brand-500 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-600 transition">
+          <Plus className="w-4 h-4" /> Add Hotel
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Hotel List */}
-        <div className="lg:col-span-1">
-          <div className="relative mb-3">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input type="text" placeholder="Search hotels..." value={search} onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-          </div>
-          <div className="space-y-2">
-            {filtered.map((hotel) => (
-              <button key={hotel.id} onClick={() => { setSelectedHotel(hotel.id); setShowRoomForm(false); setEditingRoom(null); }}
-                className={`w-full text-left p-4 rounded-xl border transition ${
-                  selectedHotel === hotel.id ? "border-brand-500 bg-brand-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"
-                }`}>
-                <div className="flex items-center gap-3">
-                  <img src={hotel.images?.[0] || hotel.image || ''} alt="" className="w-12 h-12 rounded-lg object-cover" onError={(e) => { (e.target as HTMLImageElement).src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="%23e5e7eb" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="%23f3f4f6"/><path d="M12 8v8M8 12h8" stroke="%23d1d5db" stroke-width="1.5"/></svg>'; }} />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{hotel.name}</p>
-                    <p className="text-xs text-gray-400">{hotel.location}</p>
-                  </div>
-                  <span className="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600">
-                    {hotelRooms[hotel.id]?.length || 0} rooms
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Room Management */}
-        <div className="lg:col-span-2">
-          {activeHotel ? (
-            <div className="bg-white rounded-xl border border-gray-100 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-lg font-bold">{activeHotel.name}</h2>
-                  <p className="text-sm text-gray-500">{activeHotel.location} · From PKR {activeHotel.rooms[0]?.pricePerNight?.toLocaleString()}/night</p>
-                </div>
-                <button onClick={() => { setRoomForm({ type: "", bedType: "Queen Bed", pricePerNight: 0, sizeSqm: 25, maxGuests: 2, description: "", amenities: [], available: true }); setEditingRoom(null); setShowRoomForm(true); }}
-                  className="flex items-center gap-2 bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition">
-                  <Plus className="w-4 h-4" /> Add Room Type
-                </button>
-              </div>
-
-              {/* Room Form Modal */}
-              <AnimatePresence>
-                {showRoomForm && (
-                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
-                    className="overflow-hidden mb-6">
-                    <div className="bg-gray-50 rounded-xl p-5 border border-gray-200">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-sm">{editingRoom ? "Edit Room" : "Add New Room"}</h3>
-                        <button onClick={() => setShowRoomForm(false)} className="text-gray-400 hover:text-gray-600"><X className="w-4 h-4" /></button>
-                      </div>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div>
-                          <label className="text-xs font-medium text-gray-500 mb-1 block">Room Type *</label>
-                          <input value={roomForm.type} onChange={(e) => setRoomForm({ ...roomForm, type: e.target.value })}
-                            placeholder="Deluxe Room" className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium text-gray-500 mb-1 block">Bed Type</label>
-                          <select value={roomForm.bedType} onChange={(e) => setRoomForm({ ...roomForm, bedType: e.target.value })}
-                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            {["Single Bed", "Twin Beds", "Queen Bed", "King Bed", "2 Queen Beds", "King Bed + Sofa Bed"].map((b) => (
-                              <option key={b} value={b}>{b}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium text-gray-500 mb-1 block">Price/Night (PKR) *</label>
-                          <input type="number" value={roomForm.pricePerNight || ""} onChange={(e) => setRoomForm({ ...roomForm, pricePerNight: Number(e.target.value) })}
-                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium text-gray-500 mb-1 block">Size (sqm)</label>
-                          <input type="number" value={roomForm.sizeSqm} onChange={(e) => setRoomForm({ ...roomForm, sizeSqm: Number(e.target.value) })}
-                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium text-gray-500 mb-1 block">Max Guests</label>
-                          <input type="number" value={roomForm.maxGuests} onChange={(e) => setRoomForm({ ...roomForm, maxGuests: Number(e.target.value) })}
-                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-                        </div>
-                        <div className="flex items-end">
-                          <button onClick={handleSaveRoom}
-                            className="w-full flex items-center justify-center gap-2 bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition">
-                            <Save className="w-4 h-4" /> {editingRoom ? "Update" : "Add Room"}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Room Cards */}
-              <div className="space-y-3">
-                {activeRooms.map((room) => (
-                  <div key={room.id} className={`flex items-center justify-between p-4 rounded-xl border transition ${
-                    room.available ? "border-gray-200 bg-white" : "border-red-200 bg-red-50"
+      {loading ? (
+        <div className="flex items-center justify-center py-20"><Loader2 className="w-8 h-8 animate-spin text-brand-500" /></div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Hotel List */}
+          <div className="lg:col-span-1">
+            <div className="relative mb-3">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input type="text" placeholder="Search hotels..." value={search} onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+            </div>
+            <div className="space-y-2">
+              {filtered.map((hotel: any) => (
+                <button key={hotel._id} onClick={() => { setSelectedHotel(hotel._id); setShowHotelForm(false); }}
+                  className={`w-full text-left p-4 rounded-xl border transition ${
+                    selectedHotel === hotel._id ? "border-brand-500 bg-brand-50 shadow-sm" : "border-gray-200 bg-white hover:border-gray-300"
                   }`}>
-                    <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        room.available ? "bg-orange-50 text-orange-600" : "bg-red-100 text-red-500"
-                      }`}>
-                        <Bed className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm">{room.type}</p>
-                        <p className="text-xs text-gray-400">{room.bedType} · {room.sizeSqm} sqm · Max {room.maxGuests}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <p className="font-bold text-brand-600">PKR {room.pricePerNight?.toLocaleString()}</p>
-                        <p className="text-xs text-gray-400">/ night</p>
-                      </div>
-                      <button onClick={() => toggleRoomAvailability(selectedHotel!, room.id)}
-                        className={`p-1 rounded-lg transition ${room.available ? "text-green-500 hover:bg-green-50" : "text-red-500 hover:bg-red-50"}`}>
-                        {room.available ? <ToggleRight className="w-6 h-6" /> : <ToggleLeft className="w-6 h-6" />}
-                      </button>
-                      <button onClick={() => handleEditRoom(room)} className="p-1.5 hover:bg-orange-50 rounded-lg text-orange-600 transition">
-                        <Edit3 className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDeleteRoom(selectedHotel!, room.id)} className="p-1.5 hover:bg-red-50 rounded-lg text-red-500 transition">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                  <div className="flex items-center gap-3">
+                    <img src={hotel.images?.[0] || hotel.image || ""} alt="" className="w-12 h-12 rounded-lg object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).src = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' fill='%23e5e7eb'><rect width='24' height='24' rx='4'/></svg>"; }} />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm truncate">{hotel.name}</p>
+                      <p className="text-xs text-gray-400">{hotel.destination || hotel.location} · ⭐{hotel.starRating}</p>
                     </div>
                   </div>
-                ))}
-                {activeRooms.length === 0 && (
-                  <p className="text-center text-gray-400 text-sm py-8">No rooms configured. Click "Add Room Type" to start.</p>
-                )}
-              </div>
+                </button>
+              ))}
+              {filtered.length === 0 && <p className="text-center py-8 text-gray-400 text-sm">No hotels found</p>}
             </div>
-          ) : (
-            <div className="bg-white rounded-xl border border-gray-100 p-12 text-center text-gray-400">
-              <Home className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p className="font-medium">Select a hotel to manage rooms</p>
-              <p className="text-sm mt-1">Choose from the list on the left</p>
-            </div>
-          )}
+          </div>
+
+          {/* Hotel Detail / Form */}
+          <div className="lg:col-span-2">
+            <AnimatePresence mode="wait">
+              {showHotelForm ? (
+                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="bg-white rounded-xl border border-gray-100 p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-lg font-bold">{editingHotel ? "Edit Hotel" : "Add New Hotel"}</h2>
+                    <button onClick={() => setShowHotelForm(false)} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Hotel Name *</label>
+                      <input value={hotelForm.name} onChange={(e) => setHotelForm({ ...hotelForm, name: e.target.value })}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Awan Alpine Resort" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Destination *</label>
+                      <input value={hotelForm.destination} onChange={(e) => setHotelForm({ ...hotelForm, destination: e.target.value })}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Naran" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Description</label>
+                      <textarea value={hotelForm.description} onChange={(e) => setHotelForm({ ...hotelForm, description: e.target.value })} rows={3}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Star Rating</label>
+                      <select value={hotelForm.starRating} onChange={(e) => setHotelForm({ ...hotelForm, starRating: Number(e.target.value) })}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        {[1, 2, 3, 4, 5].map((s) => <option key={s} value={s}>{s} Star</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Starting Price/Night (PKR)</label>
+                      <input type="number" value={hotelForm.startingPricePerNight || ""} onChange={(e) => setHotelForm({ ...hotelForm, startingPricePerNight: Number(e.target.value) })}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Phone</label>
+                      <input value={hotelForm.phone} onChange={(e) => setHotelForm({ ...hotelForm, phone: e.target.value })}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Email</label>
+                      <input value={hotelForm.email} onChange={(e) => setHotelForm({ ...hotelForm, email: e.target.value })}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100">
+                    <button onClick={() => setShowHotelForm(false)} className="px-4 py-2.5 text-sm text-gray-600 font-medium">Cancel</button>
+                    <button onClick={handleSaveHotel} disabled={saving}
+                      className="flex items-center gap-2 bg-brand-500 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-600 transition disabled:opacity-50">
+                      {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                      {editingHotel ? "Update" : "Create Hotel"}
+                    </button>
+                  </div>
+                </motion.div>
+              ) : activeHotel ? (
+                <motion.div key="detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="bg-white rounded-xl border border-gray-100 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 className="text-lg font-bold">{activeHotel.name}</h2>
+                      <p className="text-sm text-gray-500">{activeHotel.destination || activeHotel.location} · ⭐{activeHotel.starRating} · From PKR {activeHotel.startingPricePerNight?.toLocaleString()}/night</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button onClick={() => handleEditHotel(activeHotel)} className="p-2 hover:bg-orange-50 rounded-lg text-orange-600"><Edit3 className="w-4 h-4" /></button>
+                      <button onClick={() => handleDeleteHotel(activeHotel._id)} className="p-2 hover:bg-red-50 rounded-lg text-red-500"><Trash2 className="w-4 h-4" /></button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4">{activeHotel.description}</p>
+                  {activeHotel.amenities?.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {activeHotel.amenities.map((a: any, i: number) => (
+                        <span key={i} className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
+                          {typeof a === "string" ? a : a.name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {activeHotel.images?.length > 0 && (
+                    <div className="grid grid-cols-3 gap-2 mt-4">
+                      {activeHotel.images.slice(0, 3).map((img: string, i: number) => (
+                        <img key={i} src={img} alt="" className="w-full h-32 rounded-lg object-cover" />
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ) : (
+                <div className="bg-white rounded-xl border border-gray-100 p-12 text-center text-gray-400">
+                  <Home className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                  <p className="font-medium">Select a hotel to view details</p>
+                  <p className="text-sm mt-1">Or click "Add Hotel" to create a new one</p>
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
