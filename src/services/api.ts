@@ -1,6 +1,16 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_URL || "/api";
+function getApiBase(): string {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  const host = window.location.hostname;
+  // On Vercel or local dev (with Vite proxy), use relative /api
+  if (host.includes("vercel.app") || host === "localhost" || host === "127.0.0.1" || host === "[::1]") {
+    return "/api";
+  }
+  // On GitHub Pages or any other static host, hit the Vercel API directly
+  return "https://north-routes-pk.vercel.app/api";
+}
+const API_BASE = getApiBase();
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -26,8 +36,9 @@ api.interceptors.response.use(
       localStorage.removeItem("nr_token");
       localStorage.removeItem("passupeaks_user");
       localStorage.removeItem("nr_user");
-      if (window.location.pathname.startsWith("/admin")) {
-        window.location.href = "/signin";
+      if (window.location.pathname.includes("/admin")) {
+        const base = window.location.pathname.startsWith("/NorthRoutes-pk") ? "/NorthRoutes-pk" : "";
+        window.location.href = base + "/signin";
       }
     }
     return Promise.reject(err);

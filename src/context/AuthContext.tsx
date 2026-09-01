@@ -59,7 +59,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("nr_token");
     localStorage.removeItem("nr_user");
     setUser(null);
-    window.location.href = "/";
+    const base = window.location.pathname.startsWith("/NorthRoutes-pk") ? "/NorthRoutes-pk" : "";
+    window.location.href = base + "/";
   };
 
   return (

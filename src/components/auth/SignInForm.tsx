@@ -23,7 +23,8 @@ export default function SignInForm() {
     setSubmitting(true);
     try {
       await login(email, password);
-      navigate("/admin");
+      const base = window.location.pathname.startsWith("/NorthRoutes-pk") ? "/NorthRoutes-pk" : "";
+      window.location.href = base + "/admin";
     } catch (err: any) {
       setError(err.response?.data?.message || "Invalid credentials. Try admin@passupeaks.pk / admin123456");
     } finally {
