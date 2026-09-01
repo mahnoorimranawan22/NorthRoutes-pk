@@ -22,7 +22,7 @@ export default function AuthLayout({
                   width={231}
                   height={48}
                   src={`${import.meta.env.BASE_URL}images/logo/auth-logo.svg`}
-                  alt="NorthRoutes PK"
+                  alt="Passu Peaks Travels"
                 />
               </Link>
               <p className="text-center text-gray-400 dark:text-white/60">

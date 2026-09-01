@@ -5,7 +5,7 @@ import StatsSection from "../../components/customer/StatsSection";
 export default function Home() {
   return (
     <>
-      <PageMeta title="Home - NorthRoutes PK" description="Discover the majestic north of Pakistan" />
+      <PageMeta title="Home - Passu Peaks Travels" description="Discover the majestic north of Pakistan" />
       <HeroSection />
       <StatsSection />
     </>

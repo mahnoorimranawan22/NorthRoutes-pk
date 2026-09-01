@@ -50,7 +50,7 @@ function AnimatedRoutes() {
         {/* Admin Routes (inside admin layout) - Protected */}
         <Route path="/admin" element={<ProtectedRoute requireAdmin><AppLayout /></ProtectedRoute>}>
           <Route index element={<Home />} />
-          {/* NorthRoutes PK Admin CMS */}
+          {/* Passu Peaks Travels Admin CMS */}
           <Route path="manage-tours" element={<ManageTours />} />
           <Route path="manage-hotels" element={<ManageHotels />} />
           <Route path="manage-bookings" element={<ManageBookings />} />

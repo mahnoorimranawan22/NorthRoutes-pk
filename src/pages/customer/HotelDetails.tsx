@@ -37,7 +37,7 @@ export default function HotelDetails() {
 
   return (
     <>
-      <PageMeta title={`${hotel.name} - NorthRoutes PK`} description={hotel.description} />
+      <PageMeta title={`${hotel.name} - Passu Peaks Travels`} description={hotel.description} />
 
       {/* Photo Gallery */}
       <div className="relative h-[300px] md:h-[450px]">

@@ -49,7 +49,7 @@ export default function TourDetails() {
 
   return (
     <>
-      <PageMeta title={`${tour.title} - NorthRoutes PK`} description={tour.title} />
+      <PageMeta title={`${tour.title} - Passu Peaks Travels`} description={tour.title} />
 
       {/* Hero Gallery */}
       <div className="relative h-[300px] md:h-[420px]">

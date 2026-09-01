@@ -43,7 +43,7 @@ const destinations = [
 export default function Destinations() {
   return (
     <>
-      <PageMeta title="Destinations - NorthRoutes PK" description="Explore Northern Pakistan's top destinations" />
+      <PageMeta title="Destinations - Passu Peaks Travels" description="Explore Northern Pakistan's top destinations" />
       <HeroSlider
         slides={DESTINATION_SLIDES}
         height="h-[280px] md:h-[340px]"

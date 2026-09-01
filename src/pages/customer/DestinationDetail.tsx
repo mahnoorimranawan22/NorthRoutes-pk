@@ -60,7 +60,7 @@ export default function DestinationDetail() {
 
   return (
     <>
-      <PageMeta title={`${dest.name} - NorthRoutes PK`} description={dest.description} />
+      <PageMeta title={`${dest.name} - Passu Peaks Travels`} description={dest.description} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <Link to="/destinations" className="inline-flex items-center gap-1 text-orange-600 hover:underline mb-6">

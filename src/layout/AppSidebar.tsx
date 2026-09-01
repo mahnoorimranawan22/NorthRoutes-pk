@@ -75,14 +75,14 @@ const AppSidebar: React.FC = () => {
               <img
                 className="dark:hidden"
                 src={`${import.meta.env.BASE_URL}images/logo/logo.svg`}
-                alt="NorthRoutes PK"
+                alt="Passu Peaks Travels"
                 width={150}
                 height={40}
               />
               <img
                 className="hidden dark:block"
                 src={`${import.meta.env.BASE_URL}images/logo/logo-dark.svg`}
-                alt="NorthRoutes PK"
+                alt="Passu Peaks Travels"
                 width={150}
                 height={40}
               />
@@ -90,7 +90,7 @@ const AppSidebar: React.FC = () => {
           ) : (
             <img
               src={`${import.meta.env.BASE_URL}images/logo/logo-icon.svg`}
-              alt="NorthRoutes PK"
+              alt="Passu Peaks Travels"
               width={32}
               height={32}
             />
@@ -109,7 +109,7 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "NorthRoutes CMS"
+                  "Passu Peaks CMS"
                 ) : (
                   <HorizontaLDots className="size-6" />
                 )}

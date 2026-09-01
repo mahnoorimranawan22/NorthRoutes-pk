@@ -227,7 +227,7 @@ function authorize(...roles) {
 // Health
 app.get("/api/health", async (req, res) => {
   await connectDB();
-  res.json({ success: true, message: "NorthRoutes PK API is running", db: isConnected ? "connected" : "disconnected" });
+  res.json({ success: true, message: "Passu Peaks Travels API is running", db: isConnected ? "connected" : "disconnected" });
 });
 
 // Auth
@@ -790,7 +790,7 @@ app.delete("/api/admin/users/:id", protect, async (req, res) => {
 
 // Root - health check (Vercel rewrites frontend to index.html)
 app.get("/", (req, res) => {
-  res.json({ success: true, message: "NorthRoutes PK - Full Stack API", frontend: process.env.CLIENT_URL || "https://mahnoorimranawan22.github.io/NorthRoutes-pk/" });
+  res.json({ success: true, message: "Passu Peaks Travels - Full Stack API", frontend: process.env.CLIENT_URL || "https://mahnoorimranawan22.github.io/NorthRoutes-pk/" });
 });
 
 // 404

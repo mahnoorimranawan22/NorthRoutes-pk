@@ -124,13 +124,13 @@ export default function Home() {
   return (
     <>
       <PageMeta
-        title="Admin Dashboard | NorthRoutes PK"
-        description="NorthRoutes PK Admin Dashboard - Manage tours, hotels, and bookings"
+        title="Admin Dashboard | Passu Peaks Travels"
+        description="Passu Peaks Travels Admin Dashboard - Manage tours, hotels, and bookings"
       />
 
       <div className="mb-6">
         <h1 className="text-2xl font-bold font-heading text-gray-900 dark:text-white">
-          NorthRoutes PK Dashboard
+          Passu Peaks Travels Dashboard
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           Overview of your travel business

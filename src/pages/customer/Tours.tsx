@@ -48,7 +48,7 @@ export default function Tours() {
 
   return (
     <>
-      <PageMeta title="Tours - NorthRoutes PK" description="Browse our curated tours" />
+      <PageMeta title="Tours - Passu Peaks Travels" description="Browse our curated tours" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <h1 className="text-3xl font-bold font-heading mb-2">Our Tours</h1>
         <p className="text-gray-500 mb-6">Find the perfect adventure in Northern Pakistan</p>

@@ -53,7 +53,7 @@ app.use("/api/admin/users", userRoutes);
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "NorthRoutes PK API is running",
+    message: "Passu Peaks Travels API is running",
     timestamp: new Date().toISOString(),
   });
 });
@@ -87,7 +87,7 @@ async function startServer() {
     }
 
     app.listen(PORT, "0.0.0.0", () => {
-      console.log(`\n🚀 NorthRoutes PK API running on http://localhost:${PORT}`);
+      console.log(`\n🚀 Passu Peaks Travels API running on http://localhost:${PORT}`);
       console.log(`📋 Routes:`);
       console.log(`   POST /api/auth/register`);
       console.log(`   POST /api/auth/login`);

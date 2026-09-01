@@ -14,8 +14,8 @@ export default function Footer() {
               <Mountain className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold font-heading text-white">
-              North<span className="text-orange-400">Routes</span>
-              <span className="text-sm font-medium text-green-400 ml-1">PK</span>
+              Passu<span className="text-orange-400">Peaks</span>
+              <span className="text-sm font-medium text-green-400 ml-1">Travels</span>
             </span>
             </Link>
             <p className="text-sm text-gray-400 mb-4">
@@ -27,7 +27,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400 mt-2">
               <Mail className="w-4 h-4" />
-              <span>info@northroutes.pk</span>
+              <span>info@passupeaks.pk</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400 mt-2">
               <MapPin className="w-4 h-4" />
@@ -108,7 +108,7 @@ export default function Footer() {
           transition={{ duration: 0.6 }}
           className="border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-500"
         >
-          &copy; {new Date().getFullYear()} NorthRoutes PK. All rights reserved.
+          &copy; {new Date().getFullYear()} Passu Peaks Travels. All rights reserved.
         </motion.div>
       </div>
     </footer>

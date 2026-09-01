@@ -6,8 +6,8 @@ export default function NotFound() {
   return (
     <>
       <PageMeta
-        title="Page Not Found | NorthRoutes PK"
-        description="Page not found - NorthRoutes PK"
+        title="Page Not Found | Passu Peaks Travels"
+        description="Page not found - Passu Peaks Travels"
       />
       <div className="relative flex flex-col items-center justify-center min-h-screen p-6 overflow-hidden z-1">
         <GridShape />
@@ -36,7 +36,7 @@ export default function NotFound() {
         </div>
         {/* <!-- Footer --> */}
         <p className="absolute text-sm text-center text-gray-500 -translate-x-1/2 bottom-6 left-1/2 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} - NorthRoutes PK
+          &copy; {new Date().getFullYear()} - Passu Peaks Travels
         </p>
       </div>
     </>

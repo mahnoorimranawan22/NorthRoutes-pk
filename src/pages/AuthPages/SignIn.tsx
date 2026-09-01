@@ -6,8 +6,8 @@ export default function SignIn() {
   return (
     <>
       <PageMeta
-        title="Sign In - NorthRoutes PK"
-        description="Sign in to manage your NorthRoutes PK account"
+        title="Sign In - Passu Peaks Travels"
+        description="Sign in to manage your Passu Peaks Travels account"
       />
       <AuthLayout>
         <SignInForm />

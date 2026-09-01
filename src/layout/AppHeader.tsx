@@ -87,12 +87,12 @@ const AppHeader: React.FC = () => {
             <img
               className="dark:hidden"
               src={`${import.meta.env.BASE_URL}images/logo/logo.svg`}
-              alt="NorthRoutes PK"
+              alt="Passu Peaks Travels"
             />
             <img
               className="hidden dark:block"
               src={`${import.meta.env.BASE_URL}images/logo/logo-dark.svg`}
-              alt="NorthRoutes PK"
+              alt="Passu Peaks Travels"
             />
           </Link>
 

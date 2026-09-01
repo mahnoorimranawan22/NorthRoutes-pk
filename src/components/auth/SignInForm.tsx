@@ -25,7 +25,7 @@ export default function SignInForm() {
       await login(email, password);
       navigate("/admin");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Invalid credentials. Try demo@northroutes.pk / password123");
+      setError(err.response?.data?.message || "Invalid credentials. Try admin@passupeaks.pk / admin123456");
     } finally {
       setSubmitting(false);
     }

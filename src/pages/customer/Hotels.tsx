@@ -33,7 +33,7 @@ export default function Hotels() {
 
   return (
     <>
-      <PageMeta title="Hotels - NorthRoutes PK" description="Find the best accommodations in Northern Pakistan" />
+      <PageMeta title="Hotels - Passu Peaks Travels" description="Find the best accommodations in Northern Pakistan" />
 
       {/* Hero Slider */}
       <HeroSlider

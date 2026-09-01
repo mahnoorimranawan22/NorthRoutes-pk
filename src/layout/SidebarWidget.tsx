@@ -5,7 +5,7 @@ export default function SidebarWidget() {
     >
       <div className="text-3xl mb-2">🏔️</div>
       <h3 className="mb-2 font-semibold font-heading text-gray-900 dark:text-white">
-        NorthRoutes PK
+        Passu Peaks Travels
       </h3>
       <p className="mb-4 text-gray-500 text-theme-sm dark:text-gray-400">
         Discover Pakistan's majestic north. Manage tours, hotels, and bookings.

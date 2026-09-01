@@ -37,8 +37,8 @@ export default function Navbar() {
               <Mountain className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold font-heading text-gray-900">
-              North<span className="text-orange-600">Routes</span>
-              <span className="text-sm font-medium text-green-600 ml-1">PK</span>
+              Passu<span className="text-orange-600">Peaks</span>
+              <span className="text-sm font-medium text-green-600 ml-1">Travels</span>
             </span>
           </Link>
 

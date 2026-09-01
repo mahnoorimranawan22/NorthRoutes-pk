@@ -720,7 +720,7 @@ const rooms = [
 // ===== ADMIN USER =====
 const adminUser = {
   name: "Admin",
-  email: "admin@northroutespk.com",
+  email: "admin@passupeaks.pk",
   password: "admin123456",
   role: "admin",
   phone: "+92-300-1234567",
@@ -790,7 +790,7 @@ async function seed() {
 
     console.log("🎉 Database seeded successfully!");
     console.log("\n📋 Admin Login Credentials:");
-    console.log("   Email: admin@northroutespk.com");
+    console.log("   Email: admin@passupeaks.pk");
     console.log("   Password: admin123456\n");
 
     process.exit(0);
