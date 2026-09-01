@@ -1,23 +1,17 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background - green gradient -->
-  <rect width="32" height="32" rx="6" fill="url(#favGrad)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="favGrad" x1="0" y1="0" x2="32" y2="32">
-      <stop offset="0%" stop-color="#16A34A"/>
-      <stop offset="100%" stop-color="#15803D"/>
+    <linearGradient id="mountain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#16a34a"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <linearGradient id="peak" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ea580c"/>
+      <stop offset="100%" style="stop-color:#f97316"/>
     </linearGradient>
   </defs>
-  
-  <!-- Far mountain (left) -->
-  <path d="M2 26L10 12L14 18L16 14L20 26H2Z" fill="white" fill-opacity="0.4"/>
-  
-  <!-- Main mountain (center, tall) -->
-  <path d="M10 26L18 7L22 14L26 8L30 26H10Z" fill="white" fill-opacity="0.85"/>
-  
-  <!-- Snow cap -->
-  <path d="M24.5 10.5L26 8L27.5 10.5L26 9.8L24.5 10.5Z" fill="white"/>
-  
-  <!-- Winding road - orange -->
-  <path d="M6 27C8 25 10 24 13 24.5C16 25 17 23 19 22C21 21 23 22 26 20C28 19 29 18 30 17" 
-        stroke="#EA580C" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  <rect width="64" height="64" rx="14" fill="url(#mountain)"/>
+  <polygon points="16,48 32,14 48,48" fill="url(#peak)" opacity="0.9"/>
+  <polygon points="32,48 44,22 56,48" fill="#fff" opacity="0.25"/>
+  <polygon points="8,48 20,28 32,48" fill="#fff" opacity="0.15"/>
+  <text x="32" y="56" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="10" fill="white">PP</text>
 </svg>
