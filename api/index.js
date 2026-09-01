@@ -767,7 +767,7 @@ app.get("/api/admin/users/:id", protect, async (req, res) => {
 app.put("/api/admin/users/:id/role", protect, async (req, res) => {
   try {
     await connectDB();
-    if (req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Super admin only" });
+    if (req.user.role !== "admin" && req.user.role !== "super_admin") return res.status(403).json({ success: false, message: "Admin only" });
     const user = await User.findByIdAndUpdate(req.params.id, { role: req.body.role }, { new: true }).select("-password");
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
     res.json({ success: true, data: user });
@@ -783,6 +783,20 @@ app.delete("/api/admin/users/:id", protect, async (req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
     res.json({ success: true, message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Admin setup - promote user to admin (one-time setup)
+app.post("/api/admin/setup-admin", async (req, res) => {
+  try {
+    await connectDB();
+    const { email, secret } = req.body;
+    if (secret !== "passupeaks-setup-2026") return res.status(403).json({ success: false, message: "Invalid setup secret" });
+    const user = await User.findOneAndUpdate({ email }, { role: "admin" }, { new: true }).select("-password");
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    res.json({ success: true, message: `User ${email} promoted to admin`, data: user });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
