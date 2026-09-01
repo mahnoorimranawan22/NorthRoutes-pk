@@ -10,6 +10,8 @@ const PageMeta = ({
   <Helmet>
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
   </Helmet>
 );
 
