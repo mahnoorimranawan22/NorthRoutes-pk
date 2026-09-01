@@ -521,7 +521,7 @@ function testUserSchema() {
   // Test 4: Super admin
   const superAdmin = new User({
     name: "Super Admin",
-    email: "super@northroutes.pk",
+    email: "super@passupeaks.pk",
     password: "superPass123",
     role: "super_admin",
   });

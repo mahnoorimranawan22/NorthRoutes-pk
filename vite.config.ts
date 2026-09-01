@@ -16,4 +16,13 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://north-routes-pk.vercel.app",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 });

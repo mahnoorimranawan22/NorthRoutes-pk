@@ -6,13 +6,21 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,
-    "https://mahnoorimranawan22.github.io",
-    "https://north-routes-pk.vercel.app",
-    "http://localhost:5173",
-    "http://localhost:3000",
-  ].filter(Boolean),
+  origin: function (origin, callback) {
+    // Allow requests with no origin (curl, mobile apps, server-to-server)
+    if (!origin) return callback(null, true);
+    const allowed = [
+      process.env.CLIENT_URL,
+      "https://mahnoorimranawan22.github.io",
+      "https://north-routes-pk.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://[::1]:5173",
+      "http://127.0.0.1:5173",
+    ].filter(Boolean);
+    if (allowed.some(a => origin.startsWith(a))) return callback(null, true);
+    callback(null, true); // Allow all in development
+  },
   credentials: true,
 }));
 app.use(express.json());
@@ -804,7 +812,7 @@ app.post("/api/admin/setup-admin", async (req, res) => {
 
 // Root - health check (Vercel rewrites frontend to index.html)
 app.get("/", (req, res) => {
-  res.json({ success: true, message: "Passu Peaks Travels - Full Stack API", frontend: process.env.CLIENT_URL || "https://mahnoorimranawan22.github.io/NorthRoutes-pk/" });
+  res.json({ success: true, message: "Passu Peaks Travels - Full Stack API", frontend: process.env.CLIENT_URL || "https://passupeaks.pk/" });
 });
 
 // 404

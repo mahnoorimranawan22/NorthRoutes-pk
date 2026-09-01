@@ -69,7 +69,7 @@ function AnimatedRoutes() {
 
 function getBasename() {
   const path = window.location.pathname;
-  // GitHub Pages serves from /NorthRoutes-pk/
+  if (path.startsWith("/passu-peaks-travels/")) return "/passu-peaks-travels";
   if (path.startsWith("/NorthRoutes-pk/")) return "/NorthRoutes-pk";
   return "/";
 }

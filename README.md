@@ -80,7 +80,7 @@ A complete travel and tourism platform for Northern Pakistan, featuring tour boo
 ## 📁 Project Structure
 
 ```
-NorthRoutes-pk/
+passu-peaks-travels/
 ├── public/                    # Static assets (images, logos, favicons)
 ├── server/                    # Backend API
 │   ├── config/
@@ -159,8 +159,8 @@ NorthRoutes-pk/
 ### Clone & Install
 
 ```bash
-git clone https://github.com/mahnoorimranawan22/NorthRoutes-pk.git
-cd NorthRoutes-pk
+git clone https://github.com/mahnoorimranawan22/passu-peaks-travels.git
+cd passu-peaks-travels
 
 # Install frontend dependencies
 npm install
@@ -179,7 +179,7 @@ cd ..
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/northroutes-pk?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/passupeaks-travels?retryWrites=true&w=majority
 JWT_SECRET=your_secure_jwt_secret_here
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:5173
@@ -473,6 +473,6 @@ This project is proprietary. All rights reserved.
 
 ## 🤝 Support
 
-For issues or questions, contact: admin@northroutespk.com
+For issues or questions, contact: admin@passupeaks.pk
 
 Built with ❤️ for Pakistan's Northern Tourism
